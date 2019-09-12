@@ -1,0 +1,84 @@
+\documentclass[11pt,a4paper]{report}
+
+\usepackage{url}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[all]{xy}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{todonotes}
+\usepackage{array}
+\usepackage{listings}
+\usepackage[a4paper]{geometry}
+\usepackage[hidelinks]{hyperref}
+
+\makeatletter %otherwise geometry resets everything
+\Gm@restore@org
+\makeatother
+
+\setlength{\itemsep}{0cm}
+\setlength{\voffset}{0cm}
+\setlength{\headheight}{0cm}
+\setlength{\topmargin}{0cm}
+\setlength{\extrarowheight}{3pt} %for superscripts in tabular
+\setlength{\arraycolsep}{4pt}
+\lstset{basicstyle = \footnotesize, breaklines = true}
+
+\graphicspath{{resources/images/}}
+
+\begin{document}
+\begin{titlepage}
+\begin{center}
+\textsc{\LARGE Bachelor thesis\\Computing Science}\\[1.5cm]
+\includegraphics[height=100pt]{logo}
+
+\vspace{0.4cm}
+\textsc{\Large Radboud University}\\[1cm]
+\hrule
+\vspace{0.4cm}
+\textbf{\huge Creating a Methodology for Penetration Testing of Docker Containers}\\[0.4cm]
+\hrule
+\vspace{2cm}
+\begin{minipage}[t]{0.45\textwidth}
+\begin{flushleft} \large
+\textit{Author:}\\
+Joren Vrancken\\
+s4593847
+\end{flushleft}
+\end{minipage}
+\begin{minipage}[t]{0.45\textwidth}
+\begin{flushright} \large
+\textit{Supervisor:}\\
+Associate professor, Erik Poll\\
+\texttt{erikpoll@cs.ru.nl}\\[1.3cm]
+\textit{Internship supervisor:}\\
+Dave Wurtz\\
+\texttt{dave.wurtz@secura.com}\\[1.3cm]
+\textit{Second internship supervisor:}\\
+Geert Smelt\\
+\texttt{geert.smelt@secura.com}
+\end{flushright}
+\end{minipage}
+\vfill
+{\large \today}
+\end{center}
+\end{titlepage}
+
+\input{content/abstract}
+
+\tableofcontents
+
+\input{content/introduction}
+\input{content/background}
+\input{content/vulnerabilities}
+\input{content/pentesting}
+\input{content/futurework}
+\input{content/conclusions}
+
+\bibliographystyle{plain}
+\bibliography{content/bibliography}
+
+\appendix
+\input{content/appendix}
+
+\end{document}
