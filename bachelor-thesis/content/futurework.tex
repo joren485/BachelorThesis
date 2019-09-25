@@ -1,1 +1,47 @@
 \chapter{Future Work}
+\section{Condense CIS Benchmarks}
+
+The CIS Benchmarks for Docker contains 115 guidelines with their respective documentation.
+This makes it a 250+ page document. This is not practical for developers and engineers (the intended audience). It would be much more useful to have a smaller, better sorted list that only contains common mistakes and pitfalls to watch out for.
+
+\hfill
+
+The CIS Benchmarks do indicate the importance of each guideline.
+With Level 1 indicating that the guideline is a must-have and Level 2 indicating that the guideline is only necessary if extra security is needed. However, only twenty-one guidelines are actually considered Level 2. All the other guidelines are considered Level 1. This still leaves the reader with a lot of guidelines that are considered must-have.
+
+\hfill
+
+It would be a good idea to split the document into multiple sections. The guidelines can be divided by their importance and usefulness. For example, a three section division can be made.
+
+\hfill
+
+The first section would describe obvious and basic guidelines that everyone should follow (and probably already does). This is an example of guidelines that would be part of this section:
+\begin{itemize}
+    \item 1.1.2: Ensure that the version of Docker is up to date
+    \item 2.4: Ensure insecure registries are not used
+    \item 3.1: Ensure that the docker.service file ownership is set to root:root
+    \item 4.2: Ensure that containers use only trusted base images
+    \item 4.3: Ensure that unnecessary packages are not installed in the container
+\end{itemize}
+
+\hfill
+
+The second section would contain guidelines that are common mistakes and pitfalls. These guidelines would be the most useful to the average developer. For example:
+\begin{itemize}
+    \item 4.4 Ensure images are scanned and rebuilt to include security patches
+    \item 4.7 Ensure update instructions are not use alone in the Dockerfile
+    \item 4.9 Ensure that COPY is used instead of ADD in Dockerfiles
+    \item 4.10 Ensure secrets are not stored in Dockerfiles
+    \item 5.6 Ensure \verb|sshd| is not run within containers
+\end{itemize}
+
+\hfill
+
+The last section would describe guidelines that are intended for systems that need extra hardening. For example:
+\begin{itemize}
+    \item 1.2.4 Ensure auditing is configured for Docker files and directories
+    \item 4.1 Ensure that a user for the container has been created
+    \item 5.4 Ensure that privileged containers are not used
+    \item 5.26 Ensure that container health is checked at runtime
+    \item 5.29 Ensure that Docker's default bridge ``\verb|docker0|'' is not used
+\end{itemize}
