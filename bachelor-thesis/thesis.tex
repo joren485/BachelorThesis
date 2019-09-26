@@ -30,69 +30,66 @@
 \graphicspath{{resources/images/}}
 
 \begin{document}
-\begin{titlepage}
-\begin{center}
-\textsc{\LARGE Bachelor thesis\\Computing Science}\\[1.5cm]
-\includegraphics[height=100pt]{logo}
+    \begin{titlepage}
+        \begin{center}
+            \textsc{\LARGE Bachelor thesis\\Computing Science}\\[1.5cm]
+            \includegraphics[height=100pt]{logo}
 
-\vspace{0.4cm}
-\textsc{\Large Radboud University}\\[1cm]
-\hrule
-\vspace{0.4cm}
-\textbf{\huge Creating a Methodology for Penetration Testing of Docker Containers}\\[0.4cm]
-\hrule
-\vspace{2cm}
-\begin{minipage}[t]{0.45\textwidth}
-\begin{flushleft} \large
-\textit{Author:}\\
-Joren Vrancken\\
-s4593847
-\end{flushleft}
-\end{minipage}
-\begin{minipage}[t]{0.45\textwidth}
-\begin{flushright} \large
-\textit{Supervisor:}\\
-Associate professor, Erik Poll\\
-\texttt{erikpoll@cs.ru.nl}\\[1.3cm]
-\textit{Internship supervisor:}\\
-Dave Wurtz\\
-\texttt{dave.wurtz@secura.com}\\[1.3cm]
-\textit{Second internship supervisor:}\\
-Geert Smelt\\
-\texttt{geert.smelt@secura.com}
-\end{flushright}
-\end{minipage}
-\vfill
-{\large \today}
+            \vspace{0.4cm}
+            \textsc{\Large Radboud University}\\[1cm]
+            \hrule
+            \vspace{0.4cm}
+            \textbf{\huge Creating a Methodology for Penetration Testing of Docker Containers}\\[0.4cm]
+            \hrule
+            \vspace{2cm}
+            \begin{minipage}[t]{0.45\textwidth}
+                \begin{flushleft} \large
+                    \textit{Author:}\\
+                    Joren Vrancken\\
+                    s4593847
+                \end{flushleft}
+            \end{minipage}
+            \begin{minipage}[t]{0.45\textwidth}
+                \begin{flushright} \large
+                    \textit{Supervisor:}\\
+                    Associate professor, Erik Poll\\
+                    \texttt{erikpoll@cs.ru.nl}\\[1.3cm]
+                    \textit{Internship supervisor:}\\
+                    Dave Wurtz\\
+                    \texttt{dave.wurtz@secura.com}\\[1.3cm]
+                    \textit{Second internship supervisor:}\\
+                    Geert Smelt\\
+                    \texttt{geert.smelt@secura.com}
+                \end{flushright}
+            \end{minipage}
 
-\hfill
+            \vfill {\large \today}
+            \hfill
 
-\todo[inline]{TODOs are shown like this.}
+            \todo[inline]{TODOs are shown like this.}
+        \end{center}
+    \end{titlepage}
 
-\end{center}
-\end{titlepage}
+    \input{content/abstract}
 
-\input{content/abstract}
+    \tableofcontents
 
-\tableofcontents
+    \input{content/introduction}
+    \input{content/background}
+    \input{content/vulnerabilities}
+    \input{content/pentesting}
+    \input{content/futurework}
+    \input{content/conclusions}
+    \input{content/acknowledgements}
 
-\input{content/introduction}
-\input{content/background}
-\input{content/vulnerabilities}
-\input{content/pentesting}
-\input{content/futurework}
-\input{content/conclusions}
-\input{content/acknowledgements}
+    \bibliographystyle{plain}
+    \bibliography{content/bibliography}
+    \todo[inline]{Either cite or remove Bibliography entries}
+    \nocite{MARTIN201830}
+    \nocite{DBLP:journals/corr/Bui15}
+    \nocite{Shu:2017:SSV:3029806.3029832}
+    \nocite{7742298}
 
-\bibliographystyle{plain}
-\bibliography{content/bibliography}
-\todo[inline]{Either cite or remove Bibliography entries}
-\nocite{MARTIN201830}
-\nocite{DBLP:journals/corr/Bui15}
-\nocite{Shu:2017:SSV:3029806.3029832}
-\nocite{7742298}
-
-\appendix
-\input{content/appendix-cisexample}
-
+    \appendix
+    \input{content/appendix-cisexample}
 \end{document}
