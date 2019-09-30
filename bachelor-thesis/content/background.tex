@@ -5,13 +5,38 @@
 \todo[inline]{\href{https://hackernoon.com/democratization-of-container-technologies-95cbbfaee08d}{Democratization of Container Technologies}}
 \todo[inline]{\href{https://blog.aquasec.com/a-brief-history-of-containers-from-1970s-chroot-to-docker-2016}{A Brief History of Containers: From the 1970s to 2017}}
 
-\subsection{Docker}
+Containerization software is used to isolate software into packages (called containers). These containers only contain the necessary files for specific software to be run. Other files, libraries and binaries are shared between the host operating system (the system running the container). This allows developers to create lightweight software packages containing only the necessary dependencies.
+
+\hfill
+
+This is great for rapid development of software, because every small change can quickly be packaged into a container.
+
+Containers also make it possible to run multiple versions of the same software on one host. Each container can contain a specific version and all the containers run on the same host. Because the containers are isolated from each other, their incompatible dependencies are not a problem.
+
+\hfill
+
+This has made containerization a very popular concept in developing and running software.
+
+\subsubsection{Virtualization}
+
+Virtualization is an older technique used to isolate software. In virtualization, a whole system is simulated in top of the host (called the Hypervisor). This new virtual machine is called a guest. The guest and the host do not share any system resources. This has some advantages. For example, it allows running a completely different system as guest (e.g. Windows guest run on a Linux host).
+
+\hfill
+
+Because containerization software shares many resources with the host, it is a lot faster and more flexible than virtualization. Where virtualization needs to start a whole new operating system, containerization only needs to start a single process.
+
+\hfill
+
+This, however, does mean that containerization is a lot more dangerous from a security perspective. The container might be able to access sensitive resources because they are shared between the host and the container.
+
+\section{Docker}
 \todo[inline]{Docker is not a security model}
 \todo[inline]{Docker on Windows}
 \todo[inline]{Containerization vs virtualization}
 \todo[inline]{Research: Secure Computing Mode Profiles}
 \todo[inline]{iptables}
-
+\todo[inline]{Layers}
+\todo[inline]{Docker Engine}
 \todo[inline]{\href{https://itnext.io/chroot-cgroups-and-namespaces-an-overview-37124d995e3d}{chroot, cgroups and namespaces}}
 \todo[inline]{\href{https://www.secura.com/blog-hacklu2018-docker-security}{Docker, A brief history and security considerations for modern environments}}
 
@@ -21,10 +46,63 @@
 \todo[inline]{\href{https://medium.com/@saschagrunert/demystifying-containers-part-ii-container-runtimes-e363aa378f25}{Demystifying Containers Part II Container Runtimes}}
 \todo[inline]{\href{https://medium.com/@saschagrunert/demystifying-containers-part-iii-container-images-244865de6fef}{Demystifying Containers Part III Container Images}}
 
+\hfill
+
+The concept of containerization has been around a long time, but it only gained traction as serious way to package, distribute and run software in the last few years. This is mostly because of Docker.
+
+\hfill
+
+Docker was released in 2013 and it did not only offer a containerization platform, but also a way to distribute the containers. This allows developers and companies to create packages that are much more easily run.
+
+\hfill
+
+For example, someone that wants to run an instance of Wordpress (a very popular CMS), does not need to install all the Wordpress dependencies. They only need to download and run the Docker container.
+Similarly, if they want to move the Wordpress instance from one host to the other, they just have to copy over the files and run the Docker image on the new machine.
+
+\subsubsection{Docker Concepts}
+Docker is based on three concepts: Docker images, Docker containers and \verb|Dockerfiles|.
+
+\hfill
+
+A Docker image is packaged software. It is a distributable file consisting of image layers.
+
+\hfill
+
+A container is an instance of a Docker Image. If you run software packaged as a Docker image, you create a container based on that image. If you want to run two instances of the same Docker image, you can create two containers.
+
+\hfill
+
+A \verb|Dockerfile| describes what a Docker image is made of. It describes the steps to create the image. Lets look at a very simple example:
+\begin{lstlisting}
+FROM alpine:latest
+LABEL maintainer="Joren Vrancken"
+CMD ["echo" "Hello World"]
+\end{lstlisting}
+
+These three instructions tell the Docker engine how to create a new Docker image.
+
+\begin{enumerate}
+    \item The \lstinline{FROM} instruction tells the Docker engine what to base the new Docker image on. Instead of creating an image from scratch (a blank image), we use an already existing image as our basis.
+
+    \item The \lstinline{LABEL} instruction sets a key value pair for the image. There can be multiple LABEL instructions. These key value pairs get packaged and distributed with the image.
+
+    \item The \lstinline{CMD} instruction sets the default command that should be run and which arguments should be passed to it.
+\end{enumerate}
+
+The full instructionset can be found on The \lstinline{Dockerfile} Reference\footnote{\url{https://docs.docker.com/engine/reference/builder/}}
+
+\subsubsection{Data Persistence}
+
+\subsubsection{Networking}
+
+\subsubsection{Docker internals}
+
+
 \subsection{docker-compose}
 \todo[inline]{Secrets in docker-compose can be easily found, even without docker group permissions}
 
-\subsection{Docker Hub}
+\subsection{Registries}
+\todo[inline]{Docker Hub}
 \todo[inline]{Everybody can create an image}
 \todo[inline]{Official images not always standard images}
 
