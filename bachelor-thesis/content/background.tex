@@ -60,7 +60,7 @@ For example, someone that wants to run an instance of Wordpress (a very popular 
 Similarly, if they want to move the Wordpress instance from one host to the other, they just have to copy over the files and run the Docker image on the new machine.
 
 \subsubsection{Docker Concepts}
-Docker is based on three concepts: Docker images, Docker containers and \verb|Dockerfiles|.
+Docker is based on three concepts: Docker images, Docker containers and \lstinline{Dockerfile}s.
 
 \hfill
 
@@ -72,7 +72,7 @@ A container is an instance of a Docker Image. If you run software packaged as a 
 
 \hfill
 
-A \verb|Dockerfile| describes what a Docker image is made of. It describes the steps to create the image. Lets look at a very simple example:
+A \lstinline{Dockerfile} describes what a Docker image is made of. It describes the steps to create the image. Lets look at a very simple example:
 \begin{lstlisting}
 FROM alpine:latest
 LABEL maintainer="Joren Vrancken"
