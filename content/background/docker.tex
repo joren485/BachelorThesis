@@ -1,34 +1,3 @@
-\chapter{Background}
-
-\section{Containerization Software}
-
-\todo[inline]{\href{https://hackernoon.com/democratization-of-container-technologies-95cbbfaee08d}{Democratization of Container Technologies}}
-\todo[inline]{\href{https://blog.aquasec.com/a-brief-history-of-containers-from-1970s-chroot-to-docker-2016}{A Brief History of Containers: From the 1970s to 2017}}
-
-Containerization software is used to isolate software into packages (called containers). These containers only contain the necessary files for specific software to be run. Other files, libraries and binaries are shared between the host operating system (the system running the container). This allows developers to create lightweight software packages containing only the necessary dependencies.
-
-\hfill
-
-This is great for rapid development of software, because every small change can quickly be packaged into a container.
-
-Containers also make it possible to run multiple versions of the same software on one host. Each container can contain a specific version and all the containers run on the same host. Because the containers are isolated from each other, their incompatible dependencies are not a problem.
-
-\hfill
-
-This has made containerization a very popular concept in developing and running software.
-
-\subsubsection{Virtualization}
-
-Virtualization is an older technique used to isolate software. In virtualization, a whole system is simulated in top of the host (called the Hypervisor). This new virtual machine is called a guest. The guest and the host do not share any system resources. This has some advantages. For example, it allows running a completely different system as guest (e.g. Windows guest run on a Linux host).
-
-\hfill
-
-Because containerization software shares many resources with the host, it is a lot faster and more flexible than virtualization. Where virtualization needs to start a whole new operating system, containerization only needs to start a single process.
-
-\hfill
-
-Where virtulization can and is used as a security layer, because it truly isolates the host and guest resources. Containerization should not be used as a security layer, because containers might be able to access sensitive resources that are shared between the host and the container. This makes containerization a lot more dangerous from a security perspective.
-
 \section{Docker}
 \todo[inline]{Docker is not a security model}
 \todo[inline]{Docker on Windows}
@@ -142,20 +111,3 @@ Docker images are distributable through so called registries. A registry is a se
 
 The most popular (and public) registry is Docker Hub, which is run by company that develops Docker.
 Anybody can create a Docker Hub account and start creating images that anybody can download. Docker Hub also provides default images for popular software.
-
-\section{Penetration Testing}
-\subsection{Methodology Secura}
-
-\section{CIS Benchmarks}
-\todo[inline]{\url{https://docs.docker.com/compliance/cis/docker_ce/}}
-The Center for Internet Security (or CIS for short) is a non-profit organization that provides best practice solutions for digital security. For example, they provide security hardened virtual machine images that are configured for optimal security.
-
-\hfill
-
-The CIS Benchmarks are guidelines and best practices on security on many different types of software. These guidelines are freely available for anyone and can be found on their site\footnote{\url{https://www.cisecurity.org/cis-benchmarks/}}.
-
-\hfill
-
-They also provide guidelines on Docker\cite{cis}. The latest version of the benchmarks (1.2.0) contain 115 guidelines. These are sorted by topic (e.g. Docker daemon and configuration files). In \hyperref[appendix:a]{the appendix} you will find an example CIS benchmark taken from the latest CIS benchmarks.
-
-\section{Related Work}

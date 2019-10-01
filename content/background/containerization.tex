@@ -1,0 +1,28 @@
+\section{Containerization Software}
+
+\todo[inline]{\href{https://hackernoon.com/democratization-of-container-technologies-95cbbfaee08d}{Democratization of Container Technologies}}
+\todo[inline]{\href{https://blog.aquasec.com/a-brief-history-of-containers-from-1970s-chroot-to-docker-2016}{A Brief History of Containers: From the 1970s to 2017}}
+
+Containerization software is used to isolate software into packages (called containers). These containers only contain the necessary files for specific software to be run. Other files, libraries and binaries are shared between the host operating system (the system running the container). This allows developers to create lightweight software packages containing only the necessary dependencies.
+
+\hfill
+
+This is great for rapid development of software, because every small change can quickly be packaged into a container.
+
+Containers also make it possible to run multiple versions of the same software on one host. Each container can contain a specific version and all the containers run on the same host. Because the containers are isolated from each other, their incompatible dependencies are not a problem.
+
+\hfill
+
+This has made containerization a very popular concept in developing and running software.
+
+\subsubsection{Virtualization}
+
+Virtualization is an older technique used to isolate software. In virtualization, a whole system is simulated in top of the host (called the Hypervisor). This new virtual machine is called a guest. The guest and the host do not share any system resources. This has some advantages. For example, it allows running a completely different system as guest (e.g. Windows guest run on a Linux host).
+
+\hfill
+
+Because containerization software shares many resources with the host, it is a lot faster and more flexible than virtualization. Where virtualization needs to start a whole new operating system, containerization only needs to start a single process.
+
+\hfill
+
+Where virtulization can and is used as a security layer, because it truly isolates the host and guest resources. Containerization should not be used as a security layer, because containers might be able to access sensitive resources that are shared between the host and the container. This makes containerization a lot more dangerous from a security perspective.
