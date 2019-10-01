@@ -27,24 +27,16 @@ Because containerization software shares many resources with the host, it is a l
 
 \hfill
 
-This, however, does mean that containerization is a lot more dangerous from a security perspective. The container might be able to access sensitive resources because they are shared between the host and the container.
+Where virtulization can and is used as a security layer, because it truly isolates the host and guest resources. Containerization should not be used as a security layer, because containers might be able to access sensitive resources that are shared between the host and the container. This makes containerization a lot more dangerous from a security perspective.
 
 \section{Docker}
 \todo[inline]{Docker is not a security model}
 \todo[inline]{Docker on Windows}
-\todo[inline]{Containerization vs virtualization}
 \todo[inline]{Research: Secure Computing Mode Profiles}
-\todo[inline]{iptables}
 \todo[inline]{Layers}
 \todo[inline]{Docker Engine}
 \todo[inline]{\href{https://itnext.io/chroot-cgroups-and-namespaces-an-overview-37124d995e3d}{chroot, cgroups and namespaces}}
 \todo[inline]{\href{https://www.secura.com/blog-hacklu2018-docker-security}{Docker, A brief history and security considerations for modern environments}}
-
-\hfill
-
-\todo[inline]{\href{https://medium.com/@saschagrunert/demystifying-containers-part-i-kernel-space-2c53d6979504}{Demystifying Containers Part I Kernel Space}}
-\todo[inline]{\href{https://medium.com/@saschagrunert/demystifying-containers-part-ii-container-runtimes-e363aa378f25}{Demystifying Containers Part II Container Runtimes}}
-\todo[inline]{\href{https://medium.com/@saschagrunert/demystifying-containers-part-iii-container-images-244865de6fef}{Demystifying Containers Part III Container Images}}
 
 \hfill
 
@@ -73,11 +65,16 @@ A container is an instance of a Docker Image. If you run software packaged as a 
 \hfill
 
 A \lstinline{Dockerfile} describes what a Docker image is made of. It describes the steps to create the image. Lets look at a very simple example:
-\begin{lstlisting}
+
+\hfill
+
+\begin{lstlisting}[caption={Very Basic \lstinline{Dockerfile}},label={dockerfile:simple},captionpos=b]
 FROM alpine:latest
 LABEL maintainer="Joren Vrancken"
-CMD ["echo" "Hello World"]
+CMD ["echo", "Hello World"]
 \end{lstlisting}
+
+\hfill
 
 These three instructions tell the Docker engine how to create a new Docker image.
 
@@ -89,21 +86,54 @@ These three instructions tell the Docker engine how to create a new Docker image
     \item The \lstinline{CMD} instruction sets the default command that should be run and which arguments should be passed to it.
 \end{enumerate}
 
-The full instructionset can be found on The \lstinline{Dockerfile} Reference\footnote{\url{https://docs.docker.com/engine/reference/builder/}}
+The full instructionset can be found in the \lstinline{Dockerfile} reference\footnote{\url{https://docs.docker.com/engine/reference/builder/}}
+
+\hfill
+
+We can use this to create a new image and container from that image.
+\begin{lstlisting}[caption={Creating a Docker container from a \lstinline{Dockerfile}},label={docker:container},captionpos=b]
+$ docker build -t thesis-hello-world .
+$ docker run --rm --name=thesis-hello-world-container thesis-hello-world
+\end{lstlisting}
+
+We first create a Docker image (called \lstinline{thesis-hello-world}) using the \lstinline{docker build} command and then create and start a new container (called \lstinline{thesis-hello-world-container}) from that image.
 
 \subsubsection{Data Persistence}
 
 \subsubsection{Networking}
+\todo[inline]{iptables}
+\todo[inline]{\url{https://github.com/docker/libnetwork/blob/master/docs/design.md}}
+
+When a Docker container is created Docker creates a network sandbox for that container and (by default) connects it to an internal bridge network. This gives the container its own networking resourcessuch as a IPv4 address\footnote{IPv6 support is not enabled by default.}, routes and DNS entries. All outgoing traffic is routed through a bridge interface (by default).
+
+\hfill
+
+Incoming traffic is possible by routing traffic for specific ports from the host to the container.
+Specifying which ports on the host are routed to which ports on the container is done when a container is created.
+
+If we, for example, want to expose port \lstinline{80} to the Docker image created from the \hyperref[dockerfile:simple]{first \lstinline{Dockerfile}} we can execute the following commands.
+
+\hfill
+
+\begin{lstlisting}[caption={Creating a Docker container with exposed port},label={docker:publish},captionpos=b]
+$ docker build -t thesis-hello-world .
+$ docker run --rm --publish 8000:80 --name=thesis-hello-world-container thesis-hello-world
+\end{lstlisting}
+
+\hfill
+
+We first create a Docker image using the \lstinline{Dockerfile} and then create (and start) a container from that image. We ``publish'' port \lstinline{8000} on the host to port \lstinline{80} of the container. This means that, while the container is running, all traffic from port \lstinline{8000} on the host is routed to port \lstinline{80} of the container.
+
 
 \subsubsection{Docker internals}
-
+\todo[inline]{\href{https://medium.com/@saschagrunert/demystifying-containers-part-i-kernel-space-2c53d6979504}{Demystifying Containers Part I Kernel Space}}
+\todo[inline]{\href{https://medium.com/@saschagrunert/demystifying-containers-part-ii-container-runtimes-e363aa378f25}{Demystifying Containers Part II Container Runtimes}}
+\todo[inline]{\href{https://medium.com/@saschagrunert/demystifying-containers-part-iii-container-images-244865de6fef}{Demystifying Containers Part III Container Images}}
 
 \subsection{docker-compose}
 \todo[inline]{Secrets in docker-compose can be easily found, even without docker group permissions}
 
 \subsection{Registries}
-\todo[inline]{Docker Hub}
-\todo[inline]{Everybody can create an image}
 \todo[inline]{Official images not always standard images}
 
 Docker images are distributable through so called registries. A registry is a server (that anybody can host), that stores Docker images. When a client does not have a Docker image that it needs, it can contact a registry to download that image.
@@ -112,7 +142,6 @@ Docker images are distributable through so called registries. A registry is a se
 
 The most popular (and public) registry is Docker Hub, which is run by company that develops Docker.
 Anybody can create a Docker Hub account and start creating images that anybody can download. Docker Hub also provides default images for popular software.
-
 
 \section{Penetration Testing}
 \subsection{Methodology Secura}
