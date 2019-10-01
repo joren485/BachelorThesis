@@ -1,9 +1,6 @@
 \section{Docker}
-\todo[inline]{Docker is not a security model}
 \todo[inline]{Docker on Windows}
 \todo[inline]{Research: Secure Computing Mode Profiles}
-\todo[inline]{Layers}
-\todo[inline]{Docker Engine}
 \todo[inline]{\href{https://itnext.io/chroot-cgroups-and-namespaces-an-overview-37124d995e3d}{chroot, cgroups and namespaces}}
 \todo[inline]{\href{https://www.secura.com/blog-hacklu2018-docker-security}{Docker, A brief history and security considerations for modern environments}}
 
@@ -17,25 +14,23 @@ Docker was released in 2013 and it did not only offer a containerization platfor
 
 \hfill
 
-For example, someone that wants to run an instance of Wordpress (a very popular CMS), does not need to install all the Wordpress dependencies. They only need to download and run the Docker container.
-Similarly, if they want to move the Wordpress instance from one host to the other, they just have to copy over the files and run the Docker image on the new machine.
+For example, someone that wants to run an instance of Wordpress\footnote{A very popular content management system to build websites with.}, does not need to install all the Wordpress dependencies. They only need to download the Docker image that the Wordpress developers created.
+Similarly, if they want to move the Wordpress instance from one host to the other, they just have to copy over their database and run the Docker image on the new host. Even if the new host is a completely different operating system.
 
-\subsubsection{Docker Concepts}
-Docker is based on three concepts: Docker images, Docker containers and \lstinline{Dockerfile}s.
+\subsection{Docker Concepts}
+Docker is based on four concepts: Docker daemon, Docker images, Docker containers and \lstinline{Dockerfile}s.
 
-\hfill
+\subsubsection{Docker daemon}
+The daemon is a service that runs on the host machine. It manages all things related to Docker on that machine. For example if the user wants to build an image or a container needs to restart the docker daemon. It is good to note that, because everything related to Docker is handled by the daemon and Docker has access to all resources of the host, having access to Docker should be viewed as equivalent to having \lstinline{root} access to the host\footnote{\url{https://docs.docker.com/engine/security/security/#docker-daemon-attack-surface}}.
 
-A Docker image is packaged software. It is a distributable file consisting of image layers.
+\subsubsection{Docker images}
+A Docker image is packaged software. It is a distributable set of layers. The first layer describes the base of the image. This is either an existing image or nothing (referred to as \lstinline{scratch}). Each layer on top of that is a change to the layer before. For example, if you add a file or run an command it adds a new layer.
 
-\hfill
-
+\subsubsection{Docker containers}
 A container is an instance of a Docker Image. If you run software packaged as a Docker image, you create a container based on that image. If you want to run two instances of the same Docker image, you can create two containers.
 
-\hfill
-
-A \lstinline{Dockerfile} describes what a Docker image is made of. It describes the steps to create the image. Lets look at a very simple example:
-
-\hfill
+\subsubsection{\lstinline{Dockerfile}s}
+A \lstinline{Dockerfile} describes what a Docker image is made of. It describes the steps to build the image. Lets look at a very simple example:
 
 \begin{lstlisting}[caption={Very Basic \lstinline{Dockerfile}},label={dockerfile:simple},captionpos=b]
 FROM alpine:latest
@@ -43,9 +38,8 @@ LABEL maintainer="Joren Vrancken"
 CMD ["echo", "Hello World"]
 \end{lstlisting}
 
-\hfill
-
 These three instructions tell the Docker engine how to create a new Docker image.
+The full instructionset can be found in the \lstinline{Dockerfile} reference\footnote{\url{https://docs.docker.com/engine/reference/builder/}}
 
 \begin{enumerate}
     \item The \lstinline{FROM} instruction tells the Docker engine what to base the new Docker image on. Instead of creating an image from scratch (a blank image), we use an already existing image as our basis.
@@ -54,10 +48,6 @@ These three instructions tell the Docker engine how to create a new Docker image
 
     \item The \lstinline{CMD} instruction sets the default command that should be run and which arguments should be passed to it.
 \end{enumerate}
-
-The full instructionset can be found in the \lstinline{Dockerfile} reference\footnote{\url{https://docs.docker.com/engine/reference/builder/}}
-
-\hfill
 
 We can use this to create a new image and container from that image.
 \begin{lstlisting}[caption={Creating a Docker container from a \lstinline{Dockerfile}},label={docker:container},captionpos=b]
@@ -68,31 +58,25 @@ $ docker run --rm --name=thesis-hello-world-container thesis-hello-world
 We first create a Docker image (called \lstinline{thesis-hello-world}) using the \lstinline{docker build} command and then create and start a new container (called \lstinline{thesis-hello-world-container}) from that image.
 
 \subsubsection{Data Persistence}
+Without additional configuration, a Docker container does not have persistence storage. Its storage is maintained when the container is stopped, but not when the container is removed.
 
 \subsubsection{Networking}
 \todo[inline]{iptables}
 \todo[inline]{\url{https://github.com/docker/libnetwork/blob/master/docs/design.md}}
 
-When a Docker container is created Docker creates a network sandbox for that container and (by default) connects it to an internal bridge network. This gives the container its own networking resourcessuch as a IPv4 address\footnote{IPv6 support is not enabled by default.}, routes and DNS entries. All outgoing traffic is routed through a bridge interface (by default).
+When a Docker container is created Docker creates a network sandbox for that container and (by default) connects it to an internal bridge network. This gives the container its own networking resources such as a IPv4 address\footnote{IPv6 support is not enabled by default.}, routes and DNS entries. All outgoing traffic is routed through a bridge interface (by default).
 
 \hfill
 
 Incoming traffic is possible by routing traffic for specific ports from the host to the container.
-Specifying which ports on the host are routed to which ports on the container is done when a container is created.
-
-If we, for example, want to expose port \lstinline{80} to the Docker image created from the \hyperref[dockerfile:simple]{first \lstinline{Dockerfile}} we can execute the following commands.
-
-\hfill
+Specifying which ports on the host are routed to which ports on the container is done when a container is created. If we, for example, want to expose port \lstinline{80} to the Docker image created from the \hyperref[dockerfile:simple]{first \lstinline{Dockerfile}} we can execute the following commands.
 
 \begin{lstlisting}[caption={Creating a Docker container with exposed port},label={docker:publish},captionpos=b]
 $ docker build -t thesis-hello-world .
 $ docker run --rm --publish 8000:80 --name=thesis-hello-world-container thesis-hello-world
 \end{lstlisting}
 
-\hfill
-
-We first create a Docker image using the \lstinline{Dockerfile} and then create (and start) a container from that image. We ``publish'' port \lstinline{8000} on the host to port \lstinline{80} of the container. This means that, while the container is running, all traffic from port \lstinline{8000} on the host is routed to port \lstinline{80} of the container.
-
+The first command creates a Docker image using the \lstinline{Dockerfile} and we then create (and start) a container from that image. We ``publish'' port \lstinline{8000} on the host to port \lstinline{80} of the container. This means that, while the container is running, all traffic from port \lstinline{8000} on the host is routed to port \lstinline{80} of the container.
 
 \subsubsection{Docker internals}
 \todo[inline]{\href{https://medium.com/@saschagrunert/demystifying-containers-part-i-kernel-space-2c53d6979504}{Demystifying Containers Part I Kernel Space}}
