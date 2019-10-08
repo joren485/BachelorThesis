@@ -79,9 +79,22 @@ $ docker run --rm --publish 8000:80 --name=thesis-hello-world-container thesis-h
 The first command creates a Docker image using the \lstinline{Dockerfile} and we then create (and start) a container from that image. We ``publish'' port \lstinline{8000} on the host to port \lstinline{80} of the container. This means that, while the container is running, all traffic from port \lstinline{8000} on the host is routed to port \lstinline{80} of the container.
 
 \subsubsection{Docker internals}
-\todo[inline]{\href{https://medium.com/@saschagrunert/demystifying-containers-part-i-kernel-space-2c53d6979504}{Demystifying Containers Part I Kernel Space}}
-\todo[inline]{\href{https://medium.com/@saschagrunert/demystifying-containers-part-ii-container-runtimes-e363aa378f25}{Demystifying Containers Part II Container Runtimes}}
-\todo[inline]{\href{https://medium.com/@saschagrunert/demystifying-containers-part-iii-container-images-244865de6fef}{Demystifying Containers Part III Container Images}}
+\todo[inline]{Add more detail}
+
+A Docker container actually is a combination of multiple features within the Linux kernel. The main features are \lstinline{namespaces}, \lstinline{cgroups} and \lstinline{OverlayFS}.
+
+\hfill
+
+\lstinline{namespaces} are a way to isolate resources from processes. For example, if we add a process to a process namespace, it can only see the processes in that namespace. This allows processes to be completely isolated from each other. When the Docker daemon creates a new container, it creates new namespaces for the process that runs in that container. That way the container cannot view any of the processes, network interfaces and mount points of the host.
+
+\hfill
+
+\lstinline{cgroups} are a way to limit resources (e.g.\ CPU and RAM usage) to (groups of) processes and to monitor the usage of those processes.
+
+\hfill
+
+\lstinline{OverlayFS} is a file system that allows combining multiple directories and show them as if they are one. This is used to show the multiple layers in an Docker image as a single root directory.
+
 
 \subsection{docker-compose}
 \todo[inline]{Secrets in docker-compose can be easily found, even without docker group permissions}
