@@ -12,8 +12,9 @@ Docker was released in 2013 and it did not only offer a containerization platfor
 
 \hfill
 
-For example, someone that wants to run an instance of Wordpress\footnote{A very popular content management system to build websites with.}, does not need to install all the Wordpress dependencies. They only need to download the Docker image that the Wordpress developers created.
+For example, someone who wants to run an instance of Wordpress\footnote{A very popular content management system to build websites with.} does not need to install all the Wordpress dependencies. They only need to download the Docker image that the Wordpress developers created.
 Similarly, if they want to move the Wordpress instance from one host to the other, they just have to copy over their database and run the Docker image on the new host. Even if the new host is a completely different operating system.
+Docker also makes it possible to run multiple versions of the same software on the same host, without creating a dependency nightmare. For example, if someone wants to run a Wordpress 4 website and Wordpress 5 website, they only need to create two Wordpress containers. Because the containers are isolated from one another, there conflicting dependencies are not a problem.
 
 \subsection{Docker Concepts}
 Docker is based on four concepts: Docker daemon, Docker images, Docker containers and \lstinline{Dockerfile}s.
@@ -86,9 +87,9 @@ $ docker run --rm --publish 8000:80 --name=thesis-hello-world-container thesis-h
 The first command creates a Docker image using the \lstinline{Dockerfile} and we then create (and start) a container from that image. We ``publish'' port \lstinline{8000} on the host to port \lstinline{80} of the container. This means that, while the container is running, all traffic from port \lstinline{8000} on the host is routed to port \lstinline{80} of the container.
 
 \subsubsection{Docker internals}
-\todo[inline]{Add more detail}
-
-A Docker container actually is a combination of multiple features within the Linux kernel. The main features are \lstinline{namespaces}, \lstinline{cgroups} and \lstinline{OverlayFS}.
+\todo[inline]{Add more detail about what is shared in namespaces}
+A Docker container actually is a combination of multiple features within the Linux kernel.
+Mainly \lstinline{namespaces}, \lstinline{cgroups} and \lstinline{OverlayFS}.
 
 \hfill
 
