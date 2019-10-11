@@ -1,8 +1,6 @@
 \section{Docker}
 \todo[inline]{Docker on Windows}
 \todo[inline]{Research: Secure Computing Mode Profiles}
-\todo[inline]{\href{https://itnext.io/chroot-cgroups-and-namespaces-an-overview-37124d995e3d}{chroot, cgroups and namespaces}}
-\todo[inline]{\href{https://www.secura.com/blog-hacklu2018-docker-security}{Docker, A brief history and security considerations for modern environments}}
 
 \hfill
 
@@ -97,7 +95,41 @@ A Docker container actually is a combination of multiple features within the Lin
 
 
 \subsection{docker-compose}
-\todo[inline]{Secrets in docker-compose can be easily found, even without docker group permissions}
+\lstinline{docker-compose} is a wrapper around Docker that can be used to specify Docker container runtime configurations in files (called \lstinline{docker-compose.yaml}). These files remove the need to execute Docker commands with the correct arguments in the correct order. You have to specify the necessary arguments only once in the \lstinline{docker-compose.yaml} file.
+
+\hfill
+
+This is an advanced example of an \lstinline{docker-compose.yaml} file similar to configuration that I have used in a production environment. A lot of the time creating Docker containers in production environments, they need to have a lot of extra runtime configuration (e.g.\ environment variables, ports and dependencies on other containers). Specifying everything in a single file simplifies the runtime configuration process.
+\begin{lstlisting}[caption={Example \lstinline{docker-compose.yaml}},label={docker:composefile},captionpos=b]
+---
+version: "3"
+
+services:
+  postgres:
+    image: "postgres:10.5"
+    restart: "always"
+    environment:
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    volumes:
+      - "/dir/data/:/var/lib/postgresql/data/"
+
+  nextcloud:
+    image: "nextcloud:17-fpm"
+    restart: "always"
+    ports:
+      - "127.0.0.1:9000:9000"
+    depends_on:
+      - "postgres"
+    environment:
+      POSTGRES_DB: "database"
+      POSTGRES_USER: "user"
+      POSTGRES_PASSWORD: "password"
+      POSTGRES_HOST: "postgres"
+    volumes:
+      - "/dir/www/:/var/www/html/"
+\end{lstlisting}
+
+This, however, also shows a security risk. A lot of the information that is passed to the containers is sensitive (e.g.\ the database password). That information is saved to disk. If the permissions of that file are not set correctly, an attacker could access the sensitive information.
 
 \subsection{Registries}
 \todo[inline]{Official images not always standard images}
@@ -106,5 +138,5 @@ Docker images are distributable through so called registries. A registry is a se
 
 \hfill
 
-The most popular (and public) registry is Docker Hub, which is run by company that develops Docker.
+The most popular (and public) registry is Docker Hub, which is run by the same company that develops Docker.
 Anybody can create a Docker Hub account and start creating images that anybody can download. Docker Hub also provides default images for popular software.
