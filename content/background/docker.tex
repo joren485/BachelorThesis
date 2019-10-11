@@ -21,7 +21,7 @@ Similarly, if they want to move the Wordpress instance from one host to the othe
 Docker is based on four concepts: Docker daemon, Docker images, Docker containers and \lstinline{Dockerfile}s.
 
 \subsubsection{Docker daemon}
-The daemon is a service that runs on the host machine. It manages all things related to Docker on that machine. For example if the user wants to build an image or a container needs to restart the docker daemon. It is good to note that, because everything related to Docker is handled by the daemon and Docker has access to all resources of the host, having access to Docker should be viewed as equivalent to having \lstinline{root} access to the host\footnote{\url{https://docs.docker.com/engine/security/security/\#docker-daemon-attack-surface}}.
+The daemon is a service that runs on the host machine. It manages all things related to Docker on that machine. For example if the user wants to build an image or a container needs to restart the docker daemon. It is good to note that, because everything related to Docker is handled by the daemon and Docker has access to all resources of the host, having access to Docker should be viewed as equivalent to having \lstinline{root} access to the host\footnote{\href{https://docs.docker.com/engine/security/security/\#docker-daemon-attack-surface}{Docker daemon attack surface}}.
 
 \subsubsection{Docker images}
 A Docker image is packaged software. It is a distributable set of layers. The first layer describes the base of the image. This is either an existing image or nothing (referred to as \lstinline{scratch}). Each layer on top of that is a change to the layer before. For example, if you add a file or run an command it adds a new layer.
