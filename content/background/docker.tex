@@ -1,8 +1,4 @@
 \section{Docker}
-\todo[inline]{Docker on Windows}
-\todo[inline]{Research: Secure Computing Mode Profiles}
-
-\hfill
 
 The concept of containerization has been around a long time, but it only gained traction as serious way to package, distribute and run software in the last few years. This is mostly because of Docker.
 
@@ -14,6 +10,7 @@ Docker was released in 2013 and it did not only offer a containerization platfor
 
 For example, someone who wants to run an instance of Wordpress\footnote{A very popular content management system to build websites with.} does not need to install all the Wordpress dependencies. They only need to download the Docker image that the Wordpress developers created.
 Similarly, if they want to move the Wordpress instance from one host to the other, they just have to copy over their database and run the Docker image on the new host. Even if the new host is a completely different operating system.
+
 Docker also makes it possible to run multiple versions of the same software on the same host, without creating a dependency nightmare. For example, if someone wants to run a Wordpress 4 website and Wordpress 5 website, they only need to create two Wordpress containers. Because the containers are isolated from one another, there conflicting dependencies are not a problem.
 
 \subsection{Docker Concepts}
@@ -69,9 +66,6 @@ test
 In this example the host \lstinline{/tmp} directory is mounted into the container as \lstinline{/tmp}. We can see that a file that is created on the host is readable by the container.
 
 \subsubsection{Networking}
-\todo[inline]{iptables}
-\todo[inline]{\url{https://github.com/docker/libnetwork/blob/master/docs/design.md}}
-
 When a Docker container is created Docker creates a network sandbox for that container and (by default) connects it to an internal bridge network. This gives the container its own networking resources such as a IPv4 address\footnote{IPv6 support is not enabled by default.}, routes and DNS entries. All outgoing traffic is routed through a bridge interface (by default).
 
 \hfill
@@ -142,7 +136,6 @@ services:
 This, however, also shows a security risk. A lot of the information that is passed to the containers is sensitive (e.g.\ the database password). That information is saved to disk. If the permissions of that file are not set correctly, an attacker could access the sensitive information.
 
 \subsection{Registries}
-\todo[inline]{Official images not always standard images}
 
 Docker images are distributable through so called registries. A registry is a server (that anybody can host), that stores Docker images. When a client does not have a Docker image that it needs, it can contact a registry to download that image.
 
