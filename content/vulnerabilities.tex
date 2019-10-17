@@ -1,22 +1,5 @@
 \chapter{Known Vulnerabilities and Misconfigurations in Docker}
-
-\todo[inline]{Map this chapter to CIS Docker Benchmark}
-\todo[inline]{\href{https://resources.whitesourcesoftware.com/blog-whitesource/top-5-docker-vulnerabilities}{Top 5 Docker Vulnerabilities You Should Know}}
-\todo[inline]{\href{https://neoteric.eu/blog/docker-containers-with-root-privileges/}{Docker containers with root privileges}}
-\todo[inline]{\url{https://www.katacoda.com/courses/docker-security/}}
-\todo[inline]{\href{https://media.ccc.de/v/Camp2019-10178-hacking_containers_and_kubernetes}{Hacking Containers and Kubernetes}}
-\todo[inline]{\href{https://www.nccgroup.trust/uk/our-research/abusing-privileged-and-unprivileged-linux-containers/}{Abusing Privileged and Unprivileged Linux Containers}}
-\todo[inline]{\href{https://www.nccgroup.trust/uk/our-research/understanding-and-hardening-linux-containers/}{Understanding and Hardening Linux Containers}}
-\todo[inline]{\url{https://blog.perfect.blue/namespaces-35c3ctf}}
-\todo[inline]{\href{https://security.stackexchange.com/questions/152978/is-it-possible-to-escalate-privileges-and-escaping-from-a-docker-container}{Is it possible to escalate privileges and escaping from a Docker container?}}
-\todo[inline]{\href{https://blog.trailofbits.com/2019/07/19/understanding-docker-container-escapes/}{Understanding Docker container escapes}}
-\todo[inline]{\href{https://gist.github.com/FrankSpierings/5c79523ba693aaa38bc963083f48456c}{Container security notes}}
-\todo[inline]{\href{https://www.helpnetsecurity.com/2019/08/15/compendium-container-escapes/}{A compendium of container escapes}}
-\todo[inline]{\href{https://i.blackhat.com/USA-19/Thursday/us-19-Edwards-Compendium-Of-Container-Escapes-up.pdf}{A compendium of container escapes slides}}
-\todo[inline]{\url{https://docs.docker.com/engine/security/security/}}
-\todo[inline]{\href{https://www.cyberark.com/threat-research-blog/the-route-to-root-container-escape-using-kernel-exploitation/}{The Route to Root: Container Escape Using Kernel Exploitation}}
 \todo[inline]{introduction}
-\todo[inline]{Research: Secure Computing Mode Profiles}
 
 \section{Attack surface}
 \todo[inline]{attacks host $\to$ container $\to$ host}
@@ -24,12 +7,42 @@
 \todo[inline]{attacks container $\to$ container}
 \todo[inline]{Does docker increase/decrease the attack surface of an host}
 \todo[inline]{Does docker increase/decrease the impact/likelihood of an exploit?}
+\todo[inline]{\href{https://www.redhat.com/en/blog/secure-your-containers-one-weird-trick}{Linux Capabilities: Secure Your Containers with this One Weird Trick}}
+\todo[inline]{Research: SELinux}
+\todo[inline]{Research: AppArmor}
+\todo[inline]{\url{https://github.com/genuinetools/bane}}
+\todo[inline]{Research: Secure Computing Mode Profiles}
+\todo[inline]{\url{https://docs.docker.com/engine/security/security/}}
+\todo[inline]{Problem in a deployment pipeline?}
+\todo[inline]{\url{http://training.play-with-docker.com/security-seccomp/}}
+
 \section{Vulnerabilities}
-\todo[inline]{Look CVEs}
+\todo[inline]{\href{https://www.cvedetails.com/vulnerability-list/vendor_id-13534/Docker.html}{Docker CVEs}}
+\todo[inline]{\href{https://alpinelinux.org/posts/Docker-image-vulnerability-CVE-2019-5021.html}{DOCKER IMAGE VULNERABILITY (CVE-2019-5021)}}
+\todo[inline]{What to do with non-public CVEs}
+\todo[inline]{\href{https://blog.banyansecurity.io/blog/over-30-of-official-images-in-docker-hub-contain-high-priority-security-vulnerabilities}{Over 30\% of Official Images in Docker Hub Contain High Priority Security Vulnerabilities}}
+\todo[inline]{\href{https://security.stackexchange.com/questions/152978/is-it-possible-to-escalate-privileges-and-escaping-from-a-docker-container}{Is it possible to escalate privileges and escaping from a Docker container?}}
+\todo[inline]{\href{https://www.blackhat.com/docs/eu-15/materials/eu-15-Bettini-Vulnerability-Exploitation-In-Docker-Container-Environments-wp.pdf}{VULNERABILITY EXPLOITATION IN DOCKER CONTAINER ENVIRONMENTS}}
+\todo[inline]{\href{https://forums.grsecurity.net/viewtopic.php?f=7&t=2522}{False Boundaries and Arbitrary Code Execution}}
+\todo[inline]{\url{https://github.com/gabrtv/shocker}}
+
+\subsection{Alpine root password (CVE-2019-5021)}
+
 \section{Misconfigurations}
+\todo[inline]{\href{https://neoteric.eu/blog/docker-containers-with-root-privileges/}{Docker containers with root privileges}}
+\todo[inline]{\url{https://www.katacoda.com/courses/docker-security/}}
 \todo[inline]{Permissions on config/service files}
 \todo[inline]{Wrong volumes: / or /proc}
 \todo[inline]{Non-docker group Docker access?}
 \todo[inline]{Research: create user and group in Dockerfile}
 \todo[inline]{Map to CIS Benchmark}
 \todo[inline]{Does CIS cover everything?}
+\todo[inline]{Map this section to CIS Docker Benchmark}
+\todo[inline]{\href{https://www.nccgroup.trust/uk/our-research/abusing-privileged-and-unprivileged-linux-containers/}{Abusing Privileged and Unprivileged Linux Containers}}
+\todo[inline]{\href{https://www.nccgroup.trust/uk/our-research/understanding-and-hardening-linux-containers/}{Understanding and Hardening Linux Containers}}
+
+\subsection{The --privileged flag}
+\todo[inline]{\href{https://blog.trailofbits.com/2019/07/19/understanding-docker-container-escapes/}{Understanding Docker container escapes}}
+
+\subsection{Root user}
+\todo[inline]{\href{http://www.projectatomic.io/blog/2016/01/how-to-run-a-more-secure-non-root-user-container/}{How to Run a More Secure Non-Root User Container}}
