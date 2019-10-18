@@ -1,10 +1,4 @@
 \chapter{Introduction}
-\todo[inline]{Not about app vulnerabilities, but specifically about Docker}
-\todo[inline]{Docker is not a security framework}
-\todo[inline]{What is the added security value of Docker?}
-\todo[inline]{Specify what each chapter is about.}
-\todo[inline]{Specify what is the actual result of this paper more clearly.}
-\todo[inline]{Only about Docker on Linux}
 
 Secura, a company specializing in digital security, performs security assessments for clients. In these assessments, Secura evaluates vulnerable parts of the private and public network of their clients. They would like to improve those assessments by also looking into containerization software their clients may be running.
 
@@ -13,10 +7,10 @@ Secura, a company specializing in digital security, performs security assessment
 Containerization software allows developers to package software into easily reproducible packages.
 It removes the tedious process of installing the right dependencies to run software, because the dependencies and necessary files are neatly isolated in the container. This also allows multiple versions of the same software to run simultaneous on a server, because every instance runs in its own container.
 
-The de facto industry standard is called Docker. Docker allows developers to package software into images and run those instances as containers.
+\hfill
 
-Docker streamlines and significantly simplifies software development and deployment. That is why many companies use Docker to develop, test and deploy (part of) their IT infrastructure someway or another. This makes it very interesting from a security perspective. A security problem with Docker could have a large impact on organizations.
+This thesis will focus on Docker, because it is the de facto industry standard for containerization software. It will focus on Linux, because Docker is developed for Linux (although a Windows version does exist).
 
 \hfill
 
-This research paper describes possible security problems with Docker (vulnerabilities and misconfigurations) and how those can be used during security assessments.
+This bachelor thesis will first describe necessary background information about containerization, Docker and penetration testing. I will then go into more detail about specific vulnerabilities and misconfigurations that are of interest during a security assessment. Finally, I will describe how a penetration tester can detect and use those vulnerabilities and misconfigurations during security assessments.
