@@ -1,5 +1,4 @@
 \section{Containerization Software}
-\todo[inline]{Containerization is not a security model, but it does resemble one}
 Containerization software is used to isolate processes running on a host from one another.
 A process in a container sees a different part of the host system then processes outside of the container. A process inside a container sees a different file system, network interfaces and users than processes outside of the container. Processes inside the container can only see other processes inside the container.
 
@@ -65,6 +64,10 @@ Virtualization is an older similar technique to isolate software. In virtualizat
 
 Because containerization software shares many resources with the host, it is a lot faster and more flexible than virtualization. Where virtualization needs to start a whole new operating system, containerization only needs to start a single process.
 
+\subsubsection{Containers for security}
+
+Isolation reduces risk, because it separates processes. If one process is compromised it cannot reach another process. If a process in a container is compromised, it cannot reach sensitive files of the host. This clearly add security value.
+
 \hfill
 
-Where virtulization can and is used as a security layer, because it truly isolates the host and guest resources. Containerization should not be used as a security layer, because containers might be able to access sensitive resources that are shared between the host and the container. This makes containerization a lot more dangerous from a security perspective.
+It should be noted, however, that containerization is a lot more risky than virtualization, because containers run using the same kernel and resources as the host. For example, this means that a kernel exploit run inside a container is just as dangerous as the same exploit run directly on the host, because the target (the kernel) is the same.
