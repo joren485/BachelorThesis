@@ -95,6 +95,8 @@ Mainly \lstinline{namespaces}, \lstinline{cgroups} and \lstinline{OverlayFS}.
 
 When the Docker daemon creates a new container, it creates a new \lstinline{namespace} of each type for the process that runs in the container. That way the container cannot view any of the processes, network interfaces and mount points of the host. This way it seems that the container is actually an other operating system entirely.
 
+A \lstinline{mount} \lstinline{namespace} is very similar to a \lstinline{chroot}. A big difference is that a \lstinline{chroot} has a parent directory. The \lstinline{mount} \lstinline{namespace} can also be more easily combined with other \lstinline{namespaces} to create more isolation. 
+
 \hfill
 
 Control groups (or \lstinline{cgroups} for short) are a way to limit resources (e.g.\ CPU and RAM usage) to (groups of) processes and to monitor the usage of those processes.
