@@ -1,7 +1,7 @@
-\chapter{Known Vulnerabilities and Misconfigurations in Docker}
+\chapter{Known Vulnerabilities \& Misconfigurations in Docker}
 \todo[inline]{introduction}
 
-\section{Attack surface}
+\section{Attack Surface \& Models}
 \todo[inline]{attacks host $\to$ container $\to$ host}
 \todo[inline]{attacks container $\to$ host}
 \todo[inline]{attacks container $\to$ container}
@@ -30,7 +30,7 @@
 \todo[inline]{CVE-2017--5123}
 \todo[inline]{\href{https://github.com/Frichetten/CVE-2019-5736-PoC}{CVE-2019-5736-PoC}}
 
-\subsection{Alpine root password (CVE--2019--5021)}
+\subsection{Alpine Root Password (CVE--2019--5021)}
 \begin{lstlisting}
 $ docker run -it --rm alpine:3.5 cat /etc/shadow
 root:::0:::::
