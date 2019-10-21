@@ -1,22 +1,19 @@
 \section{Docker}
-\todo[inline]{Not about app vulnerabilities, but specifically about Docker}
-
 The concept of containerization has been around a long time, but it only gained traction as serious way to package, distribute and run software in the last few years. This is mostly because of Docker.
 
 \hfill
 
-Docker was released in 2013 and it did not only offer a containerization platform, but also a way to distribute the containers. This allows developers and companies to create packages that are much more easily run.
+Docker was released in 2013 and it does not only offer a containerization platform, but also a way to distribute the containers. This allows developers and companies to create packages that have no dependencies (besides Docker itself, of course). This allows for a lot faster development and deployment processes, because dependencies and installation of software are no longer a concern.
 
 \hfill
 
-
-Docker also makes it possible to run multiple versions of the same software on the same host, without creating a dependency nightmare. For example, if someone wants to run a Wordpress 4 website and Wordpress 5 website, they only need to create two Wordpress containers. Because the containers are isolated from one another, there conflicting dependencies are not a problem.
+Docker also makes it possible to run multiple versions of the same software on the same host, without creating a dependency nightmare. For example, if someone wants to run a Wordpress 4 website and Wordpress 5 website, they only need to create two Wordpress containers. Because the containers are isolated from one another, their conflicting dependencies are not a problem.
 
 \subsection{Docker Concepts}
-Docker is based on four concepts: Docker daemon, Docker images, Docker containers and \lstinline{Dockerfile}s.
+Docker is exists of a few concepts: Docker daemon, Docker images, Docker containers and \lstinline{Dockerfile}s.
 
 \subsubsection{Docker daemon}
-The daemon is a service that runs on the host machine. It manages all things related to Docker on that machine. For example if the user wants to build an image or a container needs to restart the docker daemon. It is good to note that, because everything related to Docker is handled by the daemon and Docker has access to all resources of the host, having access to Docker should be viewed as equivalent to having \lstinline{root} access to the host\footnote{\href{https://docs.docker.com/engine/security/security/\#docker-daemon-attack-surface}{Docker daemon attack surface}}.
+The daemon is a service that runs on the host. It manages all things related to Docker on that machine. For example if the user wants to build an image or a container needs to restart the docker daemon. It is good to note that, because everything related to Docker is handled by the daemon and Docker has access to all resources of the host, having access to Docker should be viewed as equivalent to having \lstinline{root} access to the host\footnote{\href{https://docs.docker.com/engine/security/security/\#docker-daemon-attack-surface}{Docker daemon attack surface}}.
 
 \subsubsection{Docker images}
 A Docker image is packaged software. It is a distributable set of layers. The first layer describes the base of the image. This is either an existing image or nothing (referred to as \lstinline{scratch}). Each layer on top of that is a change to the layer before. For example, if you add a file or run an command it adds a new layer.
