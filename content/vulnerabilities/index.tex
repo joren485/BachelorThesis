@@ -1,0 +1,14 @@
+\chapter{Known Vulnerabilities \& Misconfigurations in Docker}
+
+In this chapter we will look at Docker from a vulnerability analysis perspective. First we will look conceptually at Docker and security by examining the attack surface of Docker on an host and the various attacker models that come with it. 
+We then look at some interesting, practical examples of security problems of Docker. These are split into vulnerabilities and misconfigurations.
+
+\hfill
+
+Vulnerabilities and misconfigurations are both security problems, but they differ in who made the mistake. A vulnerability is a problem in a program itself. For example, a buffer overflow is a clear vulnerability. The problem lies solely in the program itself. To fix it, the code of the program needs to be changed.
+
+Misconfigurations, on the other hand, are security problems that come from wrong usage of a program. The program is incorrectly configured and that creates a situation that might be exploitable to an attacker. For example, a world-readable file containing passwords is a misconfiguration. To fix a misconfiguration, the user should change the configuration of the problem. The developers of the program can only recommend users to configure it correctly (and have documentation on how to do it). 
+
+\input{content/vulnerabilities/attacksurface}
+\input{content/vulnerabilities/cve}
+\input{content/vulnerabilities/misconfig}
