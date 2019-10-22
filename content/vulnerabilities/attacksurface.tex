@@ -12,6 +12,7 @@ Lets take a look at the following image.
 \begin{figure}[ht]
     \centering
     \includegraphics[width=.8\linewidth]{resources/images/attacksurfaces.png}
+    \label{fig:attacksurfaces}
 \end{figure}
 
 We see four distinct processes:
@@ -33,7 +34,7 @@ We also see four distinct attacker scenarios/models:
 \end{enumerate}
 
 \subsection{Container Escapes}
-One of the most prominent types of vulnerability (and sometimes misconfiguration) is the possibility for a process running in a container to escape the container and access data on the host.
+One of the most prominent types of vulnerability (and sometimes misconfiguration) is the possibility for a process running in a container to escape the container and access data (i.e.\ execute commands) on the host. This is scenario 3 in the \href{fig:attacksurfaces}{image above}.
 
 \hfill
 
