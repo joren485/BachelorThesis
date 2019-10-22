@@ -12,15 +12,14 @@ Lets take a look at the following image.
 \begin{figure}[ht]
     \centering
     \includegraphics[width=.8\linewidth]{resources/images/attacksurfaces.png}
-    \label{} 
 \end{figure}
 
 We see four distinct processes:
 \begin{enumerate}
-    \item[A)] A standard (privileged) process running directly on the host. 
+    \item[A)] A standard (privileged) process running directly on the host.
     \item[B)] A standard unprivileged process running directly on the host.
     \item[C)] A process running in a Docker container.
-    \item[D)] Similar to C. 
+    \item[D)] Similar to C.
 \end{enumerate}
 
 \hfill
@@ -30,7 +29,7 @@ We also see four distinct attacker scenarios/models:
     \item[1)] An unprivileged process accessing privileged data (in the image process A) using the Docker Daemon.
     \item[2)] An unprivileged process accessing data in a Docker container.
     \item[3)] A Docker container accessing data on the host (that it should not be able to access).
-    \item[4)] One container accessing data in another container. 
+    \item[4)] One container accessing data in another container.
 \end{enumerate}
 
 \subsection{Container Escapes}
@@ -55,12 +54,12 @@ It should also be noted that an exploit that allows someone to escape from a Lin
 \todo[inline]{attacks container $\to$ container}
 
 \subsection{Deployment \& Development Pipelines}
-One of the biggest usages of Docker is automating part of the deployment and development process. 
+One of the biggest usages of Docker is automating part of the deployment and development process.
 
 \subsection{The impact of Docker on existing vulnerabilities}
 A Docker container isolates software from the host, but does not change it. This means that vulnerabilities in software are not affected by Dockerizing that software. However, the impact of those vulnerabilities is decreased, because the vulnerability exists in a isolated environment.
 
-If, for example, there exists a RCE (remote code execution) vulnerability in Wordpress. Running Wordpress in a Docker container does not fix the vulnerability. An attacker is still able to exploit it. But that attacker is not able to access the host system, because the exploited software is isolated from the host system because of Docker. 
+If, for example, there exists a RCE (remote code execution) vulnerability in Wordpress. Running Wordpress in a Docker container does not fix the vulnerability. An attacker is still able to exploit it. But that attacker is not able to access the host system, because the exploited software is isolated from the host system because of Docker.
 
 \subsection{Protection Mechanisms}
 \todo[inline]{SELinux}
