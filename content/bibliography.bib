@@ -11,7 +11,6 @@ doi = "https://doi.org/10.1016/j.comcom.2018.03.011",
 url = "http://www.sciencedirect.com/science/article/pii/S0140366417300956",
 author = "A. Martin and S. Raponi and T. Combe and R. Di Pietro",
 keywords = "Security, Containers, Docker, Virtual Machines, DevOps, Orchestration",
-abstract = "Cloud based infrastructures have typically leveraged virtualization. However, the need for always shorter development cycles, continuous delivery and cost savings in infrastructures, led to the rise of containers. Indeed, containers provide faster deployment than virtual machines and near-native performance. In this paper, we study the security implications of the use of containers in typical use-cases, through a vulnerability-oriented analysis of the Docker ecosystem. Indeed, among all container solutions, Docker is currently leading the market. More than a container solution, it is a complete packaging and software delivery tool. In this paper we provide several contributions: we first provide a thorough survey on related work in the area, organizing them in security-driven categories, and later we perform an analysis of the containers security ecosystem. In particular, using a top-down approach, we identify in the different components of the Docker environment several vulnerabilities—present by design or introduced by some original use-cases. Moreover, we detail real world scenarios where these vulnerabilities could be exploited, propose possible fixes, and, finally discuss the adoption of Docker by PaaS providers."
 }
 
 @article{DBLP:journals/corr/Bui15,
@@ -63,33 +62,115 @@ abstract = "Cloud based infrastructures have typically leveraged virtualization.
 // Links
 
 @misc{cissite,
-  title = {{CIS} Benchmarks},
-  author = {Center for Internet Security},
+  title = {{CIS Benchmarks}},
   howpublished = {\url{https://cisecurity.org/cis-benchmarks/}},
 }
 
 @misc{dockerdaemonattacksurface,
-  title = {Docker Daemon Attack Surface},
+  title = {{Docker Daemon Attack Surface}},
   howpublished = {\url{https://docs.docker.com/engine/security/security/\#docker-daemon-attack-surface}}
 }
 
 @misc{dockerfilereference,
-  title = {Dockerfile reference},
+  title = {{Dockerfile Reference}},
   howpublished = {\url{https://docs.docker.com/engine/reference/builder/}}
 }
 
 @misc{cve20177308,
   title = {Exploiting the Linux kernel via packet sockets},
-  author = {Google Project Zero},
   howpublished = {\url{https://googleprojectzero.blogspot.com/2017/05/exploiting-linux-kernel-via-packet.html}}
 }
 
 // Reports
 
 @techreport{cis,
-    author = "Center for Internet Security",
+    author = {{Center for Internet Security}},
     institution = "Center for Internet Security",
-    title = "{CIS} Docker Benchmark",
+    title = {{CIS Docker Benchmark}},
     year =  "2019",
     month = "07",
+}
+
+// CVEs
+
+@misc{CVE-2019-16884-Github,
+  title = {AppArmor can be bypassed by a malicious image that specifies a volume at /proc},
+  author = {leoluk},
+  howpublished = {\url{https://github.com/opencontainers/runc/issues/2128}}
+}
+
+@misc{CVE-2019-13139-STAALDRAAD,
+  title = {Docker build code execution},
+  author = {staaldraad},
+  howpublished = {\url{https://staaldraad.github.io/post/2019-07-16-cve-2019-13139-docker-build/}}
+}
+
+@misc{CVE-2019-5736-DragonSector,
+  title = {{CVE}-2019-5736: Escape from Docker and Kubernetes containers to root on host},
+  author = {Adam Iwaniuk},
+  howpublished = {\url{https://blog.dragonsector.pl/2019/02/cve-2019-5736-escape-from-docker-and.html}}
+}
+
+@misc{CVE-2019-5736-Github,
+  title = {{CVE}-2019-5736-{PoC}},
+  author = {Frichetten},
+  howpublished = {\url{https://github.com/Frichetten/CVE-2019-5736-PoC}}
+}
+
+@misc{CVE-2019-5736-Twistlock,
+  title = {Breaking out of Docker via {runC}},
+  author = {Yuval Avrahami},
+  howpublished = {\url{https://www.twistlock.com/labs-blog/breaking-docker-via-runc-explaining-cve-2019-5736/}}
+}
+
+@misc{CVE-2019-5021-Talos,
+  title = {Alpine Linux Docker Image root User Hard-Coded Credential Vulnerability},
+  howpublished = {\url{https://talosintelligence.com/vulnerability_reports/TALOS-2019-0782}}
+}
+
+@misc{CVE-2019-5021-Alpine,
+  title = {Docker Image Vulnerability ({CVE}-2019-5021)},
+  howpublished = {\url{https://alpinelinux.org/posts/Docker-image-vulnerability-CVE-2019-5021.html}}
+}
+
+@misc{CVE-2018-15664-Openwall,
+  title = {docker (all versions) is vulnerable to a symlink-race attack},
+  author = {Aleksa Sarai},
+  howpublished = {\url{https://www.openwall.com/lists/oss-security/2019/05/28/1}}
+}
+
+@misc{CVE-2018-15664-Bugzilla,
+  title = {docker cp is vulnerable to symlink-exchange race attacks},
+  author = {Marcus Meissner},
+  howpublished = {\url{https://alpinelinux.org/posts/Docker-image-vulnerability-CVE-2019-5021.html}}
+}
+
+@misc{CVE-2018-10892-Github,
+  title = {Add /proc/acpi to masked paths},
+  author = {runcom},
+  howpublished = {\url{https://github.com/moby/moby/pull/37404}}
+}
+
+@misc{CVE-2018-9862-Github,
+  title = {Security: fix a issue (similar to runc {CVE}-2016-3697)},
+  author = {keloyang},
+  howpublished = {\url{https://github.com/hyperhq/hyperstart/pull/348}}
+}
+
+@misc{CVE-2017-5123-Twistlock,
+  title = {Escaping Docker container using waitid()},
+  author = {Daniel Shapira},
+  howpublished = {\url{https://www.twistlock.com/labs-blog/escaping-docker-container-using-waitid-cve-2017-5123/}}
+}
+
+@misc{CVE-2016-3697-Github,
+  title = {Numeric user id passed to --user interpreted as user name if user name is numeric in container /etc/passwd},
+  author = {jordmoz},
+  howpublished = {\url{https://github.com/moby/moby/issues/21436}}
+}
+
+@misc{CVE-2015-363-Seclists,
+  title = {Docker 1.6.1 - Security Advisory},
+  author = {Eric Windisch},
+  howpublished = {\url{https://seclists.org/fulldisclosure/2015/May/28}}
 }
