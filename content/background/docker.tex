@@ -13,7 +13,7 @@ Docker also makes it possible to run multiple versions of the same software on t
 Docker is exists of a few concepts: Docker daemon, Docker images, Docker containers and \lstinline{Dockerfile}s.
 
 \subsubsection{Docker daemon}
-The daemon is a service that runs on the host. It manages all things related to Docker on that machine. For example if the user wants to build an image or a container needs to restart the docker daemon. It is good to note that, because everything related to Docker is handled by the daemon and Docker has access to all resources of the host, having access to Docker should be viewed as equivalent to having \lstinline{root} access to the host\cite{dockerdaemonattacksurface}.
+The daemon is a service that runs on the host. It manages all things related to Docker on that machine. For example if the user wants to build an image or a container needs to restart the docker daemon. It is good to note that, because everything related to Docker is handled by the daemon and Docker has access to all resources of the host, having access to Docker should be viewed as equivalent to having \lstinline{root} access to the host\cite{Docker-Daemon-Attack-Surface}.
 
 \subsubsection{Docker images}
 A Docker image is packaged software. It is a distributable set of layers. The first layer describes the base of the image. This is either an existing image or nothing (referred to as \lstinline{scratch}). Each layer on top of that is a change to the layer before. For example, if you add a file or run an command it adds a new layer.
@@ -31,7 +31,7 @@ CMD ["echo", "Hello World"]
 \end{lstlisting}
 
 These three instructions tell the Docker engine how to create a new Docker image.
-The full instructionset can be found in the \lstinline{Dockerfile} reference\cite{dockerfilereference}
+The full instructionset can be found in the \lstinline{Dockerfile} reference\cite{Dockerfile-Reference}.
 
 \begin{enumerate}
     \item The \lstinline{FROM} instruction tells the Docker engine what to base the new Docker image on. Instead of creating an image from scratch (a blank image), we use an already existing image as our basis.

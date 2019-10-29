@@ -42,7 +42,7 @@ An example attack scenario would be a company that offers a PaaS (Platform as a 
 
 As noted before, because a container uses the same kernel and resources as the host; an exploit granting root can be just as devastating run inside as outside of the docker, because the target kernel and resources are the same.
 
-It should also be noted that an exploit that allows someone to escape from a Linux \lstinline{namespace} is essentially a container escape exploit. CVE--2017--7308\cite{cve20177308} is a good example of this.
+It should also be noted that an exploit that allows someone to escape from a Linux \lstinline{namespace} is essentially a container escape exploit. CVE--2017--7308\cite{CVE-2017-7308} is a good example of this.
 
 \subsection{Docker Daemon}
 If user permissions are incorrectly configured, an unprivileged user can gain or access container resources they should not be able to access using the Docker Daemon. This is represented by scenarios 1 and 2 in the \href{fig:attacksurfaces}{above image}, respectively.
