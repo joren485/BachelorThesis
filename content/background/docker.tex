@@ -107,7 +107,6 @@ Control groups (or \lstinline{cgroups} for short) are a way to limit resources (
 
 
 \subsection{docker-compose}
-\todo[inline]{docker stack}
 \lstinline{docker-compose} is a wrapper around Docker that can be used to specify Docker container runtime configurations in files (called \lstinline{docker-compose.yaml}). These files remove the need to execute Docker commands with the correct arguments in the correct order. You have to specify the necessary arguments only once in the \lstinline{docker-compose.yaml} file.
 
 \hfill
@@ -143,6 +142,10 @@ services:
 \end{lstlisting}
 
 This, however, also shows a security risk. A lot of the information that is passed to the containers is sensitive (e.g.\ the database password). That information is saved to disk. If the permissions of that file are not set correctly, an attacker could access the sensitive information.
+
+\hfill
+
+Very similar functionality is already built into the Docker Engine, called Docker Stack. It also uses \lstinline{docker-compose.yaml}. Some features that are supported by \lstinline{docker-compose} are not supported by Docker Stack and vice versa.
 
 \subsection{Registries}
 
