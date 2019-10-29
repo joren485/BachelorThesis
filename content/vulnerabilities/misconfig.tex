@@ -1,26 +1,44 @@
 \section{Misconfigurations}
-\todo[inline]{\href{https://neoteric.eu/blog/docker-containers-with-root-privileges/}{Docker containers with root privileges}}
 \todo[inline]{\url{https://www.katacoda.com/courses/docker-security/}}
-\todo[inline]{Permissions on config/service files}
-\todo[inline]{Wrong volumes: / or /proc}
-\todo[inline]{Non-docker group Docker access?}
-\todo[inline]{Research: create user and group in Dockerfile}
 \todo[inline]{Map to CIS Benchmark}
 \todo[inline]{Does CIS cover everything?}
 \todo[inline]{\href{https://www.nccgroup.trust/uk/our-research/abusing-privileged-and-unprivileged-linux-containers/}{Abusing Privileged and Unprivileged Linux Containers}}
 \todo[inline]{\href{https://www.nccgroup.trust/uk/our-research/understanding-and-hardening-linux-containers/}{Understanding and Hardening Linux Containers}}
 \todo[inline]{\href{https://0x00sec.org/t/securing-docker-containers/16913}{Securing Docker Containers}}
 \todo[inline]{\href{https://www.reddit.com/r/docker/comments/dkgtfv/10_docker_image_security_best_practices/}{10 Docker Image Security Best Practices}}
-\todo[inline]{\href{https://www.exploit-db.com/exploits/42650}{Docker Daemon - Unprotected TCP Socket (Metasploit)}}
-\todo[inline]{\href{https://www.redhat.com/en/blog/secure-your-containers-one-weird-trick}{Linux Capabilities: Secure Your Containers with this One Weird Trick}}
 \todo[inline]{\url{http://training.play-with-docker.com/security-seccomp/}}
 \todo[inline]{REST API over HTTP}
-\todo[inline]{\href{https://github.com/rapid7/metasploit-framework/blob/master/modules/exploits/linux/local/docker_daemon_privilege_escalation.rb}{Metasploit Docker Daemon Privilege Escalation}}
-\todo[inline]{\href{https://github.com/rapid7/metasploit-framework/blob/master/modules/post/multi/gather/docker_creds.rb}{Metasploit Multi Gather Docker Credentials Collection}}
-\todo[inline]{\href{https://github.com/rapid7/metasploit-framework/blob/master/modules/post/linux/gather/checkcontainer.rb}{Metasploit Linux Gather Container Detection}}
+\todo[inline]{Usage of third party Docker images}
+\todo[inline]{\href{https://forums.grsecurity.net/viewtopic.php?f=7&t=2522}{False Boundaries and Arbitrary Code Execution}}
 
-\subsection{The -{}-privileged flag}
+\subsection{Docker means root}
+\todo[inline]{\href{https://neoteric.eu/blog/docker-containers-with-root-privileges/}{Docker containers with root privileges}}
+\todo[inline]{\href{https://github.com/rapid7/metasploit-framework/blob/master/modules/exploits/linux/local/docker_daemon_privilege_escalation.rb}{Metasploit Docker Daemon Privilege Escalation}}
+
+\subsection{Docker permissions}
+\todo[inline]{group}
+\todo[inline]{Docker setuid}
+
+\subsection{The -{}-privileged flag \& Capabilities}
 \todo[inline]{\href{https://blog.trailofbits.com/2019/07/19/understanding-docker-container-escapes/}{Understanding Docker container escapes}}
+\todo[inline]{\href{https://www.redhat.com/en/blog/secure-your-containers-one-weird-trick}{Linux Capabilities: Secure Your Containers with this One Weird Trick}}
+\todo[inline]{\href{https://medium.com/@fun_cuddles/docker-breakout-exploit-analysis-a274fff0e6b3}{Docker breakout exploit analysis}}
+\todo[inline]{\url{https://github.com/gabrtv/shocker}}
 
 \subsection{Root user}
 \todo[inline]{\href{http://www.projectatomic.io/blog/2016/01/how-to-run-a-more-secure-non-root-user-container/}{How to Run a More Secure Non-Root User Container}}
+
+\subsection{Mounted Docker Socket}
+\todo[inline]{\href{https://raesene.github.io/blog/2016/03/06/The-Dangers-Of-Docker.sock/}{The Dangers of Docker.sock}}
+\todo[inline]{\href{https://www.exploit-db.com/exploits/42650}{Docker Daemon - Unprotected TCP Socket (Metasploit)}}
+
+\subsection{The -{}-net flag}
+\todo[inline]{\href{https://docs.docker.com/engine/reference/run/\#network-settings}{Network settings}}
+\todo[inline]{shutdown possible?}
+
+\subsection{Vulnerable volumes}
+\todo[inline]{Wrong volumes: / or /proc}
+Many of the Docker container escape vulnerabilities exist because a container can access system files directly on the host. In the latest version of Docker none of those paths are accessible anymore, but it is sometimes possible to add those paths as a volume anyway.
+
+\subsection{Readable configuration files}
+\todo[inline]{\href{https://github.com/rapid7/metasploit-framework/blob/master/modules/post/multi/gather/docker_creds.rb}{Metasploit Multi Gather Docker Credentials Collection}}
