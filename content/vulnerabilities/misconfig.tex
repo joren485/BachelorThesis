@@ -132,7 +132,7 @@ $ docker run --rm -it --cap-add="CAP_DAC_READ_SEARCH" -v "/tmp:/tmp" busybox sh
 admin:$6$VOSV5AVQ$jHWxAVAUgl...:18142:0:99999:7:::
 \end{lstlisting}
 
-The exploit needs a file with a file handle on the host system to properly work. Instead of the default \lstinline{/.dockerinit} (which does not exist anymore) we use the exploit file itself \lstinline{/tmp/a.out}. We start a container with the \lstinline{CAP_DAC_READ_SEARCH} capability and run the exploit. It prints the password file of the host (\listinline{/etc/shadow}).
+The exploit needs a file with a file handle on the host system to properly work. Instead of the default \lstinline{/.dockerinit} (which does not exist anymore) we use the exploit file itself \lstinline{/tmp/a.out}. We start a container with the \lstinline{CAP_DAC_READ_SEARCH} capability and run the exploit. It prints the password file of the host (\lstinline{/etc/shadow}).
 
 \subsection{Root user}
 \todo[inline]{\href{http://www.projectatomic.io/blog/2016/01/how-to-run-a-more-secure-non-root-user-container/}{How to Run a More Secure Non-Root User Container}}
