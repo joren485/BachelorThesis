@@ -11,13 +11,57 @@
 \todo[inline]{Usage of third party Docker images}
 \todo[inline]{\href{https://forums.grsecurity.net/viewtopic.php?f=7&t=2522}{False Boundaries and Arbitrary Code Execution}}
 
-\subsection{Docker means root}
-\todo[inline]{\href{https://neoteric.eu/blog/docker-containers-with-root-privileges/}{Docker containers with root privileges}}
-\todo[inline]{\href{https://github.com/rapid7/metasploit-framework/blob/master/modules/exploits/linux/local/docker_daemon_privilege_escalation.rb}{Metasploit Docker Daemon Privilege Escalation}}
+\subsection{Docker Permissions}
+A very common (and most notorious) misconfiguration is giving unprivileged users access to Docker. This is very dangerous because this allows the unprivileged users to access all files as \lstinline{root}. The Docker documentation says\cite{Docker-Daemon-Attack-Surface}: 
+\begin{quote}
+First of all, only trusted users should be allowed to control your Docker daemon. This is a direct consequence of some powerful Docker features. Specifically, Docker allows you to share a directory between the Docker host and a guest container; and it allows you to do so without limiting the access rights of the container. This means that you can start a container where the /host directory is the / directory on your host; and the container can alter your host filesystem without any restriction.
+\end{quote}
 
-\subsection{Docker permissions}
-\todo[inline]{group}
-\todo[inline]{Docker setuid}
+In short, because the Docker Daemon runs as root, if an user adds a directory as a volume to a container, that file is accessed as root. There are two common ways for unprivileged users to access Docker. They are either part of the \lstinline{docker} group or the \lstinline{docker} binary has the \lstinline{setuid} bit set.
+
+\subsubsection{\texorpdfstring{\lstinline{docker}}{docker} group}
+Every user in the \lstinline{docker} group is allowed to use Docker. This allows simple access management of Docker usage. Sometimes the system administrator of a network does not want to do proper access management and adds every user to the \lstinline{docker} group, because that allows everything to run smoothly. This misconfiguration, however allows every user to access every file on the system.
+
+\hfill
+
+Lets say we want the password hash of user \lstinline{admin} on a system where we do not have \lstinline{sudo} privileges, but we are a member of the \lstinline{docker} group.
+
+\begin{lstlisting}
+$ sudo -v
+Sorry, user unpriv may not run sudo on host.
+$ groups | grep -o docker
+docker
+$ docker run -it --rm --volume=/:/host ubuntu:latest bash
+# grep admin /host/etc/shadow
+admin:$6$VOSV5AVQ$jHWxAVAUgl...:18142:0:99999:7:::
+\end{lstlisting}
+
+We start by checking our permissions. We do not have \lstinline{permissions}, but we are a member of the \lstinline{docker} group. This allows us to create a container with \lstinline{/} mounted as volume and access any file as root. This includes the file storing password hashes \lstinline{/etc/passwd}.
+
+\subsubsection{\texorpdfstring{\lstinline{setuid}}{setuid} bit}
+Another way system administrators might skip proper access management is to set the \lstinline{setuid} bit on the \lstinline{docker} binary.
+
+\hfill
+
+The \lstinline{setuid} bit is a permission bit in Unix, that allows users to run binaries as the owner (or group) of the binary instead of themselves. 
+This is very useful in specific cases. For example, users should be able to change their own passwords, but should not be able to read password hashes of other users. That is why the \lstinline{passwd} binary has the \lstinline{setuid} bit set. A user can change their password, because \lstinline{passwd} is run as \lstinline{root} (the owner of \lstinline{passwd}) and, of course, \lstinline{root} is able to read and write the password file. In this case the protection and security comes from the fact that \lstinline{passwd} asks for the user's password itself and only writes to specific entries in the password file.
+
+\hfill
+
+If a system is misconfigured by having the \lstinline{setuid} bit set for the \lstinline{docker} binary, a user will be able to execute Docker as \lstinline{root} (the owner of \lstinline{docker}). Just like before, we can easily recreate this attack.
+
+\begin{lstlisting}
+$ sudo -v
+Sorry, user unpriv may not run sudo on host.
+$ groups | grep -o docker
+$ ls -halt /usr/bin/docker
+-rwsr-xr-x 1 root root 85M okt 18 17:52 /usr/bin/docker
+$ docker run -it --rm --volume=/:/host ubuntu:latest bash
+# grep admin /host/etc/shadow
+admin:$6$VOSV5AVQ$jHWxAVAUgl...:18142:0:99999:7:::
+\end{lstlisting}
+
+We now see that we are not a part of the \lstinline{docker} group, but we can still run \lstinline{docker} because the \lstinline{setuid} bit is set.
 
 \subsection{The -{}-privileged flag \& Capabilities}
 \todo[inline]{\href{https://blog.trailofbits.com/2019/07/19/understanding-docker-container-escapes/}{Understanding Docker container escapes}}
