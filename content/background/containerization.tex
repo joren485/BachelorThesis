@@ -32,7 +32,7 @@ Containers also make it possible to run multiple versions of the same software o
 
 \hfill
 
-For example, someone who wants to run an instance of Wordpress\footnote{A very popular content management system to build websites with.} does not need to install all the Wordpress dependencies. They only need to download the container that the Wordpress developers created.
+For example, someone who wants to run an instance of Wordpress\footnote{A very popular content management system to build websites with.} does not need to install all the Wordpress dependencies. They only need to download the container that the Wordpress developers created, which includes all the necessary dependencies.
 
 Similarly, if they want to move the Wordpress instance from one host to the other, they just have to copy over their database and run the image on the new host. Even if the new host is a completely different operating system.
 
@@ -45,7 +45,7 @@ This ease of use makes containerization very popular in software development, ma
 \pagebreak
 
 \subsubsection{Virtualization}
-Virtualization is an older similar technique to isolate software. In virtualization, a whole system is simulated in top of the host (called the hypervisor). This new virtual machine is called a guest. The guest and the host do not share any system resources. This has some advantages. For example, it allows running a completely different system as guest (e.g. Windows guest run on a Linux host).
+Virtualization is an older similar technique to isolate software. In virtualization, a whole system is simulated in top of the host (called the hypervisor). This new virtual machine is called a guest. The guest and the host do not share any system resources. This has some advantages. For example, it allows running a completely different operating system as guest (e.g. Windows guest run on a Linux host).
 
 \begin{figure}[ht]
     \begin{subfigure}{.45\textwidth}

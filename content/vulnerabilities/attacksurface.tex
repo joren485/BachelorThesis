@@ -1,37 +1,61 @@
 \section{Attack Surface \& Models}
+\todo[inline]{Link scenarios to CVSS}
 
 Because Docker is more of an ecosystem than a single running process, it has quite a large attack surface. This attack surface consists of multiple attacker models.
 
 \hfill
 
-Lets take a look at the following image.
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=.8\linewidth]{resources/images/attacksurfaces.png}
-    \label{fig:attacksurfaces}
-\end{figure}
-
-We see four distinct processes:
+Lets take a look at the following images showing the attacker models.
+We see the following processes pictured in the images.
 \begin{enumerate}
-    \item[A)] A standard (privileged) process running directly on the host.
-    \item[B)] A standard unprivileged process running directly on the host.
-    \item[C)] A process running in a Docker container.
+    \item[A)] Standard (privileged) process running directly on the host.
+    \item[B)] Standard unprivileged process running directly on the host.
+    \item[C)] Process running in a Docker container.
     \item[D)] Similar to C.
 \end{enumerate}
 
-\hfill
+\subsubsection*{Container Escape}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=.9\linewidth]{resources/images/attack-scenario-3.png}
+    \caption{}\label{fig:container-escape}
+    \medskip
+    \small
+    A process (Process C) running inside a container accessing data on the host (that it should not be able to access), in this case Process B.
+\end{figure}
 
-We also see four distinct attacker scenarios/models:
-\begin{enumerate}
-    \item[1)] An unprivileged process accessing privileged data (in the image process A) using the Docker Daemon.
-    \item[2)] An unprivileged process accessing data in a Docker container.
-    \item[3)] A Docker container accessing data on the host (that it should not be able to access).
-    \item[4)] One container accessing data in another container.
-\end{enumerate}
+\subsubsection*{Docker Daemon Attack}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=.9\linewidth]{resources/images/attack-scenario-1.png}
+    \caption{}\label{fig:docker-daemon-attack}
+    \medskip
+    \small
+    An unprivileged process B accessing privileged data (in the image process A) using the Docker Daemon.
+\end{figure}
 
-\subsection{Container Escapes}
-One of the most prominent types of vulnerability (and sometimes misconfiguration) is the possibility for a process running in a container to escape the container and access data (i.e.\ execute commands) on the host. This is scenario 3 in the \href{fig:attacksurfaces}{image above}.
+\subsubsection*{Container Attack}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=.9\linewidth]{resources/images/attack-scenario-2.png}
+    \caption{}\label{fig:container-attack}
+    \medskip
+    \small
+    An unprivileged process B accessing data in a Docker container.
+\end{figure}
+
+\subsubsection*{Container to Container Attack}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=.9\linewidth]{resources/images/attack-scenario-4.png}
+    \caption{}\label{fig:container-to-container-attack}
+    \medskip
+    \small
+    A process (Process C) running inside a container, accessing data in another container (process D).
+\end{figure}
+
+\subsection{Container Escape}
+One of the most common type of vulnerability (and sometimes misconfiguration) is the possibility for a process running in a container to escape the container and access data (i.e.\ execute commands) on the host. This is shown in \autoref{fig:container-escape}.
 
 \hfill
 
@@ -43,8 +67,8 @@ As noted before, because a container uses the same kernel and resources as the h
 
 It should also be noted that an exploit that allows someone to escape from a Linux \lstinline{namespace} is essentially a container escape exploit. CVE--2017--7308\cite{CVE-2017-7308} is a good example of this. Dirty Cow (CVE--2016--5195)\cite{CVE-2016-5195} is another good example of an exploit that allows container escapes\cite{Dirty-Cow-Escape}.
 
-\subsection{Docker Daemon}
-If user permissions are incorrectly configured, an unprivileged user can gain or access container resources they should not be able to access using the Docker Daemon. This is represented by scenarios 1 and 2 in the \href{fig:attacksurfaces}{above image}, respectively.
+\subsection{Docker Daemon Attack \& Container Attack}
+If user permissions are incorrectly configured, an unprivileged user can gain or access container resources they should not be able to access using the Docker Daemon. This is shown by \autoref{fig:docker-daemon-attack} and \autoref{fig:container-attack}.
 
 \hfill
 
@@ -54,12 +78,13 @@ The Docker Daemon runs as \lstinline{root} (An experimental rootless mode is bei
 
 A real life example of the impact of incorrectly configured Docker permissions happened a few years back with one of the courses in the Computing Science curriculum (of the Radboud). A teacher wanted to teach students about containerization and modern software development. He asked the IT department to install Docker on all student workstations and add all the students in the course to \lstinline{docker} group (giving them full permissions to run Docker). This gave every student the equivalent of \lstinline{root} rights on every workstation.
 
-\subsection{Container to Container}
-Containers should not only be isolated from the host, but also from other containers. This allows multiple containers with sensitive data to be run on the same host without them being to access each other's data.
+\subsection{Container to Container Attack}
+Containers should not only be isolated from the host, but also from other containers. This allows multiple containers with sensitive data to be run on the same host without them being to access each other's data. In Docker this is not always the case. This is shown in \autoref{fig:container-to-container-attack}.
 
-In Docker this is not always the case. By default all Docker containers are added to the same bridge network. This means that (by default) all Docker containers can reach each other over the network. This can lead to very dangerous situations. Lets say, for example, I run a database in a Docker container. I do not set a password for the database admin user, because I believe that the database is fully isolated (including the network) because of Docker. Any other Docker on that system is able to access the full database.
+\hfill
 
-This is scenario 4 in the \href{fig:attacksurfaces}{image above}.
+By default all Docker containers are added to the same bridge network. This means that (by default) all Docker containers can reach each other over the network. This can lead to very dangerous situations. Lets say, for example, I run a database in a Docker container. I do not set a password for the database admin user, because I believe that the database is fully isolated (including the network) because of Docker. Any other Docker on that system is able to access the full database.
+
 
 \subsection{Deployment \& Development Pipelines}
 One of the biggest usages of Docker is automating part of the deployment and development process. Many developers use Continuous Integration and Deployment systems to automatically build Docker images that they then automatically pull and run on their production environments. This level of automation allows for very rapid software development.

@@ -9,9 +9,10 @@
 \todo[inline]{\url{http://training.play-with-docker.com/security-seccomp/}}
 \todo[inline]{Usage of third party Docker images}
 \todo[inline]{\href{https://forums.grsecurity.net/viewtopic.php?f=7&t=2522}{False Boundaries and Arbitrary Code Execution}}
+\todo[inline]{Link to attack scenarios}
 
 \subsection{Docker Permissions}
-A very common (and most notorious) misconfiguration is giving unprivileged users access to Docker. This is very dangerous because this allows the unprivileged users to access all files as \lstinline{root}. The Docker documentation says\cite{Docker-Daemon-Attack-Surface}: 
+A very common (and most notorious) misconfiguration is giving unprivileged users access to Docker. This is very dangerous because this allows the unprivileged users to access all files as \lstinline{root}. The Docker documentation says\cite{Docker-Daemon-Attack-Surface}:
 \begin{quote}
 First of all, only trusted users should be allowed to control your Docker daemon. This is a direct consequence of some powerful Docker features. Specifically, Docker allows you to share a directory between the Docker host and a guest container; and it allows you to do so without limiting the access rights of the container. This means that you can start a container where the /host directory is the / directory on your host; and the container can alter your host filesystem without any restriction.
 \end{quote}
@@ -42,7 +43,7 @@ Another way system administrators might skip proper access management is to set 
 
 \hfill
 
-The \lstinline{setuid} bit is a permission bit in Unix, that allows users to run binaries as the owner (or group) of the binary instead of themselves. 
+The \lstinline{setuid} bit is a permission bit in Unix, that allows users to run binaries as the owner (or group) of the binary instead of themselves.
 This is very useful in specific cases. For example, users should be able to change their own passwords, but should not be able to read password hashes of other users. That is why the \lstinline{passwd} binary has the \lstinline{setuid} bit set. A user can change their password, because \lstinline{passwd} is run as \lstinline{root} (the owner of \lstinline{passwd}) and, of course, \lstinline{root} is able to read and write the password file. In this case the protection and security comes from the fact that \lstinline{passwd} asks for the user's password itself and only writes to specific entries in the password file.
 
 \hfill
@@ -112,7 +113,7 @@ $ docker run --rm -it --cap-add=SYS_ADMIN --security-opt apparmor=unconfined ubu
 # cat /output
 \end{lstlisting}
 
-Unlike before, instead of relying on \lstinline{--privilege} to give us write access to a \lstinline{cgroup}, we just need to mount our own. This gives us exactly the same scenario as before. We account use a \lstinline{release_agent} to run code on the host. The only difference being that we have to do some manual work ourselves. 
+Unlike before, instead of relying on \lstinline{--privilege} to give us write access to a \lstinline{cgroup}, we just need to mount our own. This gives us exactly the same scenario as before. We account use a \lstinline{release_agent} to run code on the host. The only difference being that we have to do some manual work ourselves.
 
 \subsubsection{\texorpdfstring{\lstinline{CAP_DAC_READ_SEARCH}}{CAP_DAC_READ_SEARCH}}
 Before Docker 1.0.0 \lstinline{CAP_DAC_READ_SEARCH} was added to the default capabilities that a containers are given. But this capability allows a process to escape its the container\cite{Docker-Shocker-Seclists}. To demonstrate this attack a proof of concept exploit was released\cite{Docker-Shocker}\cite{Docker-Shocker-Analysis}. This exploit has been released in 2014, but still works on containers with the \lstinline{CAP_DAC_READ_SEARCH} capability.
@@ -132,7 +133,7 @@ $ docker run --rm -it --cap-add="CAP_DAC_READ_SEARCH" -v "/tmp:/tmp" busybox sh
 admin:$6$VOSV5AVQ$jHWxAVAUgl...:18142:0:99999:7:::
 \end{lstlisting}
 
-The exploit needs a file with a file handle on the host system to properly work. Instead of the default \lstinline{/.dockerinit} (which does not exist anymore) we use the exploit file itself \lstinline{/tmp/a.out}. We start a container with the \lstinline{CAP_DAC_READ_SEARCH} capability and run the exploit. It prints the password file of the host (\lstinline{/etc/shadow}).
+The exploit needs a file with a file handle on the host system to properly work. Instead of the default \lstinline{/.dockerinit} (which is no longer created in newer versions of Docker) we use the exploit file itself \lstinline{/tmp/a.out}. We start a container with the \lstinline{CAP_DAC_READ_SEARCH} capability and run the exploit. It prints the password file of the host (\lstinline{/etc/shadow}).
 
 \subsection{Root user}
 \todo[inline]{\href{http://www.projectatomic.io/blog/2016/01/how-to-run-a-more-secure-non-root-user-container/}{How to Run a More Secure Non-Root User Container}}
