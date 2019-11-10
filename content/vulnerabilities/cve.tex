@@ -15,15 +15,15 @@ root:::0:::::
 \end{lstlisting}
 
 \begin{lstlisting}
-$ docker run -it --rm alpine:3.5 sh
-/ # apk add --no-cache linux-pam shadow
+(host)$ docker run -it --rm alpine:3.5 sh
+(cont)# apk add --no-cache linux-pam shadow
 ...
-/ # adduser test
+(cont)# adduser test
 ...
-/ # su test
+(cont)# su test
 Password:
-/ $ su root
-/ #
+(cont)$ su root
+(cont)#
 \end{lstlisting}
 
 This vulnerability has a CVSS score of 9.8 (and a 10 in CVSS 2)\footnote{\url{https://nvd.nist.gov/vuln/detail/CVE-2019-5021}}. The CVSS scores are out of 10, meaning this is seen as an extremely high-risk vulnerability. But in actuality, this vulnerability is only risky in very specific cases. "Empty \lstinline{root} password" sounds very dangerous, but it really is not that dangerous in an isolated container that runs root by default. Only in the very specific case that a process in a container runs as a non-root user and their is some vulnerability or misconfiguration that allows \lstinline{root} to escape the container and an attacker can get control of the process in the container is this dangerous. In other words, this vulnerability is actually not likely to be used in the wild and most likely needs to be combined with another vulnerability or misconfiguration to be able to do damage.

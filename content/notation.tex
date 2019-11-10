@@ -1,0 +1,26 @@
+\chapter{Notation}
+Throughout this thesis we will look at examples using shell commands. The following conventions are used to represent the different contexts in which the commands are executed.
+
+\begin{itemize}
+    \item If a command is executed directly on a host system, it is prefixed by \lstinline{(host)}.
+    \item If a command is executed inside a container, it is prefixed by \lstinline{(cont)}.
+    \item If a command is executed by an unprivileged user, it is prefixed by \lstinline{\$}.
+    \item If a command is executed by a privileged user (i.e. \lstinline{root}), it is prefixed by \lstinline{#}.
+    \item Long and irrelevant output of commands is replaced by "\lstinline{...}".
+\end{itemize}
+
+In this example, an unprivileged user executes the command \lstinline{echo Hello, World!} on the host system.
+\begin{lstlisting}[caption={Shell command notation example 1}, captionpos=b]
+(host)$ echo Hello, World!
+Hello, World!
+\end{lstlisting}
+
+\hfill
+
+In this example, the \lstinline{root} user executes two commands to get system information. The contents of \lstinline{/proc/cpuinfo} are not shown.
+\begin{lstlisting}[caption={Shell command notation example 2}, captionpos=b]
+(cont)# uname -r
+5.3.8-arch1-1
+(cont)# cat /proc/cpuinfo
+...
+\end{lstlisting}
