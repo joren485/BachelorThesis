@@ -113,7 +113,7 @@ The Docker escape by Felix Wilhelm\cite{Felix-Wilhem-Tweet} needs to be run in p
 (cont)# cat /output
 \end{lstlisting}
 
-Unlike before, instead of relying on \lstinline{--privilege} to give us write access to a \lstinline{cgroup}, we just need to mount our own. This gives us exactly the same scenario as before. We account use a \lstinline{release_agent} to run code on the host. The only difference being that we have to do some manual work ourselves.
+Unlike before, instead of relying on \lstinline{--privilege} to give us write access to a \lstinline{cgroup}, we just need to mount our own. This gives us exactly the same scenario as before. We use a \lstinline{release_agent} to run code on the host. The only difference being that we have to do some manual work ourselves.
 
 \subsubsection{\texorpdfstring{\lstinline{CAP_DAC_READ_SEARCH}}{CAP_DAC_READ_SEARCH}}
 Before Docker 1.0.0 \lstinline{CAP_DAC_READ_SEARCH} was added to the default capabilities that a containers are given. But this capability allows a process to escape its the container\cite{Docker-Shocker-Seclists}. To demonstrate this attack a proof of concept exploit was released\cite{Docker-Shocker}\cite{Docker-Shocker-Analysis}. This exploit has been released in 2014, but still works on containers with the \lstinline{CAP_DAC_READ_SEARCH} capability.
