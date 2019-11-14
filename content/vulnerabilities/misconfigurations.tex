@@ -135,9 +135,6 @@ admin:$6$VOSV5AVQ$jHWxAVAUgl...:18142:0:99999:7:::
 
 The exploit needs a file with a file handle on the host system to properly work. Instead of the default \lstinline{/.dockerinit} (which is no longer created in newer versions of Docker) we use the exploit file itself \lstinline{/tmp/a.out}. We start a container with the \lstinline{CAP_DAC_READ_SEARCH} capability and run the exploit. It prints the password file of the host (\lstinline{/etc/shadow}).
 
-\subsection{Root user}
-\todo[inline]{\href{http://www.projectatomic.io/blog/2016/01/how-to-run-a-more-secure-non-root-user-container/}{How to Run a More Secure Non-Root User Container}}
-
 \subsection{Docker Engine API}
 The Docker Daemon runs a RESTful\footnote{\url{https://restfulapi.net/}} API that is used to communicate with the Docker Daemon. For example, when an user executes a Docker client command, it actually makes a request to the API. By default the API listens on a UNIX socket accessible through \lstinline{/var/run/docker.sock}, but it also possible to make it listen on a port. This makes it possible for anybody in the \lstinline{docker} group (and \lstinline{root}) to make HTTP requests. For example the following commands (to see all containers) produce the same output (albeit in a different format). The first one is a command using the Docker client and the second is a HTTP request (using \lstinline{curl}\footnote{\url{https://curl.haxx.se/}}).
 \begin{lstlisting}[caption={Docker client and Socket},captionpos=b]
@@ -186,13 +183,8 @@ It is also possible to make the API listen on a TCP port. Ports 2375 and 2376 ar
 
 A malicious actor misused this feature in May 2019. He used Shodan\footnote{A search engine to search for systems connected to the internet.}\footnote{\url{https://www.shodan.io/}} to find unprotected publicly accessible Docker APIs and start containers that mine Monero\footnote{A cryptocurrency that focuses on privacy.} and find other hosts to infect\cite{zoolu2-bot-1807}\cite{zoolu2-bot-1809}\cite{zoolu2-bot-1853}.
 
-\subsection{The -{}-net flag}
-\todo[inline]{\href{https://docs.docker.com/engine/reference/run/\#network-settings}{Network settings}}
-\todo[inline]{shutdown possible?}
-
 \subsection{Vulnerable volumes}
 \todo[inline]{Wrong volumes: / or /proc}
-Many of the Docker container escape vulnerabilities exist because a container can access system files directly on the host. In the latest version of Docker none of those paths are accessible anymore, but it is sometimes possible to add those paths as a volume anyway.
 
 \subsection{Readable Configuration Files}
 Because setting up environments with Docker can be quite complex, many Docker users use programs to save all necessary Docker settings to configuration files (e.g. \lstinline{docker-compose}) to remove the need of repeating complex steps and configuration. These configuration files often contain very sensitive information. If the permissions on these files are configured badly, users that should not be able to read the files, might be able to read the files.
