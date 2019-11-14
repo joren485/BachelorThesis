@@ -194,8 +194,17 @@ A malicious actor misused this feature in May 2019. He used Shodan\footnote{A se
 \todo[inline]{Wrong volumes: / or /proc}
 Many of the Docker container escape vulnerabilities exist because a container can access system files directly on the host. In the latest version of Docker none of those paths are accessible anymore, but it is sometimes possible to add those paths as a volume anyway.
 
-\subsection{Readable configuration files}
-\todo[inline]{\href{https://github.com/rapid7/metasploit-framework/blob/master/modules/post/multi/gather/docker_creds.rb}{Metasploit Multi Gather Docker Credentials Collection}}
+\subsection{Readable Configuration Files}
+Because setting up environments with Docker can be quite complex, many Docker users use programs to save all necessary Docker settings to configuration files (e.g. \lstinline{docker-compose}) to remove the need of repeating complex steps and configuration. These configuration files often contain very sensitive information. If the permissions on these files are configured badly, users that should not be able to read the files, might be able to read the files.
+
+Too very common files that contain sensitive information are \lstinline{.docker/config.json} and \lstinline{docker-compose.yaml} files.
+
+\subsubsection{\texorpdfstring{\lstinline{.docker/config.json}}{.docker/config.json}}
+When pushing images to a registry, users need to login to the registry to authenticate themselves.
+It would be quite annoying to login every time an user wants to push and image. That is why \lstinline{.docker/config.json} caches those credentials. These are stored in base64 encoding in the home directory of the user by default\footnote{\url{https://docs.docker.com/engine/reference/commandline/login/}}. An attacker with access to the file, can push malicious Docker images\cite{Docker-Credentials-Metasploit}.
+
+\subsubsection{\texorpdfstring{\lstinline{docker-compose.yaml}}{docker-compose.yaml}}
+\lstinline{docker-compose.yaml} files often contain secrets (e.g.\ passwords and API keys), because all information that should be passed to a container is saved in the \lstinline{docker-compose.yaml} file.
 
 \subsection{ARP Spoofing}
 By default all Docker containers are added to the same bridge network. This means they are able to reach each other. By default Docker containers also receive the \lstinline{CAP_NET_RAW} capability, which allows them to create raw packets. This means that by default, containers are able to ARP spoof other containers.

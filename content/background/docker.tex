@@ -141,11 +141,7 @@ services:
       - "/dir/www/:/var/www/html/"
 \end{lstlisting}
 
-This, however, also shows a security risk. A lot of the information that is passed to the containers is sensitive (e.g.\ the database password). That information is saved to disk. If the permissions of that file are not set correctly, an attacker could access the sensitive information.
-
-\hfill
-
-Very similar functionality is already built into the Docker Engine, called Docker Stack. It also uses \lstinline{docker-compose.yaml}. Some features that are supported by \lstinline{docker-compose} are not supported by Docker Stack and vice versa.
+Very similar functionality is also built into the Docker Engine, called Docker Stack. It also uses \lstinline{docker-compose.yaml}. Some features that are supported by \lstinline{docker-compose} are not supported by Docker Stack and vice versa.
 
 \subsection{Registries}
 
