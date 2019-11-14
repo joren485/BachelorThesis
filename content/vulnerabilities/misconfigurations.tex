@@ -11,6 +11,7 @@
 \todo[inline]{\href{https://forums.grsecurity.net/viewtopic.php?f=7&t=2522}{False Boundaries and Arbitrary Code Execution}}
 \todo[inline]{Link to attack scenarios}
 \todo[inline]{\href{https://github.com/ProfessionallyEvil/Pequod/blob/master/pres.md}{Container Hacking or Something Like That}}
+\todo[inline]{iptables}
 
 \subsection{Docker Permissions}
 A very common (and most notorious) misconfiguration is giving unprivileged users access to Docker. This is very dangerous because this allows the unprivileged users to access all files as \lstinline{root}. The Docker documentation says\cite{Docker-Daemon-Attack-Surface}:
@@ -198,9 +199,6 @@ It is also possible to make the API listen on a TCP port. Ports 2375 and 2376 ar
 \hfill
 
 A malicious actor misused this feature in May 2019. He used Shodan\footnote{A search engine to search for systems connected to the internet.}\footnote{\url{https://www.shodan.io/}} to find unprotected publicly accessible Docker APIs and start containers that mine Monero\footnote{A cryptocurrency that focuses on privacy.} and find other hosts to infect\cite{zoolu2-bot-1807}\cite{zoolu2-bot-1809}\cite{zoolu2-bot-1853}.
-
-\subsection{Vulnerable volumes}
-\todo[inline]{Wrong volumes: / or /proc}
 
 \subsection{Readable Configuration Files}
 Because setting up environments with Docker can be quite complex, many Docker users use programs to save all necessary Docker settings to configuration files (e.g. \lstinline{docker-compose}) to remove the need of repeating complex steps and configuration. These configuration files often contain very sensitive information. If the permissions on these files are configured badly, users that should not be able to read the files, might be able to read the files.
