@@ -12,13 +12,13 @@ Docker also makes it possible to run multiple versions of the same software on t
 \subsection{Docker Concepts}
 Docker is exists of a few concepts: Docker daemon, Docker images, Docker containers and \lstinline{Dockerfile}s.
 
-\subsubsection{Docker daemon}
+\subsubsection{Docker Daemon}
 The daemon is a service that runs on the host. It manages all things related to Docker on that machine. For example if the user wants to build an image or a container needs to restart the docker daemon. It is good to note that, because everything related to Docker is handled by the daemon and Docker has access to all resources of the host, having access to Docker should be viewed as equivalent to having \lstinline{root} access to the host\footnote{\url{https://docs.docker.com/engine/security/security/}}.
 
-\subsubsection{Docker images}
+\subsubsection{Docker Images}
 A Docker image is packaged software. It is a distributable set of layers. The first layer describes the base of the image. This is either an existing image or nothing (referred to as \lstinline{scratch}). Each layer on top of that is a change to the layer before. For example, if you add a file or run an command it adds a new layer.
 
-\subsubsection{Docker containers}
+\subsubsection{Docker Containers}
 A container is an instance of a Docker Image. If you run software packaged as a Docker image, you create a container based on that image. If you want to run two instances of the same Docker image, you can create two containers.
 
 \subsubsection{\lstinline{Dockerfile}s}
@@ -76,7 +76,7 @@ Specifying which ports on the host are routed to which ports on the container is
 
 The first command creates a Docker image using the \lstinline{Dockerfile} and we then create (and start) a container from that image. We ``publish'' port \lstinline{8000} on the host to port \lstinline{80} of the container. This means that, while the container is running, all traffic from port \lstinline{8000} on the host is routed to port \lstinline{80} of the container.
 
-\subsubsection{Docker internals}
+\subsubsection{Docker Internals}
 A Docker container actually is a combination of multiple features within the Linux kernel.
 Mainly \lstinline{namespaces}, \lstinline{cgroups} and \lstinline{OverlayFS}.
 

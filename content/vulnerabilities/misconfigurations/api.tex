@@ -31,7 +31,7 @@ admin:$6$VOSV5AVQ$jHWxAVAUgl...:18142:0:99999:7:::
 (cont)# curl -XDELETE --unix-socket /var/run/docker.sock "http://localhost/containers/escape"
 \end{lstlisting}
 
-\subsubsection{Finding Sensitive information}
+\subsubsection{Sensitive Information}
 
 When a container has access to \lstinline{/var/run/docker.sock} (i.e. \lstinline{/var/run/docker.sock} is added as volume inside the container), it cannot only start new containers but it can also look at the configuration of existing containers. This configuration might contain sensitive information (e.g.\ passwords in the environment variables).
 
