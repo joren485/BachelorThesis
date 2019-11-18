@@ -25,6 +25,10 @@ admin:$6$VOSV5AVQ$jHWxAVAUgl...:18142:0:99999:7:::
 
 We start by checking our permissions. We do not have \lstinline{permissions}, but we are a member of the \lstinline{docker} group. This allows us to create a container with \lstinline{/} mounted as volume and access any file as root. This includes the file storing password hashes \lstinline{/etc/passwd}.
 
+\hfill
+
+This is covered by the CIS Benchmark guideline 1.2.2 (Ensure only trusted users are allowed to control Docker daemon).
+
 \subsubsection{\texorpdfstring{\lstinline{setuid}}{setuid} bit}
 Another way system administrators might skip proper access management is to set the \lstinline{setuid} bit on the \lstinline{docker} binary.
 
@@ -49,3 +53,7 @@ admin:$6$VOSV5AVQ$jHWxAVAUgl...:18142:0:99999:7:::
 \end{lstlisting}
 
 We now see that we are not a part of the \lstinline{docker} group, but we can still run \lstinline{docker} because the \lstinline{setuid} bit is set.
+
+\hfill
+
+This is not covered by the CIS Benchmark guidelines. There are multiple guidelines about correct file and directory permissions, but none cover the binaries.

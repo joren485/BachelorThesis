@@ -1,4 +1,5 @@
 \subsection{Docker Engine API}
+
 The Docker Daemon runs a RESTful\footnote{\url{https://restfulapi.net/}} API\footnote{\url{https://docs.docker.com/engine/api/v1.40/}} that is used to communicate with the Docker Daemon. For example, when an user executes a Docker client command, it actually makes a request to the API. By default the API listens on a UNIX socket accessible through \lstinline{/var/run/docker.sock}, but it also possible to make it listen on a port. This makes it possible for anybody in the \lstinline{docker} group (and \lstinline{root}) to make HTTP requests. For example the following commands (to see all containers) produce the same output (albeit in a different format). The first one is a command using the Docker client and the second is a HTTP request (using \lstinline{curl}\footnote{\url{https://curl.haxx.se/}}).
 \begin{lstlisting}[caption={Docker client and Socket},captionpos=b]
 (host)$ docker ps -a
@@ -9,10 +10,11 @@ The Docker Daemon runs a RESTful\footnote{\url{https://restfulapi.net/}} API\foo
 
 \hfill
 
-In some cases, it might be possible to access the API when it is not possible to access the Docker client, but because API access gives the same exact possibilities as having access to the Docker client, this is very dangerous\cite{The-Dangers-Of-Docker-Sock}.
+In some cases, it might be possible to access the API when it is not possible to access the Docker client. For example, if the permissions of the socket are incorrectly set. This is covered by CIS Benchmark guidelines 3.15 (Ensure that the Docker socket file ownership is set to root:docker) and 3.16(Ensure that the Docker socket file permissions are set to 660 or more restrictively).
+Because API access gives the same exact possibilities as having access to the Docker client, this is very dangerous\cite{The-Dangers-Of-Docker-Sock}.
 However, giving containers access to the API (by adding the socket as a volume) is a common practice, because it allows containers to monitor and analyze other containers.
 
-\subsubsection{Container Escapes}
+\subsubsection{Container Escape}
 If the \lstinline{/var/run/docker.sock} is added as a volume to a container, the container has access to the API\@. This means the process in the container has full access to Docker on the host. This can be used to escape, because the container can create another container with arbitrary volumes and commands. It is even possible to create an interactive shell in another container\cite{Escape-Socket-Shell}.
 
 \hfill
@@ -31,9 +33,13 @@ admin:$6$VOSV5AVQ$jHWxAVAUgl...:18142:0:99999:7:::
 (cont)# curl -XDELETE --unix-socket /var/run/docker.sock "http://localhost/containers/escape"
 \end{lstlisting}
 
+\hfill
+
+This is also covered by CIS Benchmark guideline 5.31 (Ensure that the Docker socket is not mounted inside any containers).
+
 \subsubsection{Sensitive Information}
 
-When a container has access to \lstinline{/var/run/docker.sock} (i.e. \lstinline{/var/run/docker.sock} is added as volume inside the container), it cannot only start new containers but it can also look at the configuration of existing containers. This configuration might contain sensitive information (e.g.\ passwords in the environment variables).
+When a container has access to \lstinline{/var/run/docker.sock} (i.e.\ when \lstinline{/var/run/docker.sock} is added as volume inside the container), it cannot only start new containers but it can also look at the configuration of existing containers. This configuration might contain sensitive information (e.g.\ passwords in the environment variables).
 
 \hfill
 
@@ -54,6 +60,10 @@ Lets start a Postgres\footnote{\url{https://www.postgresql.org/}} database insid
 ]
 \end{lstlisting}
 
+\hfill
+
+This is also covered by CIS Benchmark guideline 5.31 (Ensure that the Docker socket is not mounted inside any containers).
+
 \subsubsection{Remote Access}
 It is also possible to make the API listen on a TCP port. Ports 2375 and 2376 are usually used for HTTP and HTTPS communication, respectively. This, however, does bring all the extra complexity of TCP sockets with it. If not configured to only listen on \lstinline{localhost}, this gives every host on the network access to Docker (which might be desirable behavior). If the host is directly accessible by the internet, it gives everybody access to the full capabilities of Docker on the host. An attacker can exploit this by starting malicious containers\cite{Metasploit-Unprotected-TCP-Socket}.
 
@@ -61,14 +71,4 @@ It is also possible to make the API listen on a TCP port. Ports 2375 and 2376 ar
 
 A malicious actor misused this feature in May 2019. He used Shodan\footnote{A search engine to search for systems connected to the internet.}\footnote{\url{https://www.shodan.io/}} to find unprotected publicly accessible Docker APIs and start containers that mine Monero\footnote{A cryptocurrency that focuses on privacy.} and find other hosts to infect\cite{zoolu2-bot-1807}\cite{zoolu2-bot-1809}\cite{zoolu2-bot-1853}.
 
-\subsection{Readable Configuration Files}
-Because setting up environments with Docker can be quite complex, many Docker users use programs to save all necessary Docker settings to configuration files (e.g. \lstinline{docker-compose}) to remove the need of repeating complex steps and configuration. These configuration files often contain very sensitive information. If the permissions on these files are configured badly, users that should not be able to read the files, might be able to read the files.
-
-Too very common files that contain sensitive information are \lstinline{.docker/config.json} and \lstinline{docker-compose.yaml} files.
-
-\subsubsection{\texorpdfstring{\lstinline{.docker/config.json}}{.docker/config.json}}
-When pushing images to a registry, users need to login to the registry to authenticate themselves.
-It would be quite annoying to login every time an user wants to push and image. That is why \lstinline{.docker/config.json} caches those credentials. These are stored in base64 encoding in the home directory of the user by default\footnote{\url{https://docs.docker.com/engine/reference/commandline/login/}}. An attacker with access to the file, can push malicious Docker images\cite{Docker-Credentials-Metasploit}.
-
-\subsubsection{\texorpdfstring{\lstinline{docker-compose.yaml}}{docker-compose.yaml}}
-\lstinline{docker-compose.yaml} files often contain secrets (e.g.\ passwords and API keys), because all information that should be passed to a container is saved in the \lstinline{docker-compose.yaml} file.
+The Docker CIS Benchmark do not cover anything about the possibility to make the API accessible over \lstinline{TCP}.

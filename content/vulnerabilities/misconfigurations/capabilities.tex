@@ -5,7 +5,11 @@ To perform a privileged Linux kernel action, the process needs the relevant \lst
 
 \hfill
 
-Giving containers extra capabilities, gives the container permission to perform certain actions. Some of these actions allow Docker escapes.
+Giving containers extra capabilities, gives the container permission to perform certain actions. Some of these actions allow Docker escapes. We will look at two such capabilities.
+
+\hfill
+
+The CIS Benchmark covers all of these problems in one guideline: 5.3 (Ensure that Linux kernel capabilities are restricted within containers).
 
 \subsubsection{\texorpdfstring{\lstinline{SYS_ADMIN}}{SYS_ADMIN}}
 The Docker escape by Felix Wilhelm\cite{Felix-Wilhem-Tweet} needs to be run in privileged mode to work, but it can be rewritten to only need the permission to run \lstinline{mount}\cite{TrailOfBits-Docker-Escape}, which is granted by the \lstinline{SYS_ADMIN} capability.

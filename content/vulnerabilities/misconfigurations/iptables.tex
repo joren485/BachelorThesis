@@ -33,3 +33,7 @@ curl: (7) Failed to connect to httpbin.org port 80: Connection timed out
 \end{lstlisting}
 
 We first setup rules to drop all outgoing (including forwarded) \lstinline{HTTP} (not \lstinline{HTTPS}) traffic. We drop traffic going to port \lstinline{80} (the default \lstinline{HTTP} port) and try to request a \lstinline{HTTP} page on the host. As expected, it does not work. If we then try to make the exact same request in a container, it works.
+
+\hfill
+
+The Docker CIS Benchmark does not cover this problem. It, however, does have a guideline that ensures this problem exists. Guideline 2.3 (Ensure Docker is allowed to make changes to iptables) recommends that the Docker Daemon is allowed to change the firewall rules. This is a good recommendation, because it removes the need to configure all network configuration for Docker yourself. But that also isolates the firewall rules of the host from the containers.
