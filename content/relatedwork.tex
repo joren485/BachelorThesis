@@ -1,1 +1,24 @@
 \chapter{Related Work}
+\todo[inline]{A Compendium of Container Escapes}
+\todo[inline]{\url{https://cfp.hack.lu/hacklu19/talk/VJSHEV/}}
+\todo[inline]{\href{https://i.blackhat.com/us-18/Thu-August-9/us-18-McGrew-An-Attacker-Looks-At-Docker-Approaching-Multi-Container-Applications-wp.pdf}{Blackhat Talk}}
+
+A comparison of OS-level virtualization (e.g.\ containers) technologies is given in\cite{Security-OS-level-Virtualization}.
+
+An in-depth look at the security of the Linux features (e.g. \lstinline{namespaces}) is given in\cite{Analysis-Docker-Security}.
+
+In their 2018 paper, A. Martin et al review and summarize the Docker ecosystem, vulnerabilities and literature about the security of Docker\cite{Docker-Ecosystem-Vulnerability-Analysis}.
+
+A more flexible Docker image hardening technique using SELinux policies is propose in\cite{DockerPolicyModules}.
+
+In\cite{Defense-Docker-Escape} Z. Jian and L. Chen look at a Linux \lstinline{namespace} escape and looks at defenses to protect from the attack.
+
+Memory denial of service attacks from the container to the host and possible protections are described in\cite{Securing-Docker-Containers-from-DOS}.
+
+A very quick overview of penetration testing Docker environments is given in\cite{Research-Pentesting-Docker-Environment}.
+
+In\cite{Study-Vulnerabilities-Docker-Hub} the authors show the results of their publicly available Docker image scan. They have looked at 356218 images and identified and analyzed vulnerabilities within the images.
+
+\cite{To-Docker-Not-To-Docker} looks at the security implications of practical use-cases of using a Docker environment.
+
+The NCC group has published multiple papers on the security of Docker, both from a defensive\cite{Understanding-and-Hardening-Linux-Containers} and offensive\cite{Abusing-Containers} perspective.
