@@ -90,18 +90,3 @@ That automation does have a negative side. It removes scrutiny from the deployme
 A Docker container isolates software from the host, but does not change it. This means that vulnerabilities in software are not affected by Dockerizing that software. However, the impact of those vulnerabilities is decreased, because the vulnerability exists in an isolated environment.
 
 If, for example, there exists a RCE (remote code execution) vulnerability in Wordpress. Running Wordpress in a Docker container does not fix the vulnerability. An attacker is still able to exploit it. But that attacker is not able to access the host system, because the exploited software is isolated from the host system because of Docker.
-
-\subsection{Protection Mechanisms}
-\todo[inline]{SELinux}
-\todo[inline]{AppArmor}
-\todo[inline]{Secure Computing Mode Profiles}
-\todo[inline]{Capabilities}
-\todo[inline]{\url{https://github.com/genuinetools/bane}}
-\todo[inline]{CIS Benchmark Docker protections}
-\todo[inline]{Docker Content Trust Signature Verification}
-\todo[inline]{Wrapper scripts like docker-compose}
-\todo[inline]{\url{https://docs.docker.com/engine/security/security/}}
-\todo[inline]{\href{https://0x00sec.org/t/securing-docker-containers/16913}{Securing Docker Containers}}
-\todo[inline]{\href{https://www.nccgroup.trust/uk/our-research/understanding-and-hardening-linux-containers/}{Understanding and Hardening Linux Containers}}
-\todo[inline]{\href{http://www.projectatomic.io/blog/2016/01/how-to-run-a-more-secure-non-root-user-container/}{How to Run a More Secure Non-Root User Container}}
-\todo[inline]{Containers that do not run as root}

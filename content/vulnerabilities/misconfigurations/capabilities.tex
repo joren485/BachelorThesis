@@ -1,11 +1,5 @@
 \subsection{Capabilities}
-To perform a privileged Linux kernel action, the process needs the relevant \lstinline{capability}. \lstinline{capabilities}\footnote{See the \lstinline{man page} of \lstinline{capbilities}}
- are a Linux feature that allow specific privileged actions (e.g.\ sending raw packets). A process running as \lstinline{uid} 0(\lstinline{root}) has all capabilities.
- Processes in a Docker container are given minimum capabilities, but if needed it is possible to add extra capabilities using the \lstinline{--cap-add} argument. It is also possible to drop unnecessary capabilities using the \lstinline{--cap-drop}. In privileged mode, the container has all capabilities.
-
-\hfill
-
-Giving containers extra capabilities, gives the container permission to perform certain actions. Some of these actions allow Docker escapes. We will look at two such capabilities.
+As we saw in \autoref{capabilities} to use privileged functionality in the Linux kernel, a process needs the relevant \lstinline{capability}. Docker containers are started with minimal capabilities, but it is possible to add extra capabilities on runtime. Giving containers extra capabilities, gives the container permission to perform certain actions. Some of these actions allow Docker escapes. We will look at two such capabilities.
 
 \hfill
 
