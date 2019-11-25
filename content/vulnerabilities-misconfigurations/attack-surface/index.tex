@@ -1,0 +1,27 @@
+\section{Attack Surface \& Models}
+Because Docker is more of an ecosystem than a single running process, it has quite a large attack surface. This attack surface consists of multiple attacker models.
+
+\hfill
+
+Lets take a look at the following scenarios and images showing the attacker models.
+We see the following processes pictured in the images.
+\begin{enumerate}
+    \item[A)] Standard (privileged) process running directly on the host.
+    \item[B)] Standard unprivileged process running directly on the host.
+    \item[C)] Process running in a Docker container.
+    \item[D)] Similar to C.
+\end{enumerate}
+
+\input{content/vulnerabilities-misconfigurations/attack-surface/container-escape}
+\input{content/vulnerabilities-misconfigurations/attack-surface/daemon-container-attack}
+\input{content/vulnerabilities-misconfigurations/attack-surface/container-to-container}
+
+\subsection{Deployment \& Development Pipelines}
+One of the biggest usages of Docker is automating part of the deployment and development process. Many developers use Continuous Integration and Deployment systems to automatically build Docker images that they then automatically pull and run on their production environments. This level of automation allows for very rapid software development.
+
+That automation does have a negative side. It removes scrutiny from the deployment pipeline. If an attacker is able to compromise a link in the chain, they will be able to create their own malicious images that will be automatically run. Without proper monitoring of the full pipeline, such an attack can go unnoticed, because the system is designed to not need any human interaction.
+
+\subsection{Impact of Docker on Existing Vulnerabilities}
+A Docker container isolates software from the host, but does not change it. This means that vulnerabilities in software are not affected by Dockerizing that software. However, the impact of those vulnerabilities is decreased, because the vulnerability exists in an isolated environment.
+
+If, for example, there exists a RCE (remote code execution) vulnerability in Wordpress. Running Wordpress in a Docker container does not fix the vulnerability. An attacker is still able to exploit it. But that attacker is not able to access the host system, because the exploited software is isolated from the host system because of Docker.
