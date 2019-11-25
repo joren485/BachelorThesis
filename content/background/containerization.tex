@@ -3,14 +3,44 @@ Containerization software is used to isolate processes running on a host from on
 A process in a container sees a different part of the host system then processes outside of the container. A process inside a container sees a different file system, network interfaces and users than processes outside of the container. Processes inside the container can only see other processes inside the container.
 
 \begin{figure}[ht]
-    \begin{subfigure}{.45\textwidth}
+    \centering
+    \begin{subfigure}[t]{.45\textwidth}
         \centering
-        \includegraphics[width=.8\linewidth]{resources/images/no-containers.png}
+        \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+            \path (0,80);
+            % Process A Rectangle
+            \draw (0,25) -- (95,25) -- (95,55) -- (0,55) -- cycle ;
+            \draw (47.5,40) node {Process A};
+
+            % Process B Rectangle
+            \draw (105,25) -- (200,25) -- (200,55) -- (105,55) -- cycle ;
+            \draw (152.5,40) node {Process B};
+
+            % Host Rectangle
+            \draw (0,65) -- (200,65) -- (200,95) -- (0,95) -- cycle ;
+            \draw (100, 80) node {Linux Host};
+        \end{tikzpicture}
         \caption{Two processes}
     \end{subfigure}
-    \begin{subfigure}{.45\textwidth}
+    \begin{subfigure}[t]{.45\textwidth}
         \centering
-        \includegraphics[width=.8\linewidth]{resources/images/container.png}
+        \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+            % Process A Rectangle
+            \draw (0,25) -- (90,25) -- (90,55) -- (0,55) -- cycle ;
+            \draw (45,40) node {Process A};
+
+            % Process B container Rectangle
+            \draw (100,0) -- (200,0) -- (200,60) -- (100,60) -- cycle ;
+            \draw (152.5,15) node {Container};
+
+            %% Process B Rectangle
+            \draw (105,25) -- (195,25) -- (195,55) -- (105,55) -- cycle ;
+            \draw (150,40) node {Process B};
+
+            % Host Rectangle
+            \draw (0,65) -- (200,65) -- (200,95) -- (0,95) -- cycle ;
+            \draw (100, 80) node {Linux Host};
+        \end{tikzpicture}
         \caption{One process in a container}
     \end{subfigure}
     \caption{}
