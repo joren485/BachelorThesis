@@ -7,7 +7,6 @@ A process in a container sees a different part of the host system then processes
     \begin{subfigure}[t]{.45\textwidth}
         \centering
         \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
-            \path (0,80);
             % Process A Rectangle
             \draw (0,25) -- (95,25) -- (95,55) -- (0,55) -- cycle ;
             \draw (47.5,40) node {Process A};
@@ -79,14 +78,67 @@ This ease of use makes containerization very popular in software development, ma
 Virtualization is an older similar technique to isolate software. In virtualization, a whole system is simulated in top of the host (called the hypervisor). This new virtual machine is called a guest. The guest and the host do not share any system resources. This has some advantages. For example, it allows running a completely different operating system as guest (e.g. Windows guest run on a Linux host).
 
 \begin{figure}[ht]
-    \begin{subfigure}{.45\textwidth}
+    \centering
+    \begin{subfigure}[t]{.45\textwidth}
         \centering
-        \includegraphics[width=.8\linewidth]{resources/images/virtual-machines.png}
-        \caption{Virtual machines}
+        \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+            % VM Process A Rectangle
+            \draw (0,0) -- (100,0) -- (100,100) -- (0,100) -- cycle ;
+            \draw (50,10) node {{\small Virtual Machine}};
+
+            % OS Process A Rectangle
+            \draw (5,20) -- (95,20) -- (95,95) -- (5,95) -- cycle ;
+            \draw (50,30) node {OS};
+
+            % Process A Rectangle
+            \draw (10,40) -- (90,40) -- (90,70) -- (10,70) -- cycle ;
+            \draw (50,55) node {Process A};
+
+            % VM Process B Rectangle
+            \draw (105,0) -- (205,0) -- (205,100) -- (105,100) -- cycle ;
+            \draw (155,10) node {{\small Virtual Machine}};
+
+            % OS Process B Rectangle
+            \draw (110,20) -- (200,20) -- (200,95) -- (110,95) -- cycle ;
+            \draw (155,30) node {OS};
+
+            % Process B Rectangle
+            \draw (115,40) -- (195,40) -- (195,70) -- (115,70) -- cycle ;
+            \draw (155,55) node {Process B};
+
+            % Hypervisor
+            \draw (0,105) -- (205,105) -- (205,120) -- (0,120) -- cycle ;
+            \draw (102.5,112.5) node {{\small Hypervisor}};
+
+            % Linux Host
+            \draw (0,125) -- (205,125) -- (205,155) -- (0,155) -- cycle ;
+            \draw (102.5,140) node {Linux Host};
+        \end{tikzpicture}
+        \caption{Virtual Machines}
     \end{subfigure}
-    \begin{subfigure}{.45\textwidth}
+    \begin{subfigure}[t]{.45\textwidth}
         \centering
-        \includegraphics[width=.8\linewidth]{resources/images/containers.png}
+         \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+            % Container Process A Rectangle
+            \draw (0,0) -- (97.5,0) -- (97.5,50) -- (0,50) -- cycle ;
+            \draw (50,10) node {Container};
+
+            % Process A Rectangle
+            \draw (5,20) -- (95,20) -- (95,45) -- (5,45) -- cycle ;
+            \draw (50,32.5) node {Process A};
+
+            % Container Process B Rectangle
+            \draw (102.5,0) -- (200,0) -- (200,50) -- (102.5,50) -- cycle ;
+            \draw (150,10) node {Container};
+
+            % Process B Rectangle
+            \draw (105,20) -- (195,20) -- (195,45) -- (105,45) -- cycle ;
+            \draw (150,32.5) node {Process B};
+
+            % Host Rectangle
+            \draw (0,55) -- (200,55) -- (200,85) -- (0,85) -- cycle ;
+            \draw (100, 70) node {Linux Host};
+        \end{tikzpicture}
         \caption{Containers}
     \end{subfigure}
     \caption{}
