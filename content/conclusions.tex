@@ -1,9 +1,16 @@
 \chapter{Conclusions}
+\todo[inline]{specific conclusions for specific audiences}
+\todo[inline]{Include pentesting chapter}
+Because Docker is a whole ecosystem and not just one program, we saw that there are many different attacker models. All of these models should be taken into account when designing infrastructure using containers. Using containers creates more secure environments, because it does isolate software, but it should be noted that because containerization software also adds extra abstraction layers and complexity, using containers also increases the attack surface and risks.
 
-\todo[inline]{Docker Security}
-\todo[inline]{CIS Benchmarks too long}
-\todo[inline]{Penetration testing at Secura}
-\todo[inline]{Based on my personal experience}
-\todo[inline]{Docker makes applications more secure}
+\hfill
 
-As we saw in \autoref{misconfigurations}, the Docker CIS Benchmark guidelines do not cover every aspect of Docker.
+We looked at multiple vulnerabilities (in \autoref{section:vulnerabilities}) and misconfigurations (in \autoref{misconfigurations}). The vulnerabilities show that it is very important to stay up to date with the latest Docker version.
+
+The misconfigurations show that it is very important to understand and think about the systems you might design. A single wrong permission can expose very sensitive information.
+
+\hfill
+
+In \autoref{chapter:vulnerabilities-misconfigurations} we looked at multiple vulnerabilities and misconfigurations. We linked those to the relevant CIS Benchmark guidelines. Unfortunately, we saw that not all misconfigurations are covered by the Docker CIS Benchmark (See \autoref{subsection:iptables} and \autoref{subsection:config-files}).
+
+The CIS Benchmark tries to be a very detailed and inclusive list of security best practices that developers and engineers. This results in an extremely long list of guidelines that is (as this thesis shows) not all-inclusive but does include some draconian guidelines that are probably overkill on most systems.
