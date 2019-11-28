@@ -24,7 +24,7 @@ A container is an instance of a Docker Image. If you run software packaged as a 
 \subsubsection{\lstinline{Dockerfile}s}
 A \lstinline{Dockerfile} describes what a Docker image is made of. It describes the steps to build the image. Lets look at a very simple example:
 
-\begin{lstlisting}[caption={Very Basic \lstinline{Dockerfile}},label={dockerfile:simple},captionpos=b]
+\begin{lstlisting}[caption={Very Basic \lstinline{Dockerfile}},label={listing:dockerfile-simple},captionpos=b]
 FROM alpine:latest
 LABEL maintainer="Joren Vrancken"
 CMD ["echo", "Hello World"]
@@ -42,7 +42,7 @@ The full instruction set can be found in the \lstinline{Dockerfile} reference\fo
 \end{enumerate}
 
 We can use this to create a new image and container from that image.
-\begin{lstlisting}[caption={Creating a Docker container from a \lstinline{Dockerfile}},label={docker:container},captionpos=b]
+\begin{lstlisting}[caption={Creating a Docker container from a \lstinline{Dockerfile}},label={listing:create-container},captionpos=b]
 (host)$ docker build -t thesis-hello-world .
 (host)$ docker run --rm --name=thesis-hello-world-container thesis-hello-world
 \end{lstlisting}
@@ -52,7 +52,7 @@ We first create a Docker image (called \lstinline{thesis-hello-world}) using the
 \subsubsection{Data Persistence}
 Without additional configuration, a Docker container does not have persistence storage. Its storage is maintained when the container is stopped, but not when the container is removed. It is possible to mount a directory on the host in a Docker container. This allows the container to access files on the host and save them to that mounted directory.
 
-\begin{lstlisting}[caption={Bind mount example},label={docker:bindmount},captionpos=b]
+\begin{lstlisting}[caption={Bind mount example},label={listing:docker-volume},captionpos=b]
 (host)$ echo test > /tmp/test
 (host)$ docker run -it --rm -v "/tmp:/tmp" ubuntu:latest bash
 (cont)$ cat /tmp/test
@@ -67,9 +67,9 @@ When a Docker container is created Docker creates a network sandbox for that con
 \hfill
 
 Incoming traffic is possible by routing traffic for specific ports from the host to the container.
-Specifying which ports on the host are routed to which ports on the container is done when a container is created. If we, for example, want to expose port \lstinline{80} to the Docker image created from the \hyperref[dockerfile:simple]{first \lstinline{Dockerfile}} we can execute the following commands.
+Specifying which ports on the host are routed to which ports on the container is done when a container is created. If we, for example, want to expose port \lstinline{80} to the Docker image created from \autoref{listing:dockerfile-simple} we can execute the following commands.
 
-\begin{lstlisting}[caption={Creating a Docker container with exposed port},label={docker:publish},captionpos=b]
+\begin{lstlisting}[caption={Creating a Docker container with exposed port},label={listing:docker-port},captionpos=b]
 (host)$ docker build -t thesis-hello-world .
 (host)$ docker run --rm --publish 8000:80 --name=thesis-hello-world-container thesis-hello-world
 \end{lstlisting}
@@ -112,7 +112,7 @@ Control groups (or \lstinline{cgroups} for short) are a way to limit resources (
 \hfill
 
 This is an advanced example of an \lstinline{docker-compose.yaml} file similar to configuration that I have used in a production environment. A lot of the time creating Docker containers in production environments, they need to have a lot of extra runtime configuration (e.g.\ environment variables, ports and dependencies on other containers). Specifying everything in a single file simplifies the runtime configuration process.
-\begin{lstlisting}[caption={Example \lstinline{docker-compose.yaml}},label={docker:composefile},captionpos=b]
+\begin{lstlisting}[caption={Example \lstinline{docker-compose.yaml}},label={listing:docker-compose-file},captionpos=b]
 ---
 version: "3"
 
