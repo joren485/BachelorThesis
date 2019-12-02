@@ -1,7 +1,7 @@
 \subsubsection{Checking Capabilities}
 Once we have a clear picture what kind of system we are working with, we can do some more detailed reconnaissance. One of the most important things to look at are the capabilities of the current process. We can do this by looking at \lstinline{/proc/pid/status} where \lstinline{pid} is the process id\footnote{In Bash \lstinline{/proc/self/} the current process}. This file contains multiple lines that contain information about the granted capabilities.
 
-\begin{lstlisting}
+\begin{lstlisting}[caption={Capabilities of process in container},captionpos=b]
 (cont)# grep Cap /proc/self/status
 CapInh:	00000000a80425fb
 CapPrm:	00000000a80425fb
@@ -21,7 +21,7 @@ We see five different values:
 
 We are interested in the \lstinline{CapEff} value, because that value represents the current capabilities. The capabilities are represented as a hexadecimal value. Every capability has a value and the \lstinline{CapEff} value is the combination of those values. We can use the \lstinline{capsh} tool to get a list of capabilities from a hexadecimal value (this can be on a different system).
 
-\begin{lstlisting}
+\begin{lstlisting}[caption={\lstinline{capsh} shows capabilities},captionpos=b]
 (host)$ capsh --decode=00000000a80425fb
 0x00000000a80425fb=cap_chown,cap_dac_override,cap_fowner,cap_fsetid,cap_kill,cap_setgid,cap_setuid,cap_setpcap,cap_net_bind_service,cap_net_raw,cap_sys_chroot,cap_mknod,cap_audit_write,cap_setfcap
 \end{lstlisting}
@@ -30,7 +30,7 @@ We are interested in the \lstinline{CapEff} value, because that value represents
 
 As stated before, if the container runs in privileged mode it gets all capabilities. This makes it easy to check if we are running a process in a container in privileged mode. \lstinline{0000003fffffffff} is the representation of all capabilities.
 
-\begin{lstlisting}
+\begin{lstlisting}[caption={\lstinline{capsh} shows privileged capabilities},captionpos=b]
 (host)$ docker run -it --rm --privileged ubuntu:latest grep CapEff /proc/1/status
 CapEff:	0000003fffffffff
 (host)$ capsh --decode=0000003fffffffff 

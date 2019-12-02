@@ -9,7 +9,7 @@ In this section, we will look at identifying/fingerprinting a system (using a Ba
 \subsubsection{Control Group}
 To limit the resources of containers, Docker creates control groups for each container and a parent control group called \lstinline{docker}. If a process is started in a Docker container, that process will have be in the control group of that container. We can verify this in \lstinline{/proc/1/cgroups}\cite{Metasploit-Linux-Gather-Container-Detection}. Please note that long lines have been abbreviated using ``$\ldots$''.
 
-\begin{lstlisting}
+\begin{lstlisting}[caption={Process control group inside container},captionpos=b]
 (cont)# cat /proc/1/cgroup
 12:hugetlb:/docker/0c7a3b8...
 11:blkio:/docker/0c7a3b8...
@@ -18,7 +18,7 @@ To limit the resources of containers, Docker creates control groups for each con
 
 If we look at the host system, we do not see the same \lstinline{/docker/} parent control group.
 
-\begin{lstlisting}
+\begin{lstlisting}[caption={Process control groups on host},captionpos=b]
 (cont)# cat /proc/1/cgroup
 12:hugetlb:/
 11:blkio:/

@@ -2,7 +2,7 @@
 It is also important to identify information about the host operating system. This can be very useful to identify and use relevant exploits. 
 
 Because the container uses the kernel of the host, we can use the kernel version to identify information about the host. Lets take a look at the following example running on an Ubuntu host.
-\begin{lstlisting}o
+\begin{lstlisting}[caption={\lstinline{/etc/os-release} and \lstinline{uname} differ},captionpos=b]
 (host)$ docker run -it --rm alpine:latest cat /etc/os-release 
 ...
 PRETTY_NAME="Alpine Linux v3.10"
