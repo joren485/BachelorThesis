@@ -1,7 +1,38 @@
 \subsection{Attack Context Detection}
-\todo[inline]{Detect running in a Docker}
-\todo[inline]{Detect Docker (running) on host}
-\todo[inline]{\href{https://github.com/rapid7/metasploit-framework/blob/master/modules/post/linux/gather/checkcontainer.rb}{Metasploit Linux Gather Container Detection}}
-\todo[inline]{Running processes}
-\todo[inline]{Minimal binaries}
+In most security assessments and penetration tests it will be clear what kind of system you are attacking. In some cases, however, it might not be. A good example of this is getting remote code execution on a system during a black box penetration test. In that case, you might get a reverse shell and are able to execute commands, but do not know anything about the systems internal workings. In such a case it is important to know if you are running in a Docker container or not.
 
+In this section, we will look at identifying/fingerprinting a system (using a Bash shell) to see if we are in a Docker container or not.
+
+\subsubsection{\texorpdfstring{\lstinline{/.dockerenv}}{/.dockerenv}}
+\lstinline{/.dockerenv} is a file that is present in all Docker containers. It was used in the past by LXC to load the environment variables in the container. Currently it is always empty, because LXC is not used anymore. However, it is still (officially) used to identify containers\cite{Metasploit-Linux-Gather-Container-Detection}\cite{Removed-Dockerinit-Reference}.
+
+\subsubsection{Control Group}
+To limit the resources of containers, Docker creates control groups for each container and a parent control group called \lstinline{docker}. If a process is started in a Docker container, that process will have be in the control group of that container. We can verify this in \lstinline{/proc/1/cgroups}\cite{Metasploit-Linux-Gather-Container-Detection}. Please note that long lines have been abbreviated using ``$\ldots$''.
+
+\begin{lstlisting}
+(cont)# cat /proc/1/cgroup
+12:hugetlb:/docker/0c7a3b8...
+11:blkio:/docker/0c7a3b8...
+...
+\end{lstlisting}
+
+If we look at the host system, we do not see the same \lstinline{/docker/} parent control group.
+
+\begin{lstlisting}
+(cont)# cat /proc/1/cgroup
+12:hugetlb:/
+11:blkio:/
+...
+\end{lstlisting}
+
+\hfill
+
+In some systems that are using Docker (i.e.\ orchestration software), the parent control group has another name (e.g. \lstinline{kubepod} for Kubernetes).
+
+\subsubsection{Running Processes}
+Containers are made to run one process. Host systems run many processes. All these processes have one root process (with process id 1) to start all necessary processes. On most Linux systems that process is either \lstinline{init} or \lstinline{systemd}. You would never see \lstinline{init} or \lstinline{systemd} in a container, because the container only runs one process not a full operating system. That is why the amount of processes and the process with pid 1 is a good indicator whether we are running in a container.
+
+\subsubsection{Available Libraries and Binaries}
+Docker images are made as small as possible. Many processes do not need a fully operational Linux system, they need only part of it. That is why developers often remove libraries and binaries that are not needed for their specific application. If we see a lot of missing packages, binaries or libraries it is a good indicator that we are running in a container.
+
+A good example of this is the \lstinline{sudo} package. This package is crucial on most Linux distributions, because it enables a way for non-root users to execute commands as \lstinline{root}. However, in a Docker container \lstinline{sudo} does not make a lot of sense. If a process needs to run something as \lstinline{root}, the process should be run as \lstinline{root} in the container.
