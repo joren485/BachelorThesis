@@ -1,8 +1,8 @@
 \subsubsection{Checking Capabilities}
-Once we have a clear picture what kind of system we are working with, we can do some more detailed reconnaissance. One of the most important things to look at are the capabilities of the current process. We can do this by looking at \lstinline{/proc/pid/status} where \lstinline{pid} is the process id\footnote{In Bash \$\$ refers to the process id of the current process}. This file contains multiple lines that contain information about the granted capabilities.
+Once we have a clear picture what kind of system we are working with, we can do some more detailed reconnaissance. One of the most important things to look at are the capabilities of the current process. We can do this by looking at \lstinline{/proc/pid/status} where \lstinline{pid} is the process id\footnote{In Bash \lstinline{/proc/self/} the current process}. This file contains multiple lines that contain information about the granted capabilities.
 
 \begin{lstlisting}
-(cont)# grep Cap /proc/$$/status
+(cont)# grep Cap /proc/self/status
 CapInh:	00000000a80425fb
 CapPrm:	00000000a80425fb
 CapEff:	00000000a80425fb
