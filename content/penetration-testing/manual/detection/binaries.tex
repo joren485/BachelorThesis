@@ -1,0 +1,4 @@
+\subsubsection{Available Libraries and Binaries}
+Docker images are made as small as possible. Many processes do not need a fully operational Linux system, they need only part of it. That is why developers often remove libraries and binaries that are not needed for their specific application. If we see a lot of missing packages, binaries or libraries it is a good indicator that we are running in a container.
+
+A good example of this is the \lstinline{sudo} package. This package is crucial on most Linux distributions, because it enables a way for non-root users to execute commands as \lstinline{root}. However, in a Docker container \lstinline{sudo} does not make a lot of sense. If a process needs to run something as \lstinline{root}, the process should be run as \lstinline{root} in the container.
