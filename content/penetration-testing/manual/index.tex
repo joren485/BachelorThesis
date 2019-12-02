@@ -1,0 +1,136 @@
+\section{Manual}
+\todo[inline]{Which attack scenarios from 3 are relevant?}
+
+\subsection{Attack Context Detection}
+\todo[inline]{Detect running in a Docker}
+\todo[inline]{Detect Docker (running) on host}
+\todo[inline]{\href{https://github.com/rapid7/metasploit-framework/blob/master/modules/post/linux/gather/checkcontainer.rb}{Metasploit Linux Gather Container Detection}}
+\todo[inline]{Running processes}
+\todo[inline]{Minimal binaries}
+
+\subsection{Testing from Host}
+\todo[inline]{What images are available on the host?}
+\todo[inline]{systemctl cat docker}
+\todo[inline]{/etc/default/docker}
+\todo[inline]{daemon.json}
+\todo[inline]{firewall rules}
+\todo[inline]{docker binary setuid}
+\todo[inline]{check if docker is installed}
+\todo[inline]{check docker socket}
+\todo[inline]{Which users are in the docker group}
+\todo[inline]{Open ports to Docker socket?}
+\todo[inline]{What containers are running}
+\todo[inline]{Docker version, does not require docker permissions}
+
+\subsection{Testing from Container}
+If we have only access to a container, we are mostly are going to look for ways to escape it or see what we can reach from the container. In this section we will look at what we should look at and target. 
+
+\hfill
+
+Many Docker images are stripped from unnecessary tools, binaries and libraries to make the image smaller. However, we might need those tools during a penetration test. If we are \lstinline{root} in a container, we are most likely able to install the necessary tooling. If we only have access to a non-\lstinline{root} user, it might not be possible to install anything. In that case, we will have to work with what is available to us.
+
+\subsubsection{Identifying Users}
+The first step we should take is to see if we are a privileged user and identify other users. We can see our current user by using \lstinline{id} and see all users by looking at \lstinline{/etc/passwd}.
+\begin{lstlisting}
+(cont)# id
+uid=0(root) gid=0(root) groups=0(root)
+(cont)# cat /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+...
+test:x:1000:1000:,,,:/home/test:/bin/bash
+\end{lstlisting}
+
+Wee see that our current user is \lstinline{root} (the user id is 0) and that there are two users (besides the default users in Linux). By default, containers run as \lstinline{root}. Which is great from an attacker perspective, because it allows us full access to everything inside the container. A well configured container most likely does not run as \lstinline{root} (see \autoref{subsection:non-root-user}).
+
+\subsubsection{Identifying Docker Image}
+
+The next step is to identify the operating system (and maybe the Docker Image) of the container.
+
+All modern Linux distributions have a file \lstinline{/etc/os-release}\footnote{Although this file is introduced by \lstinline{systemd}, even systems that explicitly do not use \lstinline{systemd} contain it.} that contains information about the running operating system.
+\begin{lstlisting}
+(host)$ docker run -it --rm centos:latest cat /etc/os-release
+...
+PRETTY_NAME="CentOS Linux 8 (Core)"
+...
+\end{lstlisting}
+
+\hfill
+
+To get a better idea of what a container is supposed to do, we can look at the processes. Because containers should only have a singular task (e.g.\ running a database), they should only have one running process. 
+
+\begin{lstlisting}
+(host)$ docker run --rm --env MYSQL_RANDOM_ROOT_PASSWORD=true --name=database mariadb:latest
+...
+(host)$ docker exec database ps -A -o pid,cmd
+PID CMD
+  1 mysqld
+320 ps -A -o pid,cmd
+\end{lstlisting}
+
+In this example, we see that the image \lstinline{mariadb} only has only process (\lstinline{mysqld}). This way we know (without looking at the image name) that the container is a MySQL servier.
+
+\subsubsection{Identifying Host Operating System}
+It is also important to identify information about the host operating system. This can be very useful to identify and use relevant exploits. 
+
+Because the container uses the kernel of the host, we can use the kernel version to identify information about the host. Lets take a look at the following example running on an Ubuntu host.
+\begin{lstlisting}o
+(host)$ docker run -it --rm alpine:latest cat /etc/os-release 
+...
+PRETTY_NAME="Alpine Linux v3.10"
+...
+(host)$ docker run -it --rm alpine:latest uname -rv
+5.0.0-36-generic #39~18.04.1-Ubuntu SMP Tue Nov 12 11:09:50 UTC 2019
+\end{lstlisting}
+
+We are running an Alpine Linux container, which we see when we look in the \lstinline{/etc/os-release} file. However, when we look at the kernel version (using the \lstinline{uname} command), we see that we are using an Ubuntu kernel. That means that we are most likely running on an Ubuntu host.
+
+\hfill
+
+We also see the kernel version number (in this case \lstinline{5.0.0-36-generic}). This can be used to see if the system is vulnerable to kernel exploits, because some kernel exploits may be used to escape the container (see \autoref{subsection:container-escape}).
+
+\subsubsection{Identifying Volumes}
+
+\subsubsection{Checking Capabilities}
+Once we have a clear picture what kind of system we are working with, we can do some more detailed reconnaissance. One of the most important things to look at are the capabilities of the current process. We can do this by looking at \lstinline{/proc/pid/status} where \lstinline{pid} is the process id\footnote{In Bash \$\$ refers to the process id of the current process}. This file contains multiple lines that contain information about the granted capabilities.
+
+\begin{lstlisting}
+(cont)# grep Cap /proc/$$/status
+CapInh:	00000000a80425fb
+CapPrm:	00000000a80425fb
+CapEff:	00000000a80425fb
+CapBnd:	00000000a80425fb
+CapAmb:	0000000000000000
+\end{lstlisting}
+
+We see five different values:
+\begin{itemize}
+    \item \lstinline{CapInh}: The inheritable capabilities are the capabilities that a child process is allowed to get.
+    \item \lstinline{CapPrm}: The permitted capabilities are the maximum capabilities that a process can use.
+    \item \lstinline{CapEff}: The currently effective capabilities.
+    \item \lstinline{CapBnd}: The capabilities that are permitted in the call tree.
+    \item \lstinline{CapAmb}: Capabilities that non-root child processes can inherit.
+\end{itemize}
+
+We are interested in the \lstinline{CapEff} value, because that value represents the current capabilities. The capabilities are represented as a hexadecimal value. Every capability has a value and the \lstinline{CapEff} value is the combination of those values. We can use the \lstinline{capsh} tool to get a list of capabilities from a hexadecimal value (this can be on a different system).
+
+\begin{lstlisting}
+(host)$ capsh --decode=00000000a80425fb
+0x00000000a80425fb=cap_chown,cap_dac_override,cap_fowner,cap_fsetid,cap_kill,cap_setgid,cap_setuid,cap_setpcap,cap_net_bind_service,cap_net_raw,cap_sys_chroot,cap_mknod,cap_audit_write,cap_setfcap
+\end{lstlisting}
+
+\subsubsection{Checking for Privileged Mode}
+
+As stated before, if the container runs in privileged mode it gets all capabilities. This makes it easy to check if we are running a process in a container in privileged mode. \lstinline{0000003fffffffff} is the representation of all capabilities.
+
+\begin{lstlisting}
+(host)$ docker run -it --rm --privileged ubuntu:latest grep CapEff /proc/1/status
+CapEff:	0000003fffffffff
+(host)$ capsh --decode=0000003fffffffff 
+0x0000003fffffffff=cap_chown,cap_dac_override,cap_dac_read_search,cap_fowner,cap_fsetid,cap_kill,cap_setgid,cap_setuid,cap_setpcap,cap_linux_immutable,cap_net_bind_service,cap_net_broadcast,cap_net_admin,cap_net_raw,cap_ipc_lock,cap_ipc_owner,cap_sys_module,cap_sys_rawio,cap_sys_chroot,cap_sys_ptrace,cap_sys_pacct,cap_sys_admin,cap_sys_boot,cap_sys_nice,cap_sys_resource,cap_sys_time,cap_sys_tty_config,cap_mknod,cap_lease,cap_audit_write,cap_audit_control,cap_setfcap,cap_mac_override,cap_mac_admin,cap_syslog,cap_wake_alarm,cap_block_suspend,cap_audit_read
+\end{lstlisting}
+
+\subsubsection{Searching for the Docker Socket}
+
+\subsubsection{Checking Network Configuration}
+\todo[inline]{Reachable containers}
+\todo[inline]{ARP Spoofing other containers}
