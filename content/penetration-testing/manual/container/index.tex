@@ -1,0 +1,14 @@
+\subsection{Testing from Container}
+If we have only access to a container, we are mostly are going to look for ways to escape it or see what we can reach from the container. In this section we will look at what we should look at and target. 
+
+\hfill
+
+Many Docker images are stripped from unnecessary tools, binaries and libraries to make the image smaller. However, we might need those tools during a penetration test. If we are \lstinline{root} in a container, we are most likely able to install the necessary tooling. If we only have access to a non-\lstinline{root} user, it might not be possible to install anything. In that case, we will have to work with what is available to us.
+
+\input{content/penetration-testing/manual/container/identifying-users}
+\input{content/penetration-testing/manual/container/docker-image}
+\input{content/penetration-testing/manual/container/host-os}
+\input{content/penetration-testing/manual/container/volumes}
+\input{content/penetration-testing/manual/container/capabilities}
+\input{content/penetration-testing/manual/container/socket}
+\input{content/penetration-testing/manual/container/network}
