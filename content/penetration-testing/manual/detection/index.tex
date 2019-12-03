@@ -1,7 +1,7 @@
 \subsection{Attack Context Detection}
-In most security assessments and penetration tests it will be clear what kind of system you are attacking. In some cases, however, it might not be. A good example of this is getting remote code execution on a system during a black box penetration test. In that case, you might get a reverse shell and are able to execute commands, but do not know anything about the systems internal workings. In such a case it is important to know if you are running in a Docker container or not.
+In most security assessments and penetration tests it will be clear what kind of system (i.e.\ running as a Docker or not) we are attacking. In some cases, however, it might not be. A good example of this is getting remote code execution on a system during a black box penetration test. In that case, you might get a reverse shell and are able to execute commands, but do not know anything about the systems' internal workings. In such a case it is important to know if you are running in a Docker container or not.
 
-In this section, we will look at identifying/fingerprinting a system (using a Bash shell) to see if we are in a Docker container or not.
+In this section, we will look at fingerprinting a system to see if we are in a Docker container.
 
 \input{content/penetration-testing/manual/detection/dockerenv}
 \input{content/penetration-testing/manual/detection/cgroup}
