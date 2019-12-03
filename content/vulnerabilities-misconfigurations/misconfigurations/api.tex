@@ -10,7 +10,7 @@ The Docker Daemon runs a RESTful\footnote{\url{https://restfulapi.net/}} API\foo
 
 \hfill
 
-In some cases, it might be possible to access the API when it is not possible to access the Docker client. For example, if the permissions of the socket are incorrectly set. This is covered by CIS Benchmark guidelines 3.15 (Ensure that the Docker socket file ownership is set to root:docker) and 3.16(Ensure that the Docker socket file permissions are set to 660 or more restrictively).
+In some cases, it might be possible to access the API when it is not possible to access the Docker client. For example, if all users have read and write permissions footnote{Both read and write permissions  are required to interact with Unix sockets.}\lstinline{/var/run/docker.sock}. This is covered by CIS Benchmark guidelines 3.15 (Ensure that the Docker socket file ownership is set to root:docker) and 3.16(Ensure that the Docker socket file permissions are set to 660 or more restrictively).
 Because API access gives the same exact possibilities as having access to the Docker client, this is very dangerous\cite{The-Dangers-Of-Docker-Sock}.
 However, giving containers access to the API (by adding the socket as a volume) is a common practice, because it allows containers to monitor and analyze other containers.
 
