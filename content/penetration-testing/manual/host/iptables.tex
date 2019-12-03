@@ -1,0 +1,2 @@
+\subsubsection{\texorpdfstring{\lstinline{iptables}}{iptables} Rules}
+As we saw in \autoref{subsection:iptables}, Docker will bypass the host \lstinline{iptables} rules. Using \lstinline{iptables -vnL} and \lstinline{iptables -t nat -vnL} we can see the rules of the default tables \lstinline{mangle} and \lstinline{nat}, respectively. It is important that all firewall rules regarding Docker containers are set in the \lstinline{DOCKER-USER} chain in \lstinline{mangle}, because all Docker traffic will first pass the \lstinline{DOCKER-USER} chain.

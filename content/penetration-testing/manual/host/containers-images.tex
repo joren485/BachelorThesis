@@ -1,0 +1,37 @@
+\subsubsection{Available Images \& Containers}
+We should check which images and containers (both running and stopped) are available on the host. This will tell us more about the system we are testing.
+
+\lstinline{docker images --all} will list all available images (including intermediate images) and \lstinline{docker ps --all} will list all (running and stopped) containers.
+
+\begin{lstlisting}[caption={Listing all images and containers available},captionpos=b]
+(host)$ docker images --all
+REPOSITORY  TAG     IMAGE ID        CREATED      SIZE
+mariadb     latest  c1c9e6fba07a    2 weeks ago  355MB
+ubuntu      latest  775349758637    4 weeks ago  64.2MB
+alpine      3       965ea09ff2eb    6 weeks ago  5.55MB
+alpine      latest  965ea09ff2eb    6 weeks ago  5.55MB
+centos      latest  0f3e07c0138f    2 months ago 220MB
+(host)$ docker ps --all --no-trunc --format="{{.Names}} {{.Command}} {{.Image}}"
+database "docker-entrypoint.sh mysqld" mariadb:latest
+\end{lstlisting}
+
+\hfill
+
+We should also look at the environment variables that have been passed to the containers, because environment variables are used to pass information (including passwords and secrets) to a container when it is created. Using \lstinline{docker inspect} we can see information about containers. Including the set environment variables.
+\begin{lstlisting}[caption={List environment variables passed to Docker container},captionpos=b]
+(host)$ docker run --rm -e MYSQL_ROOT_PASSWORD=supersecret --name=database mariadb:latest
+(host)$ docker inspect database | jq -r '.[0].Config.Env'
+[
+  "MYSQL_ROOT_PASSWORD=supersecret",
+...
+\end{lstlisting}
+
+\hfill
+
+The containers might have volumes. Those volumes tell us more about where sensitive and important data might be. We can also list the volumes using \lstinline{docker inspect}.
+\begin{lstlisting}[caption={List bindmounts into Docker container.},captionpos=b]
+(host)$ docker inspect database | jq -r '.[0].HostConfig.Binds'
+[
+  "/tmp/database/:/var/lib/mysql/"
+]
+\end{lstlisting}

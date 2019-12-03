@@ -1,18 +1,9 @@
 \subsection{Testing from Host}
 
+When testing a system with Docker installed, we are going to look at how Docker is configured. As we saw in \autoref{section:misconfigurations}, a simple misconfiguration can lead to very big problems. We are also going to look at specific images and containers that are running on the system. Those will not only tell us what the system is used for, but might also contain sensitive information.
+
 \input{content/penetration-testing/manual/host/version}
 \input{content/penetration-testing/manual/host/docker-permissions}
-
-\subsubsection{Docker Daemon Configuration Files}
-\todo[inline]{systemctl cat docker}
-\todo[inline]{/etc/default/docker}
-\todo[inline]{daemon.json}
-\todo[inline]{TCP}
-\todo[inline]{Docker-compose}
-\todo[inline]{Registry files}
-
-\subsubsection{Running Containers}
-\todo[inline]{Cronjobs}
-
-\subsubsection{\texorpdfstring{iptables}{iptables} Rules}
-
+\input{content/penetration-testing/manual/host/configuration}
+\input{content/penetration-testing/manual/host/containers-images}
+\input{content/penetration-testing/manual/host/iptables}
