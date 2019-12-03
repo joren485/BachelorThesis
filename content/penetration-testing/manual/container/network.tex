@@ -1,5 +1,5 @@
 \subsubsection{Checking Network Configuration}
-We should also look at the network of the container. We should look at which containers are in the same network and what the container is able to reach. To do this, we will most likely need to install some tools. Even the most basic networking tools (e.g.\ \lstinline{ping}) are removed from most Docker images, because very few containers will need them. 
+We should also look at the network of the container. We should look at which containers are in the same network and what the container is able to reach. To do this, we will most likely need to install some tools. Even the most basic networking tools (e.g.\ \lstinline{ping}) are removed from most Docker images, because very few containers will need them.
 
 By default all containers get an IPv4 address in subnet \lstinline{172.17. 0.0/16}. It is possible to find the address (without installing anything) of a container you have access to by looking at \lstinline{/etc/hosts/} file. Docker will add a line that resolves the hostname of to the IPv4 address to \lstinline{/etc/hosts}.
 
@@ -9,9 +9,9 @@ By default all containers get an IPv4 address in subnet \lstinline{172.17. 0.0/1
 \end{lstlisting}
 
 
-We can look at the Docker network by using \lstinline{nmap} (which we will have to install ourselves). 
+We can look at the Docker network by using \lstinline{nmap} (which we will have to install ourselves).
 \begin{lstlisting}[caption={\lstinline{nmap} scan inside container},captionpos=b]
-(host)$ docker run -it --rm ubuntu bash 
+(host)$ docker run -it --rm ubuntu bash
 (cont)# apt update
 ...
 (cont)# apt install nmap

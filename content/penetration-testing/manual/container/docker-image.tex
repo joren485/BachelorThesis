@@ -10,7 +10,7 @@ PRETTY_NAME="CentOS Linux 8 (Core)"
 ...
 \end{lstlisting}
 
-To get a better idea of what a container is supposed to do, we can look at the processes. Because containers should only have a singular task (e.g.\ running a database), they should only have one running process. 
+To get a better idea of what a container is supposed to do, we can look at the processes. Because containers should only have a singular task (e.g.\ running a database), they should only have one running process.
 
 \begin{lstlisting}[caption={A container only has one process},captionpos=b]
 (host)$ docker run --rm --env MYSQL_RANDOM_ROOT_PASSWORD=true --name=database mariadb:latest
