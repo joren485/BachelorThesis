@@ -11,7 +11,7 @@ When the Docker Daemon is started, it sets up its own chains and rules to create
 
 We will look at the following simple example of bypassing a firewall rule with Docker.
 
-\begin{lstlisting}
+\begin{lstlisting}[caption={Bypass \lstinline{iptables} firewall rules using Docker},captionpos=b]
 (host)# iptables -A OUTPUT -p tcp --dport 80 -j DROP
 (host)# iptables -A FORWARD -p tcp --dport 80 -j DROP
 (host)$ curl http://httpbin.org/get
