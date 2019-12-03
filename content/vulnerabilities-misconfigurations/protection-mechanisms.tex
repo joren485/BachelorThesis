@@ -6,7 +6,7 @@ To significantly reduce that risk that (future) vulnerabilities and misconfigura
 
 It should be noted that because these protections add complexity and features, some vulnerabilities focus solely on bypassing one or more protections. A good example of this is CVE--2019--5021 (see \autoref{subsection:CVE-2019-5021}).
 
-\subsection{Capabilities}\label{subsection:capabilities}
+\subsection{Capabilities}\label{protection-mechanisms:subsection:capabilities}
 To allow or disallow a process to use specific privileged functionality, the Linux kernel has capabilities\footnote{See the \lstinline{man page} of \lstinline{capbilities}}. A capability is a granular way of giving certain privileges to processes. A capability allows a process to perform privileged action without giving the process full \lstinline{root} rights. For example, if we want a process to be able to create its own packets but not read sensitive files we give it the \lstinline{CAP_NET_RAW} capability.
 
 \hfill
