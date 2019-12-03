@@ -1,3 +1,32 @@
 \subsubsection{Checking Network Configuration}
 \todo[inline]{Reachable containers}
 \todo[inline]{ARP Spoofing other containers}
+
+We should also look at the network of the container. We should look at which containers are in the same network and what the container is able to reach. To do this, we will most likely need to install some tools. Even the most basic networking tools (e.g.\ \lstinline{ping}) are removed from most Docker images, because very few containers will need them. 
+
+By default all containers get an IPv4 address in subnet \lstinline{172.17. 0.0/16}. It is possible to find the address (without installing anything) of a container you have access to by looking at \lstinline{/etc/hosts/} file. Docker will add a line that resolves the hostname of to the IPv4 address to \lstinline{/etc/hosts}.
+
+\begin{lstlisting}[caption={Last line of \lstinline{/etc/hosts} in Docker},captionpos=b]
+(host)$ docker run -it --rm alpine tail -n1 /etc/hosts
+172.17.0.2 e0e6b96367db
+\end{lstlisting}
+
+
+We can look at the Docker network by using \lstinline{nmap} (which we will have to install ourselves). 
+\begin{lstlisting}[caption={\lstinline{nmap} scan inside container},captionpos=b]
+(host)$ docker run -it --rm ubuntu bash 
+(cont)# apt update
+...
+(cont)# apt install nmap
+...
+(cont)# nmap -sn -PE 172.17.0.0/16
+...
+Nmap scan report for 172.17.0.1
+Host is up (0.000044s latency).
+MAC Address: 02:42:5F:92:ED:72 (Unknown)
+Nmap scan report for 172.17.0.3
+Host is up (0.000027s latency).
+MAC Address: 02:42:AC:11:00:03 (Unknown)
+\end{lstlisting}
+
+We see that we have access to two other hosts, \lstinline{172.17.0.1} and \lstinline{172.17.0.2}. The former being the host itself and the latter being another docker. It is possible to capture the traffic of that container by using a \lstinline{ARP} man-in-the-middle attack (see \autoref{subsection:arp-spoofing}).

@@ -1,5 +1,5 @@
 \subsubsection{Checking Capabilities}
-Once we have a clear picture what kind of system we are working with, we can do some more detailed reconnaissance. One of the most important things to look at are the capabilities of the current process. We can do this by looking at \lstinline{/proc/pid/status} where \lstinline{pid} is the process id\footnote{In Bash \lstinline{/proc/self/} the current process}. This file contains multiple lines that contain information about the granted capabilities.
+Once we have a clear picture what kind of system we are working with, we can do some more detailed reconnaissance. One of the most important things to look at are the kernel capabilities (see \autoref{subsection:capabilities}) of the container. We can do this by looking at \lstinline{/proc/self/status}\footnote{\lstinline{/proc/self/} refers to \lstinline{/proc} of the current process}. This file contains multiple lines that contain information about the granted capabilities.
 
 \begin{lstlisting}[caption={Capabilities of process in container},captionpos=b]
 (cont)# grep Cap /proc/self/status
@@ -19,12 +19,14 @@ We see five different values:
     \item \lstinline{CapAmb}: Capabilities that non-root child processes can inherit.
 \end{itemize}
 
-We are interested in the \lstinline{CapEff} value, because that value represents the current capabilities. The capabilities are represented as a hexadecimal value. Every capability has a value and the \lstinline{CapEff} value is the combination of those values. We can use the \lstinline{capsh} tool to get a list of capabilities from a hexadecimal value (this can be on a different system).
+We are interested in the \lstinline{CapEff} value, because that value represents the current capabilities. The capabilities are represented as a hexadecimal value. Every capability has a value and the \lstinline{CapEff} value is the combination of the values of granted capabilities. We can use the \lstinline{capsh} tool to get a list of capabilities from a hexadecimal value (this can be on a different system).
 
 \begin{lstlisting}[caption={\lstinline{capsh} shows capabilities},captionpos=b]
 (host)$ capsh --decode=00000000a80425fb
 0x00000000a80425fb=cap_chown,cap_dac_override,cap_fowner,cap_fsetid,cap_kill,cap_setgid,cap_setuid,cap_setpcap,cap_net_bind_service,cap_net_raw,cap_sys_chroot,cap_mknod,cap_audit_write,cap_setfcap
 \end{lstlisting}
+
+We can use this to check if there are any capabilities that can be used to escape the Docker container (see \autoref{subsection:capabilities}).
 
 \subsubsection{Checking for Privileged Mode}
 
@@ -36,3 +38,5 @@ CapEff:	0000003fffffffff
 (host)$ capsh --decode=0000003fffffffff 
 0x0000003fffffffff=cap_chown,cap_dac_override,cap_dac_read_search,cap_fowner,cap_fsetid,cap_kill,cap_setgid,cap_setuid,cap_setpcap,cap_linux_immutable,cap_net_bind_service,cap_net_broadcast,cap_net_admin,cap_net_raw,cap_ipc_lock,cap_ipc_owner,cap_sys_module,cap_sys_rawio,cap_sys_chroot,cap_sys_ptrace,cap_sys_pacct,cap_sys_admin,cap_sys_boot,cap_sys_nice,cap_sys_resource,cap_sys_time,cap_sys_tty_config,cap_mknod,cap_lease,cap_audit_write,cap_audit_control,cap_setfcap,cap_mac_override,cap_mac_admin,cap_syslog,cap_wake_alarm,cap_block_suspend,cap_audit_read
 \end{lstlisting}
+
+If we find a privileged container, we can easily escape it (as shown in \autoref{subsection:privileged}).

@@ -9,4 +9,4 @@ root:x:0:0:root:/root:/bin/bash
 test:x:1000:1000:,,,:/home/test:/bin/bash
 \end{lstlisting}
 
-Wee see that our current user is \lstinline{root} (the user id is 0) and that there are two users (besides the default users in Linux). By default, containers run as \lstinline{root}. Which is great from an attacker perspective, because it allows us full access to everything inside the container. A well configured container most likely does not run as \lstinline{root} (see \autoref{subsection:non-root-user}).
+Wee see that our current user is \lstinline{root} (the user id is 0) and that there are two users (besides the default users in Linux). By default, containers run as \lstinline{root}. That is great from an attackers perspective, because it allows us full access to everything inside the container. A well configured container most likely does not run as \lstinline{root} (see \autoref{subsection:non-root-user}).

@@ -1,2 +1,9 @@
 \subsubsection{Searching for the Docker Socket}
+It is quite common for the Docker Socket to be mounted into containers. For example if we want to have a container that monitors the health of all other containers. However, this is very dangerous (as we saw in \autoref{subsection:api}). We can search for the socket using two techniques. We either look at the mounts (like in \autoref{subsubsection:volumes}) or we try to look for files with names similar to \lstinline{docker.sock}.
 
+\begin{lstlisting}[caption={\lstinline{docker.sock} in \lstinline{/proc/mounts}},captionpos=b]
+(host)$ docker run -it --rm -v /var/run/docker.sock:/var/run/docker.sock ubuntu grep docker.sock /proc/mounts
+tmpfs /run/docker.sock tmpfs rw,nosuid,noexec,relatime,size=792244k,mode=755 0 0
+\end{lstlisting}
+
+In this example, we mount \lstinline{/var/run/docker.sock} into the container as \lstinline{/var/run/docker.sock}. We can see that the \lstinline{docker.sock} is mounted at \lstinline{/run/docker.sock} (it is not mounted at \lstinline{/var/run/docker.sock} because \lstinline{/var/run/} is a symlink to \lstinline{/run/}).
