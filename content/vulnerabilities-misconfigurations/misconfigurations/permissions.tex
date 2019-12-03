@@ -39,7 +39,7 @@ This is very useful in specific cases. For example, users should be able to chan
 
 \hfill
 
-If a system is misconfigured by having the \lstinline{setuid} bit set for the \lstinline{docker} binary, a user will be able to execute Docker as \lstinline{root} (the owner of \lstinline{docker}). Just like before, we can easily recreate this attack.
+If a system is misconfigured by having the \lstinline{setuid} bit set for the \lstinline{docker} binary, an user will be able to execute Docker as \lstinline{root} (the owner of \lstinline{docker}). Just like before, we can easily recreate this attack.
 
 \begin{lstlisting}[caption={Docker \lstinline{setuid} exploit example},captionpos=b]
 (host)$ sudo -v
@@ -52,7 +52,7 @@ Sorry, user unpriv may not run sudo on host.
 admin:$6$VOSV5AVQ$jHWxAVAUgl...:18142:0:99999:7:::
 \end{lstlisting}
 
-We now see that we are not a part of the \lstinline{docker} group, but we can still run \lstinline{docker} because the \lstinline{setuid} bit is set.
+We now see that we are not a part of the \lstinline{docker} group, but we can still run \lstinline{docker} because the \lstinline{setuid} bit (and the execute bit for all users) is set.
 
 \hfill
 
