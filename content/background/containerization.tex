@@ -1,5 +1,5 @@
 \section{Containerization Software}
-Containerization software is used to isolate processes running on a host from one another.
+Containerization software isolates processes running on a host from one another.
 A process in a container sees a different part of the host system then processes outside of the container. A process inside a container sees a different file system, network interfaces and users than processes outside of the container. Processes inside the container can only see other processes inside the container.
 
 \begin{figure}[ht]
@@ -46,7 +46,7 @@ A process in a container sees a different part of the host system then processes
 \end{figure}
 
 If we look at the above example, we see two scenarios. The first is the default way to run processes. The operating system starts processes that can communicate with one another. Their view on the file system is the same.
-In the second scenario one of the processes runs inside a container. These processes cannot communicate with one another. If Process A looks at the files in \lstinline{/tmp}, it accesses a different part of the file system than if Process B looks at the files in \lstinline{/tmp}. Process B can not even see that Process A exists.
+In the second scenario one of the processes runs inside a container. These processes cannot communicate with one another. If Process A looks at the files in \lstinline{/tmp}, it accesses a different part of the file system than if Process B looks at the files in \lstinline{/tmp}\footnote{Access to files on the host has to be explicitly given (as discussed in \autoref{subsection:data-persistence})}. Process B can not even see that Process A exists.
 
 \hfill
 
@@ -114,7 +114,7 @@ Virtualization is an older similar technique to isolate software. In virtualizat
             \draw (0,125) -- (205,125) -- (205,155) -- (0,155) -- cycle ;
             \draw (102.5,140) node {Linux Host};
         \end{tikzpicture}
-        \caption{Virtual Machines}
+        \caption{Virtual Machines\protect\footnotemark}
     \end{subfigure}
     \begin{subfigure}[t]{.45\textwidth}
         \centering
@@ -143,12 +143,13 @@ Virtualization is an older similar technique to isolate software. In virtualizat
     \end{subfigure}
     \caption{}
 \end{figure}
+\footnotetext{Hypervisors can also run on the bare metal. This removes the need for a host OS, which adds security.}
 
 Because containerization software shares many resources with the host, it is a lot faster and more flexible than virtualization. Where virtualization needs to start a whole new operating system, containerization only needs to start a single process.
 
 \subsubsection{Containers and Security}
 
-Isolation reduces risk, because it separates processes. If one process is compromised it cannot reach another process. If a process in a container is compromised, it cannot reach sensitive files of the host. This clearly add security value.
+Isolation reduces risk, because it separates processes. If one process is compromised it cannot reach another process. If a process in a container is compromised, it cannot reach sensitive files of the host.
 
 \hfill
 
