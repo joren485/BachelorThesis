@@ -144,10 +144,14 @@ services:
 Very similar functionality is also built into the Docker Engine, called Docker Stack. It also uses \lstinline{docker-compose.yaml}. Some features that are supported by \lstinline{docker-compose} are not supported by Docker Stack and vice versa.
 
 \subsection{Registries}
-
 Docker images are distributable through so called registries. A registry is a server (that anybody can host), that stores Docker images. When a client does not have a Docker image that it needs, it can contact a registry to download that image.
 
 \hfill
 
 The most popular (and public) registry is Docker Hub, which is run by the same company that develops Docker.
 Anybody can create a Docker Hub account and start creating images that anybody can download. Docker Hub also provides default images for popular software.
+
+\subsection{Deployment \& Development Pipelines}
+One of the biggest usages of Docker is automating part of the deployment and development process. Many developers use continuous integration and continuous deployment systems to automatically build Docker images that they then automatically pull and run on their production environments. This level of automation allows for very rapid software development.
+
+That automation does have a negative side. It removes scrutiny from the deployment pipeline. If an attacker is able to compromise a link in the chain, they will be able to create their own malicious images that will be automatically run. Without proper monitoring of the full pipeline, such an attack can go unnoticed, because the system is designed to not need any human interaction.

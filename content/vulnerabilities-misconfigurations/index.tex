@@ -9,7 +9,13 @@ Vulnerabilities and misconfigurations are both security problems, but they diffe
 
 In the \autoref{chapter:pentesting}, we will look at how these vulnerabilities and misconfigurations can be used during a penetration test.
 
+\subsection*{Impact of Docker on Existing Vulnerabilities}
+A Docker container isolates software from the host, but does not change it. This means that vulnerabilities in software are not affected by Dockerizing that software. However, the impact of those vulnerabilities is decreased, because the vulnerability exists in an isolated environment.
+
+If, for example, there exists a RCE (remote code execution) vulnerability in Wordpress. Running Wordpress in a Docker container does not fix the vulnerability. An attacker is still able to exploit it. But that attacker is not able to access the host system, because the exploited software is isolated from the host system because of Docker.
+
+
 \input{content/vulnerabilities-misconfigurations/attack-surface/index}
 \input{content/vulnerabilities-misconfigurations/protection-mechanisms}
-\input{content/vulnerabilities-misconfigurations/vulnerabilities/index}
 \input{content/vulnerabilities-misconfigurations/misconfigurations/index}
+\input{content/vulnerabilities-misconfigurations/vulnerabilities/index}

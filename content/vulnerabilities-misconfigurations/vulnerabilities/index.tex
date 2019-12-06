@@ -6,6 +6,11 @@ Because there are many security researchers looking for vulnerabilities in conta
 
 All of these vulnerabilities can be prevented by using the latest version of Docker and Docker images. This is covered by guidelines 1.1.2 (Ensure that the version of Docker is up to date) and 5.27 (Ensure that Docker commands always make use of the latest version of their image), respectively.
 
+\subsection{Common Vulnerabilities and Exposures}
+The Common Vulnerabilities and Exposures (CVE for short) system is a list of all publicly known security vulnerabilities. Every vulnerability that is found gets a CVE identifier, which looks like CVE--2019--0000. The first number represents the year in which the vulnerability is found. The second number is an arbitrary number that is at least four digits long. The system is maintained by the Mitre Corporation. Organizations that are allowed to give out new CVE identifiers are called CVE Numbering Authorities (CNA for short). It is possible to read and search the full list on Mitre's website\footnote{\url{https://cve.mitre.org/}}, the United State's National Vulnerability Database\footnote{\url{https://nvd.nist.gov/}} and other websites like CVEDetails\footnote{\url{https://www.cvedetails.com/}}.
+
+The severity of a CVE is determined by the Common Vulnerability Scoring System (CVSS for short) score.
+
 \input{content/vulnerabilities-misconfigurations/vulnerabilities/cve-2019-16884.tex}
 \input{content/vulnerabilities-misconfigurations/vulnerabilities/cve-2019-13139.tex}
 \input{content/vulnerabilities-misconfigurations/vulnerabilities/cve-2019-5736.tex}
