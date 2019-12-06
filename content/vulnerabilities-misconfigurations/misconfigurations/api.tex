@@ -19,7 +19,7 @@ If the \lstinline{/var/run/docker.sock} is added as a volume to a container, the
 
 \hfill
 
-Lets say we want to get the password hash of an user called \lstinline{admin} on the host. We are in a container that has access to \lstinline{/var/run/docker.sock}. We use the API to start another Docker container on the host, that has access to the password hash (located in \lstinline{/etc/shadow}). We read the password file, by looking at the logs of the container that we just started.
+Let's say we want to get the password hash of an user called \lstinline{admin} on the host. We are in a container that has access to \lstinline{/var/run/docker.sock}. We use the API to start another Docker container on the host, that has access to the password hash (located in \lstinline{/etc/shadow}). We read the password file, by looking at the logs of the container that we just started.
 
 \begin{lstlisting}[caption={Start Docker using the API to read host filesi.},captionpos=b]
 (host)$ docker run -it --rm -v /var/run/docker.sock:/var/run/docker.sock ubuntu /bin/bash
@@ -43,7 +43,7 @@ When a container has access to \lstinline{/var/run/docker.sock} (i.e.\ when \lst
 
 \hfill
 
-Lets start a Postgres\footnote{\url{https://www.postgresql.org/}} database inside a Docker. From the documentation of the Postgres Docker image\footnote{\url{https://hub.docker.com/_/postgres}}, we know that we can provide a password using the \lstinline{POSTGRES_PASSWORD} environment variable. If we have access to another container which has access to the Docker API, we can read that password from the environment variable.
+Let's start a Postgres\footnote{\url{https://www.postgresql.org/}} database inside a Docker. From the documentation of the Postgres Docker image\footnote{\url{https://hub.docker.com/_/postgres}}, we know that we can provide a password using the \lstinline{POSTGRES_PASSWORD} environment variable. If we have access to another container which has access to the Docker API, we can read that password from the environment variable.
 
 \begin{lstlisting}[caption={Example extract secrets using the Docker API},captionpos=b]
 (host)$ docker run --name database -e POSTGRES_PASSWORD=thisshouldbesecret -d postgres
