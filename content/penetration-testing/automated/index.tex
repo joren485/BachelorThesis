@@ -1,16 +1,41 @@
-\section{Automated}
-\todo[inline]{\href{https://github.com/ProfessionallyEvil/harpoon}{harpoon}}
-\todo[inline]{Source \href{https://www.zenko.io/blog/5-free-tools-to-navigate-through-docker-containers-security}{5-free-tools-to-navigate-through-docker-containers-security}}
-\todo[inline]{Static analysis tool: \url{https://github.com/coreos/clair}}
-\todo[inline]{Scanner for clair: \url{https://github.com/arminc/clair-scanner}}
-\todo[inline]{Static vulnerability scanner (and clamAV) on software in container: \url{https://github.com/eliasgranderubio/dagda}}
-\todo[inline]{\href{https://github.com/goodwithtech/dockle}{Dockle}}
-\todo[inline]{Scanner using the CIS Docker Benchmark: \url{https://github.com/docker/docker-bench-security}}
-\todo[inline]{SaaS container policy scanner: \url{https://anchore.com}}
-\todo[inline]{Research: Twistlock}
-\todo[inline]{Research: Sqreen}
-\todo[inline]{sysdig: \url{https://sysdig.com/}}
-\todo[inline]{sysdig: \url{https://sysdig.com/opensource/falco/}}
-\todo[inline]{\href{https://docs.docker.com/ee/dtr/user/manage-images/scan-images-for-vulnerabilities/}{Docker Docs: Scan images for vulnerabilities}}
-\todo[inline]{\href{https://techbeacon.com/security/10-top-open-source-tools-docker-security}{10+ top open-source tools for Docker security}}
+\section{Automation Tools}
+Most security assessments are very time restricted. Large, complex systems need to be assessed in a short amount of time. There are tools that automate part of the assessment process. Instead of taking every step manually, these tools scan systems automatically find known vulnerabilities and possible weak spots in a system.
 
+The advantage of these tools is that they save a lot of time and effort, because they can look at every part of a system in a systematic way. While the tools save time, they do miss the precision and detail that manual testing brings. Many security flaws are complex and might only be vulnerable under very specific circumstances. Manual examination and testing might reveal new vulnerabilities or vulnerable circumstances, while automated testing will only look for known vulnerabilities.
+
+\hfill
+
+In this section we will look at tools that automate scanning, exploitation and detection of Docker vulnerabilities. Because Docker is a very popular ecosystem, there exist many different tools and scanners. Created by both companies (including Docker itself) and individuals interested in Docker security.
+
+\subsection{Docker Bench Security}
+Docker itself has released a scanner that is based on the CIS Docker Benchmark\footnote{\url{https://github.com/docker/docker-bench-security}}. It checks a host for every guideline in the CIS Docker Benchmark.
+
+\subsection{Image Analysis}
+Most Docker security analysis tools focus on static analysis of Docker images. They look for software and libraries inside the images and match these against known vulnerability databases. They also look for sensitive information (i.e.\ passwords) that might be stored inside the image. In \autoref{appendix:static-analysis-list} you will find a list of available Docker image analysis tools.
+
+\subsubsection{Continuous Integration}
+Because these tools perform static analysis, they can be run immediately after creating an image. This makes them perfect for CI pipelines. Let's say we have the following very common Git pipeline:
+\begin{enumerate}
+    \item A commit is made on feature branch.
+    \item A pull request is opened to merge branch into \lstinline{master}.
+    \item A new Docker image is build.
+    \item Unit, integration and linting tests are run using CI\@.
+    \item Docker image is pushed to registry
+    \item New Docker image is deployed.
+\end{enumerate}
+
+In step 4, tests are automatically run on the newly created image using CI\@. It is possible to also check whether everything inside the image is up to date and no sensitive information is leaked. Some registries (e.g.\ Docker Hub) do this automatically (if enabled).
+
+\subsection{Offensive Tools}
+There are some tools that specifically focus on the attacker perspective on Docker systems. These tools focus on escaping containers or escalating privileges on the host.
+
+\begin{itemize}
+    \item Break out the Box\footnote{\url{https://github.com/brompwnie/botb}}. BOtB is a tool that specialize in container escapes. It uses some well-known techniques and exploits. (that we looked at in \autoref{chapter:vulnerabilities-misconfigurations})
+    \item Metasploit specific modules: Metasploit is an exploitation framework (for all software, not only Docker). It has some Docker system scanners and exploits\cite{Docker-Credentials-Metasploit}\cite{Metasploit-Linux-Gather-Container-Detection}\cite{Metasploit-Unprotected-TCP-Socket}.
+    \item Harpoon\footnote{\url{https://github.com/ProfessionallyEvil/harpoon}}: Harpoon is a simple tool that can identify whether it is running inside a container and tries to escape using a mounted Docker socket (see \autoref{subsection:api}).
+    \item dockerscan\footnote{\url{https://github.com/cr0hn/dockerscan}}: dockerscan is a tool that is used to exploit registries. It tries to find and attack vulnerable registries inside a network.
+    \item dockscan\footnote{\url{https://github.com/kost/dockscan}}: Checks running containers and for misconfigurations.
+\end{itemize}
+
+\subsection{Integrated Monitoring Platforms}
+There are also companies that sell security monitoring platforms. Customers need to install software inside their images and on their hosts and the monitoring system will try to detect malicious behavior. To popular options seem to be Twistlock\footnote{\url{https://www.twistlock.com/}}\footnote{Twistlock has a very detailed blog about Docker security.} and Sysdig Falco\footnote{\url{https://sysdig.com/opensource/falco/}}.
