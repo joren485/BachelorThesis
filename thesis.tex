@@ -32,11 +32,14 @@
 % Make itemize with multiple columns.
 \usepackage{multicol}
 
-% Make sure Latex does not split urls
+% Make sure Latex correctly splits urls.
 \usepackage[hyphens,spaces,obeyspaces]{url}
 
 % Internal and external references
 \usepackage[hidelinks]{hyperref}
+
+% Include \raggedright command.
+\usepackage{etoolbox}
 
 \lstset{basicstyle = \ttfamily,
         columns = fullflexible,
@@ -49,6 +52,8 @@
 
 \setcounter{tocdepth}{4}
 \setcounter{secnumdepth}{4}
+
+\apptocmd{\thebibliography}{\raggedright}{}{}
 
 \begin{document}
     \hypersetup{pageanchor=false}
