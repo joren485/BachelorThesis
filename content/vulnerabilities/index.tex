@@ -1,4 +1,4 @@
-\chapter{Known Vulnerabilities \& Misconfigurations in Docker}\label{chapter:vulnerabilities-misconfigurations}
+\chapter{Known Docker Vulnerabilities}\label{chapter:vulnerabilities}
 \todo[inline]{Rename vulnerabilities to software bugs}
 \todo[inline]{Make distinction between root in container and root on host everywhere}
 \todo[inline]{Move vuln vs misconfig to notation and definitions}
@@ -18,7 +18,7 @@ A Docker container isolates software from the host, but does not change it. This
 If, for example, there exists a RCE (remote code execution) vulnerability in Wordpress. Running Wordpress in a Docker container does not fix the vulnerability. An attacker is still able to exploit it. But that attacker is not able to access the host system, because the exploited software is isolated from the host system because of Docker.
 
 
-\input{content/vulnerabilities-misconfigurations/attack-surface/index}
-\input{content/vulnerabilities-misconfigurations/protection-mechanisms}
-\input{content/vulnerabilities-misconfigurations/misconfigurations/index}
-\input{content/vulnerabilities-misconfigurations/vulnerabilities/index}
+\input{content/vulnerabilities/attack-surface/index}
+\input{content/vulnerabilities/protection-mechanisms}
+\input{content/vulnerabilities/misconfigurations/index}
+\input{content/vulnerabilities/bugs/index}

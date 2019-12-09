@@ -30,7 +30,7 @@ In step 4, tests are automatically run on the newly created image using CI\@. It
 There are some tools that specifically focus on the attacker perspective on Docker systems. These tools focus on escaping containers or escalating privileges on the host.
 
 \begin{itemize}
-    \item Break out the Box\footnote{\url{https://github.com/brompwnie/botb}}. BOtB is a tool that specialize in container escapes. It uses some well-known techniques and exploits. (that we looked at in \autoref{chapter:vulnerabilities-misconfigurations})
+    \item Break out the Box\footnote{\url{https://github.com/brompwnie/botb}}. BOtB is a tool that specialize in container escapes. It uses some well-known techniques and exploits. (that we looked at in \autoref{chapter:vulnerabilities})
     \item Metasploit specific modules: Metasploit is an exploitation framework (for all software, not only Docker). It has some Docker system scanners and exploits\cite{Docker-Credentials-Metasploit}\cite{Metasploit-Linux-Gather-Container-Detection}\cite{Metasploit-Unprotected-TCP-Socket}.
     \item Harpoon\footnote{\url{https://github.com/ProfessionallyEvil/harpoon}}: Harpoon is a simple tool that can identify whether it is running inside a container and tries to escape using a mounted Docker socket (see \autoref{subsection:api}).
     \item dockerscan\footnote{\url{https://github.com/cr0hn/dockerscan}}: dockerscan is a tool that is used to exploit registries. It tries to find and attack vulnerable registries inside a network.
