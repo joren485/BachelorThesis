@@ -1,22 +1,22 @@
-\chapter{Known Docker Vulnerabilities}\label{chapter:vulnerabilities}
+\chapter{Known Vulnerabilities in Docker}\label{chapter:vulnerabilities}
 \todo[inline]{Rename vulnerabilities to software bugs}
 \todo[inline]{Make distinction between root in container and root on host everywhere}
 \todo[inline]{Move vuln vs misconfig to notation and definitions}
-In this chapter we will look at Docker from a vulnerability analysis perspective. First we will look conceptually at Docker and security by examining the attack surface of Docker on an host and the various attacker models that come with it. Then we look at the practical countermeasures in place to prevent security problems and reduce impact of existing ones. We then look at some interesting, practical examples of security problems of Docker. These are split into vulnerabilities and misconfigurations.
+In this chapter we will look at Docker from a vulnerability analysis perspective. First we will look conceptually at Docker and security by examining the attack surface of Docker on an host and the various attacker models that come with it. Then we look at the practical countermeasures in place to prevent or reduce the impact of security problems. We then look at some interesting, practical examples of security problems of Docker. These are split into misconfigurations and security related software bugs.
 
 \hfill
 
-Vulnerabilities and misconfigurations are both security problems, but they differ in who made the mistake. A \emph{vulnerability} is a problem in a program itself. For example, a buffer overflow is a clear vulnerability. The problem lies solely in the program itself. To fix it, the code of the program needs to be changed. \emph{Misconfigurations}, on the other hand, are security problems that come from wrong usage of a program. The program is incorrectly configured and that creates a situation that might be exploitable to an attacker. For example, a world-readable file containing passwords is a misconfiguration. To fix a misconfiguration, the user should change the configuration of the problem. The developers of the program can only recommend users to configure it correctly (and have documentation on how to do it).
+Software bugs and misconfigurations can both security problems, but they differ in who made the mistake. A \emph{bug} is a problem in a program itself. For example, a buffer overflow is a clear bug. The problem lies solely in the program itself. To fix it, the code of the program needs to be changed. \emph{Misconfigurations}, on the other hand, are security problems that come from wrong usage of a program. The program is incorrectly configured and that creates a situation that might be exploitable to an attacker. For example, a world-readable file containing passwords is a misconfiguration. To fix a misconfiguration, the user should change the configuration of the problem. The developers of the program can only recommend users to configure it correctly.
 
 \hfill
 
-In the \autoref{chapter:pentesting}, we will look at how these vulnerabilities and misconfigurations can be used during a penetration test.
+In the \autoref{chapter:pentesting}, we will look at how these vulnerabilities can be used during a penetration test.
 
 \subsection*{Impact of Docker on Existing Vulnerabilities}
+\todo[inline]{Find a better place for this}
 A Docker container isolates software from the host, but does not change it. This means that vulnerabilities in software are not affected by Dockerizing that software. However, the impact of those vulnerabilities is decreased, because the vulnerability exists in an isolated environment.
 
 If, for example, there exists a RCE (remote code execution) vulnerability in Wordpress. Running Wordpress in a Docker container does not fix the vulnerability. An attacker is still able to exploit it. But that attacker is not able to access the host system, because the exploited software is isolated from the host system because of Docker.
-
 
 \input{content/vulnerabilities/attack-surface/index}
 \input{content/vulnerabilities/protection-mechanisms}
