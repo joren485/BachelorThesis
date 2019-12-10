@@ -1,12 +1,11 @@
-\section{Manual Penetration Testing}
-\todo[inline]{Explain relation of detection, host and container}
-\todo[inline]{Explain white box vs black box pentests Docker systems}
-\todo[inline]{Check for protection mechanisms}
-In \autoref{chapter:vulnerabilities} we focussed on the individual vulnerabilities and misconfigurations and how to exploit them. In this section we will focus on how to identify them. Before we do that, we will look at how to see whether you are in a container or not.
+\section{Identifying Vulnerabilities}
+During a penetration test we will get access to different systems. How we get that access depends on the type of assessment we are performing. During a white box assessment, we will most likely get full access to all systems before the assessment starts. During a black box assessment, on the other hand, we get access by exploiting vulnerabilities in systems to get a foothold and command execution. In this section we will discuss how we can manually identify the vulnerabilities we looked at in \autoref{chapter:vulnerabilities} once we have gotten command execution on a system.
 
-We will mostly focus on the misconfigurations, because although the vulnerabilities might have a high impact they are all mitigated with one line of advice: ``Keep your systems up to date''. Finding vulnerabilities is also a lot easier than misconfigurations, because almost all Docker vulnerabilities are dependent on the version of Docker being out of date.
+We will look at two different perspectives: command execution inside a Docker container and command execution on a host running Docker. We will first look at detecting from which perspective we are attacking. For both perspectives (container and host) we will then look at steps we can take (i.e.\ command we can execute) to get information about the system and identify weak spots.
 
-We will look at all the attack scenarios described in \autoref{section:attack-surface-models}.
+\hfill
+
+We will mostly focus on the misconfigurations, because although the security related bugs might have a high impact they are all mitigated with one simple line of advice: ``Keep your systems up to date''. Checking whether a vulnerable to a known bug is also a lot easier than misconfigurations, because almost all Docker bugs are dependent on the version of Docker being out of date.
 
 \input{content/penetration-testing/manual/detection/index}
 \input{content/penetration-testing/manual/host/index}

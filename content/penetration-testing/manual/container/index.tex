@@ -1,6 +1,5 @@
 \subsection{Testing from Container}
-\todo[inline]{Explain relation of the steps}
-If we have only access to a container, we are mostly are going to look for ways to escape it or see what we can reach from the container. In this section we will look at what we should look at and target.
+If we have code execution inside of a container, we are going to focus on escaping. Because the Docker Daemon runs as root, we will most likely get \lstinline{root} access to the host if we escape. We will take a look at steps we can take to identify the container operating system, the container image, the host operating system and weak spots in the container.
 
 \hfill
 
