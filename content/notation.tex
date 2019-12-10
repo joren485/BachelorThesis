@@ -1,5 +1,4 @@
 \chapter{Notation}\label{chapter:notation}
-\todo[inline]{Consistently use quotes and argument abbreviations in shell commands}
 Throughout this thesis we will look at examples using Bash commands. The following conventions are used to represent the different contexts in which the commands are executed.
 
 \begin{itemize}
@@ -11,7 +10,7 @@ Throughout this thesis we will look at examples using Bash commands. The followi
 \end{itemize}
 
 In this example, an unprivileged user executes the command \lstinline{echo Hello, World!} on the host system.
-\begin{lstlisting}[caption={Shell command notation example 1}, captionpos=b]
+\begin{lstlisting}[caption={Shell command notation example 1.}, captionpos=b]
 (host)$ echo Hello, World!
 Hello, World!
 \end{lstlisting}
@@ -19,9 +18,13 @@ Hello, World!
 \hfill
 
 In this example, the \lstinline{root} user executes two commands to get system information. The content of \lstinline{/proc/cpuinfo} is not shown.
-\begin{lstlisting}[caption={Shell command notation example 2}, captionpos=b]
+\begin{lstlisting}[caption={Shell command notation example 2.}, captionpos=b]
 (cont)# uname -r
 5.3.8-arch1-1
 (cont)# cat /proc/cpuinfo
 ...
 \end{lstlisting}
+
+\hfill
+
+In this thesis, we will look at many examples using Bash commands. Although I prefer using non-abbreviated arguments and quoted values to make it more clear what a command does, throughout this thesis we will use abbreviated non-quoted arguments (where possible) to make the commands smaller and more readable.

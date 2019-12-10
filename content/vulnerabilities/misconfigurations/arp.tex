@@ -16,13 +16,13 @@ We start three Docker containers using the \lstinline{ubuntu:latest} image (whic
 We use \lstinline{vic0}, \lstinline{vic1} and \lstinline{atck} instead of \lstinline{cont} to indicate in which container a command is executed.
 
 \begin{lstlisting}[caption={Docker container ARP spoof},captionpos=b]
-(host)$ docker run --rm -it --name=victim0 --hostname=victim0 ubuntu:latest /bin/bash
+(host)$ docker run --rm -it --name=victim0 -h victim0 ubuntu:latest /bin/bash
 (vic0)# apt update
 ...
 (vic0)# apt install net-tools iproute2 iputils-ping
 ...
-(host)$ docker run --rm -it --name=victim1 --hostname=victim1 ubuntu:latest /bin/bash
-(host)$ docker run --rm -it --name=attacker --hostname=attacker ubuntu:latest /bin/bash
+(host)$ docker run --rm -it --name=victim1 -h victim1 ubuntu:latest /bin/bash
+(host)$ docker run --rm -it --name=attacker -h attacker ubuntu:latest /bin/bash
 (atck)# apt update
 ...
 (atck)# apt install dsniff net-tools iproute2 tcpdump

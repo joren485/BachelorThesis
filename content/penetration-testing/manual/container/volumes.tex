@@ -2,7 +2,7 @@
 Volumes, the directories that are mounted from the host into the container, are the persistent data of the container. This persistent data might contain sensitive information, that is why it is important to check what directories are mounted into the container.
 
 We can do this by looking at the mounted filesystem locations.
-\begin{lstlisting}[caption={The (very abbreviated) contents of \lstinline{/proc/mounts} in a Docker container},captionpos=b,label={listing:proc-mounts}]
+\begin{lstlisting}[caption={The (very abbreviated) contents of \lstinline{/proc/mounts} in a Docker container.},captionpos=b,label={listing:proc-mounts}]
 (host)$ docker run -it --rm -v /tmp:/host/tmp ubuntu cat /proc/mounts
 overlay / overlay...
 ...

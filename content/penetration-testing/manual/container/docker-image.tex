@@ -3,7 +3,7 @@
 The next step is to identify the operating system (and maybe the Docker Image) of the container.
 
 All modern Linux distributions have a file \lstinline{/etc/os-release}\footnote{Although this file was introduced by \lstinline{systemd}, systems that explicitly do not use \lstinline{systemd} (e.g.\ Void Linux) use \lstinline{/etc/os-release}.} that contains information about the running operating system.
-\begin{lstlisting}[caption={CentOS container \lstinline{/etc/os-release}},captionpos=b]
+\begin{lstlisting}[caption={CentOS container \lstinline{/etc/os-release}.},captionpos=b]
 (host)$ docker run -it --rm centos:latest cat /etc/os-release
 ...
 PRETTY_NAME="CentOS Linux 8 (Core)"
@@ -12,8 +12,8 @@ PRETTY_NAME="CentOS Linux 8 (Core)"
 
 To get a better idea of what a container is supposed to do, we can look at the processes. Because containers should only have a singular task (e.g.\ running a database), they should only have one running process.
 
-\begin{lstlisting}[caption={A container only has one process},captionpos=b]
-(host)$ docker run --rm --env MYSQL_RANDOM_ROOT_PASSWORD=true --name=database mariadb:latest
+\begin{lstlisting}[caption={A container only has one process.},captionpos=b]
+(host)$ docker run --rm -e MYSQL_RANDOM_ROOT_PASSWORD=true --name=database mariadb:latest
 ...
 (host)$ docker exec database ps -A -o pid,cmd
 PID CMD

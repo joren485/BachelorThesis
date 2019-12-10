@@ -19,7 +19,7 @@ A process in a container sees a different part of the host system then processes
             \draw (0,65) -- (200,65) -- (200,95) -- (0,95) -- cycle ;
             \draw (100, 80) node {Linux Host};
         \end{tikzpicture}
-        \caption{Two processes}
+        \caption{Two processes.}
     \end{subfigure}
     \begin{subfigure}[t]{.45\textwidth}
         \centering
@@ -40,13 +40,13 @@ A process in a container sees a different part of the host system then processes
             \draw (0,65) -- (200,65) -- (200,95) -- (0,95) -- cycle ;
             \draw (100, 80) node {Linux Host};
         \end{tikzpicture}
-        \caption{One process in a container}
+        \caption{One process in a container.}
     \end{subfigure}
     \caption{}
 \end{figure}
 
 If we look at the above example, we see two scenarios. The first is the default way to run processes. The operating system starts processes that can communicate with one another. Their view on the file system is the same.
-In the second scenario one of the processes runs inside a container. These processes cannot communicate with one another. If Process A looks at the files in \lstinline{/tmp}, it accesses a different part of the file system than if Process B looks at the files in \lstinline{/tmp}\footnote{Access to files on the host has to be explicitly given (as discussed in \autoref{subsection:data-persistence})}. Process B can not even see that Process A exists.
+In the second scenario one of the processes runs inside a container. These processes cannot communicate with one another. If Process A looks at the files in \lstinline{/tmp}, it accesses a different part of the file system than if Process B looks at the files in \lstinline{/tmp}\footnote{Access to files on the host has to be explicitly given (as discussed in \autoref{subsection:data-persistence}).}. Process B can not even see that Process A exists.
 
 \hfill
 
@@ -114,7 +114,7 @@ Virtualization is an older similar technique to isolate software. In virtualizat
             \draw (0,125) -- (205,125) -- (205,155) -- (0,155) -- cycle ;
             \draw (102.5,140) node {Linux Host};
         \end{tikzpicture}
-        \caption{Virtual Machines\protect\footnotemark}
+        \caption{Virtual Machines\protect\footnotemark.}
     \end{subfigure}
     \begin{subfigure}[t]{.45\textwidth}
         \centering
@@ -139,7 +139,7 @@ Virtualization is an older similar technique to isolate software. In virtualizat
             \draw (0,55) -- (200,55) -- (200,85) -- (0,85) -- cycle ;
             \draw (100, 70) node {Linux Host};
         \end{tikzpicture}
-        \caption{Containers}
+        \caption{Containers.}
     \end{subfigure}
     \caption{}
 \end{figure}

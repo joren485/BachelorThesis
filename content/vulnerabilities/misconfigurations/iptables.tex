@@ -11,7 +11,7 @@ When the Docker Daemon is started, it sets up its own chains and rules to create
 
 We will look at the following simple example of bypassing a firewall rule with Docker.
 
-\begin{lstlisting}[caption={Bypass \lstinline{iptables} firewall rules using Docker},captionpos=b]
+\begin{lstlisting}[caption={Bypass \lstinline{iptables} firewall rules using Docker.},captionpos=b]
 (host)# iptables -A OUTPUT -p tcp --dport 80 -j DROP
 (host)# iptables -A FORWARD -p tcp --dport 80 -j DROP
 (host)$ curl http://httpbin.org/get
@@ -36,4 +36,4 @@ We first setup rules to drop all outgoing (including forwarded) \lstinline{HTTP}
 
 \hfill
 
-The Docker CIS Benchmark does not cover this problem. It, however, does have guidelines that ensures this problem exists. Guideline 2.3 (Ensure Docker is allowed to make changes to iptables) recommends that the Docker Daemon is allowed to change the firewall rules. Guideline 5.9 (Ensure that the host's network namespace is not shared) recommends to not use the \lstinline{--net=host} setting, to make sure the container is put into a separate network stack. These are a good recommendations, because implementing them removes the need to configure a containerized network stack yourself. However, it also isolates the firewall rules of the host from the containers.
+The Docker CIS Benchmark does not cover this problem. It, however, does have guidelines that ensures this problem exists. Guideline 2.3 (Ensure Docker is allowed to make changes to iptables) recommends that the Docker Daemon is allowed to change the firewall rules. Guideline 5.9 (Ensure that the host's network \lstinline{namespace} is not shared) recommends to not use the \lstinline{--net=host} setting, to make sure the container is put into a separate network stack. These are a good recommendations, because implementing them removes the need to configure a containerized network stack yourself. However, it also isolates the firewall rules of the host from the containers.

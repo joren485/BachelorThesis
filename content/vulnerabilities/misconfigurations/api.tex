@@ -1,7 +1,7 @@
 \subsection{Docker Engine API}\label{subsection:api}
 
 The Docker Daemon runs a RESTful\footnote{\url{https://restfulapi.net/}} API\footnote{\url{https://docs.docker.com/engine/api/v1.40/}} that is used to communicate with the Docker Daemon. For example, when an user executes a Docker client command, it actually makes a request to the API.\@ By default the API listens on a UNIX socket accessible through \lstinline{/var/run/docker.sock}, but it also possible to make it listen on a port. This makes it possible for anybody in the \lstinline{docker} group (and \lstinline{root}) to make HTTP requests. For example the following commands (to see all containers) produce the same output (albeit in a different format). The first one is a command using the Docker client and the second is a HTTP request (using \lstinline{curl}\footnote{\url{https://curl.haxx.se/}}).
-\begin{lstlisting}[caption={Docker client and Socket},captionpos=b]
+\begin{lstlisting}[caption={Docker client and Socket.},captionpos=b]
 (host)$ docker ps -a
 ...
 (host)$ curl --unix-socket /var/run/docker.sock -H 'Content-Type: application/json' "http://localhost/containers/json?all=1"
@@ -21,7 +21,7 @@ If the \lstinline{/var/run/docker.sock} is added as a volume to a container, the
 
 Let's say we want to get the password hash of an user called \lstinline{admin} on the host. We are in a container that has access to \lstinline{/var/run/docker.sock}. We use the API to start another Docker container on the host, that has access to the password hash (located in \lstinline{/etc/shadow}). We read the password file, by looking at the logs of the container that we just started.
 
-\begin{lstlisting}[caption={Start Docker using the API to read host filesi.},captionpos=b]
+\begin{lstlisting}[caption={Start Docker using the API to read host files.},captionpos=b]
 (host)$ docker run -it --rm -v /var/run/docker.sock:/var/run/docker.sock ubuntu /bin/bash
 (cont)# curl -XPOST -H "Content-Type: application/json" --unix-socket /var/run/docker.sock -d '{"Image":"ubuntu:latest","Cmd":["cat", "/host/etc/shadow"],"Mounts":[{"Type":"bind","Source":"/","Target":"/host"}]}' "http://localhost/containers/create?name=escape"
 ...
@@ -45,7 +45,7 @@ When a container has access to \lstinline{/var/run/docker.sock} (i.e.\ when \lst
 
 Let's start a Postgres\footnote{\url{https://www.postgresql.org/}} database inside a Docker. From the documentation of the Postgres Docker image\footnote{\url{https://hub.docker.com/_/postgres}}, we know that we can provide a password using the \lstinline{POSTGRES_PASSWORD} environment variable. If we have access to another container which has access to the Docker API, we can read that password from the environment variable.
 
-\begin{lstlisting}[caption={Example extract secrets using the Docker API},captionpos=b]
+\begin{lstlisting}[caption={Example extract secrets using the Docker API.},captionpos=b]
 (host)$ docker run --name database -e POSTGRES_PASSWORD=thisshouldbesecret -d postgres
 ...
 (host)$ docker run -it --rm -v /var/run/docker.sock:/var/run/docker.sock:ro ubuntu:latest bash

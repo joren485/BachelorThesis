@@ -4,7 +4,7 @@ It is also important to look for information about the host. This can be very us
 \hfill
 
 Because containers use the kernel of the host, we can use the kernel version to identify information about the host. Let's take a look at the following example running on an Ubuntu host.
-\begin{lstlisting}[caption={\lstinline{/etc/os-release} and \lstinline{uname} differ},captionpos=b]
+\begin{lstlisting}[caption={\lstinline{/etc/os-release} and \lstinline{uname} differ.},captionpos=b]
 (host)$ docker run -it --rm alpine:latest cat /etc/os-release
 ...
 PRETTY_NAME="Alpine Linux v3.10"

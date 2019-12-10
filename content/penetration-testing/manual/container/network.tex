@@ -3,14 +3,14 @@ We should also look at the network of the container. We should look at which con
 
 By default all containers get an IPv4 address in subnet \lstinline{172.17. 0.0/16}. It is possible to find the address (without installing anything) of a container you have access to by looking at \lstinline{/etc/hosts/} file. Docker will add a line that resolves the hostname of to the IPv4 address to \lstinline{/etc/hosts}.
 
-\begin{lstlisting}[caption={Last line of \lstinline{/etc/hosts} in Docker},captionpos=b]
+\begin{lstlisting}[caption={Last line of \lstinline{/etc/hosts} in Docker.},captionpos=b]
 (host)$ docker run -it --rm alpine tail -n1 /etc/hosts
 172.17.0.2 e0e6b96367db
 \end{lstlisting}
 
 
 We can look at the Docker network by using \lstinline{nmap} (which we will have to install ourselves).
-\begin{lstlisting}[caption={\lstinline{nmap} scan inside container},captionpos=b]
+\begin{lstlisting}[caption={\lstinline{nmap} scan inside container.},captionpos=b]
 (host)$ docker run -it --rm ubuntu bash
 (cont)# apt update
 ...

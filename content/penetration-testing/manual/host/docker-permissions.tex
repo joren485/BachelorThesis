@@ -2,7 +2,7 @@
 Docker permissions are defined by the permission bits on the Docker socket (i.e.\ \lstinline{/var/run/docker.sock}). By default, the owner (\lstinline{root}) and the group (\lstinline{docker}) have read and write permissions. Meaning that \lstinline{root} and every user in the \lstinline{docker} group are allowed to interact with the Docker socket.
 
 We can see who is in the \lstinline{docker} group by looking in \lstinline{/etc/group}.
-\begin{lstlisting}[caption={See what users are in the \lstinline{docker} group},captionpos=b]
+\begin{lstlisting}[caption={See what users are in the \lstinline{docker} group.},captionpos=b]
 $ grep docker /etc/group
 docker:x:999:jvrancken
 \end{lstlisting}
