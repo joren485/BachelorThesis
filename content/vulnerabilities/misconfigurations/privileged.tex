@@ -18,7 +18,7 @@ We can look at a proof of concept of this attack developed by security researche
 (cont)# chmod +x /c;sh -c "echo 0 >$d/w/cgroup.procs";sleep 1;cat /o
 \end{lstlisting}
 
-This proof of concept creates a new \lstinline{cgroup}, sets a \lstinline{release_agent} and releases it. In this case the \lstinline{release_agent} runs \lstinline{ps} and writes the output to the root of the container.
+This proof of concept creates a new \lstinline{cgroup}, sets a \lstinline{release_agent} and releases it. In this case the \lstinline{release_agent} runs \lstinline{ps} and writes the output to the root directory of the container.
 
 \hfill
 

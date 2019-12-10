@@ -3,4 +3,4 @@ Docker images are made as small as possible. Many processes do not need a fully 
 
 \hfill
 
-A good example of this is the \lstinline{sudo} package. This package is crucial on many Linux distributions, because it enables a way for non-root users to execute commands as \lstinline{root}. However, in a Docker container \lstinline{sudo} does not make a lot of sense. If a process needs to run something as \lstinline{root}, the process should be run as \lstinline{root} in the container. That is why \lstinline{sudo} is often not installed in Docker images.
+A good example of this is the \lstinline{sudo} package. This package is crucial on many Linux distributions, because it enables a way for non-\lstinline{root} users to execute commands as \lstinline{root}. However, in a Docker container \lstinline{sudo} does not make a lot of sense. If a process needs to run something as \lstinline{root}, the process should be run as \lstinline{root} in the container. That is why \lstinline{sudo} is often not installed in Docker images.

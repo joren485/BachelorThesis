@@ -4,7 +4,7 @@ A very common (and most notorious) misconfiguration is giving unprivileged users
 First of all, only trusted users should be allowed to control your Docker daemon. This is a direct consequence of some powerful Docker features. Specifically, Docker allows you to share a directory between the Docker host and a guest container; and it allows you to do so without limiting the access rights of the container. This means that you can start a container where the /host directory is the / directory on your host; and the container can alter your host filesystem without any restriction.
 \end{quote}
 
-In short, because the Docker Daemon runs as root, if an user adds a directory as a volume to a container, that file is accessed as root. There are two common ways for unprivileged users to access Docker. They are either part of the \lstinline{docker} group or the \lstinline{docker} binary has the \lstinline{setuid} bit set.
+In short, because the Docker Daemon runs as \lstinline{root}, if an user adds a directory as a volume to a container, that file is accessed as \lstinline{root}. There are two common ways for unprivileged users to access Docker. They are either part of the \lstinline{docker} group or the \lstinline{docker} binary has the \lstinline{setuid} bit set.
 
 \subsubsection{\texorpdfstring{\lstinline{docker}}{docker} group}
 Every user in the \lstinline{docker} group is allowed to use Docker. This allows simple access management of Docker usage. Sometimes the system administrator of a network does not want to do proper access management and adds every user to the \lstinline{docker} group, because that allows everything to run smoothly. This misconfiguration, however allows every user to access every file on the system, as illustrated in \autoref{listing:docker-group}.
@@ -23,7 +23,7 @@ docker
 admin:$6$VOSV5AVQ$jHWxAVAUgl...:18142:0:99999:7:::
 \end{lstlisting}
 
-We start by checking our permissions. We do not have \lstinline{permissions}, but we are a member of the \lstinline{docker} group. This allows us to create a container with \lstinline{/} mounted as volume and access any file as root. This includes the file storing password hashes \lstinline{/etc/passwd}.
+We start by checking our permissions. We do not have \lstinline{permissions}, but we are a member of the \lstinline{docker} group. This allows us to create a container with \lstinline{/} mounted as volume and access any file as \lstinline{root}. This includes the file storing password hashes \lstinline{/etc/passwd}.
 
 \hfill
 

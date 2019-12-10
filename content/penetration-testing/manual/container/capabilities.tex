@@ -16,7 +16,7 @@ We see five different values:
     \item \lstinline{CapPrm}: The permitted capabilities are the maximum capabilities that a process can use.
     \item \lstinline{CapEff}: The currently effective capabilities.
     \item \lstinline{CapBnd}: The capabilities that are permitted in the call tree.
-    \item \lstinline{CapAmb}: Capabilities that non-root child processes can inherit.
+    \item \lstinline{CapAmb}: Capabilities that non-\lstinline{root} child processes can inherit.
 \end{itemize}
 
 We are interested in the \lstinline{CapEff} value, because that value represents the current capabilities. The capabilities are represented as a hexadecimal value. Every capability has a value and the \lstinline{CapEff} value is the combination of the values of granted capabilities. We can use the \lstinline{capsh} tool to get a list of capabilities from a hexadecimal value (this can be on a different system).
