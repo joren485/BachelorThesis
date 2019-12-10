@@ -41,5 +41,6 @@ SELinux (which stands for Security-Enhanced Linux) is a set of changes to the Li
 Docker does not enable SELinux support by default, but it does provide a SELinux policy\footnote{\url{https://www.mankier.com/8/docker_selinux}}.
 
 \subsection{Non-\texorpdfstring{\lstinline{root}}{root} user in containers}\label{subsection:non-root-user}
-\todo[inline]{Move this section?}
+Besides the protection mechanisms on the host, there are also protection mechanisms in the Docker images. The most important protection mechanism that Docker image creators can implement is not running processes inside a container as \lstinline{root}.
+
 By default processes in Docker containers are executed as \lstinline{root} (the \lstinline{root} user of that \lstinline{namespace}), because the process is isolated from the host system. However, as we will see there exist many ways to escape containers. Most of those ways require \lstinline{root} privileges inside the container. That is why it is recommended to run processes in containers using non-\lstinline{root}. If the container gets compromised in any way, the attacker cannot escape because the user is non-\lstinline{root}.

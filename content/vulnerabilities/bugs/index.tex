@@ -1,8 +1,8 @@
 \section{Security Related Software Bugs}\label{section:bugs}
-\todo[inline]{Link vulnerabilities to scenarios}
-\todo[inline]{Something about where to find the CVSS/likelyhood/impact score of each CVE}
-\todo[inline]{In the end not very useful, this section is mostly for completeness}
 In this section we will look at security related bugs that have been found in the last few years. Although there have been many security related bugs found in the Docker ecosystem, not all of them have a large impact. Others are not fully publicly disclosed. We will look at recent, fully disclosed bugs that might be of use during a penetration test. In the \hyperref[appendix:CVE-List]{appendix} you will find a list of all other Docker related bugs I have looked at.
+
+Each vulnerability is not immediately a complete container escape or other attack scenario. Most are useful during an attack scenario. For example by bypassing a protection mechanism.
+However, some severe bugs are complete attacks. For example, CVE--2019--16884 (see \autoref{subsection:CVE-2019-16884}) is a container escape.
 
 \hfill
 
@@ -13,10 +13,9 @@ All of the risk of these bugs can be prevented by using the latest version of Do
 Because of these reasons, this section we will focus more on misconfigurations in \autoref{chapter:pentesting}.
 
 \subsection*{Common Vulnerabilities and Exposures}
-\todo[inline]{Find a better place for this}
 The Common Vulnerabilities and Exposures (CVE for short) system is a list of all publicly known security vulnerabilities. Every vulnerability that is found gets a CVE identifier, which looks like CVE--2019--0000. The first number represents the year in which the vulnerability is found. The second number is an arbitrary number that is at least four digits long. The system is maintained by the Mitre Corporation. Organizations that are allowed to give out new CVE identifiers are called CVE Numbering Authorities (CNA for short). It is possible to read and search the full list on Mitre's website\footnote{\url{https://cve.mitre.org/}}, the United State's National Vulnerability Database\footnote{\url{https://nvd.nist.gov/}} and other websites like CVEDetails\footnote{\url{https://www.cvedetails.com/}}.
 
-The severity of a CVE is determined by the Common Vulnerability Scoring System (CVSS for short) score.
+The severity (impact and likelihood of exploitation) of a CVE is determined by the Common Vulnerability Scoring System (CVSS for short) score. The CVSS scores of every CVE can be found in the National Vulnerability Database\footnote{\url{https://nvd.nist.gov/}} which is maintained by National Institute of Standards and Technology.
 
 \input{content/vulnerabilities/bugs/cve-2019-16884.tex}
 \input{content/vulnerabilities/bugs/cve-2019-13139.tex}

@@ -1,5 +1,4 @@
 \subsection{ARP Spoofing}\label{subsection:arp-spoofing}
-\todo[inline]{Capturing external traffic}
 By default all Docker containers are added to the same bridge network. This means they are able to reach each other. By default Docker containers also receive the \lstinline{CAP_NET_RAW} capability, which allows them to create raw packets. This means that by default, containers are able to ARP spoof other containers\footnote{IPv4 forwarding is enabled by default by Docker}\cite{Abusing-Containers}.
 
 \hfill

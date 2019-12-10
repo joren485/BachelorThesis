@@ -1,5 +1,4 @@
 \chapter{Known Vulnerabilities in Docker}\label{chapter:vulnerabilities}
-\todo[inline]{Make distinction between root in container and root on host everywhere}
 In this chapter we will look at Docker from a vulnerability analysis perspective. First we will look conceptually at Docker and security by examining the attack surface of Docker on an host and the various attacker models that come with it. Then we look at the practical countermeasures in place to prevent or reduce the impact of security problems. We then look at some interesting, practical examples of security problems of Docker. These are split into misconfigurations and security related software bugs.
 
 \hfill
@@ -9,12 +8,6 @@ Software bugs and misconfigurations can both security problems, but they differ 
 \hfill
 
 In the \autoref{chapter:pentesting}, we will look at how these vulnerabilities can be used during a penetration test.
-
-\subsection*{Impact of Docker on Existing Vulnerabilities}
-\todo[inline]{Find a better place for this}
-A Docker container isolates software from the host, but does not change it. This means that vulnerabilities in software are not affected by Dockerizing that software. However, the impact of those vulnerabilities is decreased, because the vulnerability exists in an isolated environment.
-
-If, for example, there exists a RCE (remote code execution) vulnerability in Wordpress. Running Wordpress in a Docker container does not fix the vulnerability. An attacker is still able to exploit it. But that attacker is not able to access the host system, because the exploited software is isolated from the host system because of Docker.
 
 \input{content/vulnerabilities/attack-surface/index}
 \input{content/vulnerabilities/protection-mechanisms}
