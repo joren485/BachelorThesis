@@ -15,7 +15,7 @@ Because API access gives the same exact possibilities as having access to the Do
 However, giving containers access to the API (by adding the socket as a volume) is a common practice, because it allows containers to monitor and analyze other containers.
 
 \subsubsection{Container Escape}
-If the \lstinline{/var/run/docker.sock} is added as a volume to a container, the container has access to the API\@. This means the process in the container has full access to Docker on the host. This can be used to escape, because the container can create another container with arbitrary volumes and commands. It is even possible to create an interactive shell in another container\cite{Escape-Socket-Shell}.
+If the \lstinline{/var/run/docker.sock} is added as a volume to a container, the container has access to the API (even if the socket is added as a read-only volume\cite{The-Dangers-Of-Docker-Sock}\cite{Read-Only-Docker-Socket-Tweet}\cite{Read-Only-Docker-Socket-Hackernews}). This means the process in the container has full access to Docker on the host. This can be used to escape, because the container can create another container with arbitrary volumes and commands. It is even possible to create an interactive shell in another container\cite{Escape-Socket-Shell}.
 
 \hfill
 
