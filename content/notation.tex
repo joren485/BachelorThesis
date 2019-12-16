@@ -1,24 +1,24 @@
 \chapter{Notation}\label{chapter:notation}
-Throughout this thesis we will look at examples using Bash commands. The following conventions are used to represent the different contexts in which the commands are executed.
+Throughout this thesis we will look at examples using Unix shell commands. The following conventions are used to represent the different contexts in which the commands are executed.
 
 \begin{itemize}
     \item If a command is executed directly on a host system, it is prefixed by ``\lstinline{(host)}''.
     \item If a command is executed inside a container, it is prefixed by ``\lstinline{(cont)}''.
     \item If a command is executed by an unprivileged user, it is prefixed by ``\lstinline{$}''.
     \item If a command is executed by a privileged user (i.e. \lstinline{root}), it is prefixed by ``\lstinline{#}''.
-    \item Long and irrelevant output of commands is replaced by ``\ldots''.
+    \item Long or irrelevant output of commands is replaced by ``\ldots''.
 \end{itemize}
 
-In this example, an unprivileged user executes the command \lstinline{echo Hello, World!} on the host system.
-\begin{lstlisting}[caption={Shell command notation example 1.}, captionpos=b]
+In \autoref{listing:notation:example1}, an unprivileged user executes the command ``\lstinline{echo Hello, World!}'' on a host system.
+\begin{lstlisting}[caption={Shell command notation example 1.}, captionpos=b, label={listing:notation:example1}]
 (host)$ echo Hello, World!
 Hello, World!
 \end{lstlisting}
 
 \hfill
 
-In this example, the \lstinline{root} user executes two commands to get system information. The content of \lstinline{/proc/cpuinfo} is not shown.
-\begin{lstlisting}[caption={Shell command notation example 2.}, captionpos=b]
+In \autoref{listing:notation:example2}, the \lstinline{root} user executes two commands to get system information. The content of \lstinline{/proc/cpuinfo} is omitted.
+\begin{lstlisting}[caption={Shell command notation example 2.}, captionpos=b, label={listing:notation:example2}]
 (cont)# uname -r
 5.3.8-arch1-1
 (cont)# cat /proc/cpuinfo
@@ -27,4 +27,14 @@ In this example, the \lstinline{root} user executes two commands to get system i
 
 \hfill
 
-In this thesis, we will look at many examples using Bash commands. Although I prefer using non-abbreviated arguments and quoted values to make it more clear what a command does, throughout this thesis we will use abbreviated non-quoted arguments (where possible) to make the commands smaller and more readable.
+We will look at many examples using shell commands. Although I prefer using non-abbreviated arguments and quoted values (see \autoref{listing:notation:example3}) to make it more clear what a command does, throughout this thesis we will use abbreviated non-quoted arguments (see \autoref{listing:notation:example4}) where possible to make the commands smaller and more readable. 
+
+\begin{lstlisting}[caption={Abbreviated non-quoted command example.}, captionpos=b, label={listing:notation:example3}]
+(host)$ docker run --tty="true" --interactive="true" --rm --volume="/:/host/" ubuntu:latest
+...
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Non-abbreviated quoted command example.}, captionpos=b, label={listing:notation:example4}]
+(host)$ docker run -it --rm -v /:/host/ ubuntu:latest /bin/bash}
+...
+\end{lstlisting}

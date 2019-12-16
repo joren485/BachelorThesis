@@ -4,7 +4,7 @@ A very common (and most notorious) misconfiguration is giving unprivileged users
 First of all, only trusted users should be allowed to control your Docker daemon. This is a direct consequence of some powerful Docker features. Specifically, Docker allows you to share a directory between the Docker host and a guest container; and it allows you to do so without limiting the access rights of the container. This means that you can start a container where the /host directory is the / directory on your host; and the container can alter your host filesystem without any restriction.
 \end{quote}
 
-In short, because the Docker Daemon runs as \lstinline{root}, if an user adds a directory as a volume to a container, that file is accessed as \lstinline{root}. There are two common ways for unprivileged users to access Docker. They are either part of the \lstinline{docker} group or the \lstinline{docker} binary has the \lstinline{setuid} bit set.
+In short, because the Docker daemon runs as \lstinline{root}, if a user adds a directory as a volume to a container, that file is accessed as \lstinline{root}. There are two common ways for unprivileged users to access Docker. They are either part of the \lstinline{docker} group or the \lstinline{docker} binary has the \lstinline{setuid} bit set.
 
 \subsubsection{\texorpdfstring{\lstinline{docker}}{docker} group}
 Every user in the \lstinline{docker} group is allowed to use Docker. This allows simple access management of Docker usage. Sometimes the system administrator of a network does not want to do proper access management and adds every user to the \lstinline{docker} group, because that allows everything to run smoothly. This misconfiguration, however allows every user to access every file on the system, as illustrated in \autoref{listing:docker-group}.
@@ -39,7 +39,7 @@ This is very useful in specific cases. For example, users should be able to chan
 
 \hfill
 
-If a system is misconfigured by having the \lstinline{setuid} bit set for the \lstinline{docker} binary, an user will be able to execute Docker as \lstinline{root} (the owner of \lstinline{docker}). Just like before, we can easily recreate this attack.
+If a system is misconfigured by having the \lstinline{setuid} bit set for the \lstinline{docker} binary, a user will be able to execute Docker as \lstinline{root} (the owner of \lstinline{docker}). Just like before, we can easily recreate this attack.
 
 \begin{lstlisting}[caption={Docker \lstinline{setuid} exploit example.},captionpos=b]
 (host)$ sudo -v

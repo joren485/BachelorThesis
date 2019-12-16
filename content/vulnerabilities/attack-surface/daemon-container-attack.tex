@@ -1,5 +1,5 @@
 \subsection{Docker Daemon Attack}
-If user permissions are incorrectly configured, an unprivileged user can access privileged resources using the Docker Daemon. This is shown in \autoref{fig:docker-daemon-attack}.
+If user permissions are incorrectly configured, an unprivileged user can access privileged resources using the Docker daemon. This is shown in \autoref{fig:docker-daemon-attack}.
 
 \begin{figure}[ht]
     \centering
@@ -43,10 +43,10 @@ If user permissions are incorrectly configured, an unprivileged user can access 
     \caption{}\label{fig:docker-daemon-attack}
     \medskip
     \small
-    An unprivileged process B accessing privileged data (in the image process A) using the Docker Daemon.
+    An unprivileged process B accessing privileged data (in the image process A) using the Docker daemon.
 \end{figure}
 
-The Docker Daemon runs as \lstinline{root}. Because Docker has many (powerful) features, this allows any user with permissions to use Docker to practically gain \lstinline{root} privileges. This is why the Docker documentation explicitly states ``only trusted users should be allowed to control your Docker daemon''\footnote{\url{https://docs.docker.com/engine/security/security/}}.
+The Docker daemon runs as \lstinline{root}. Because Docker has many (powerful) features, this allows any user with permissions to use Docker to practically gain \lstinline{root} privileges. This is why the Docker documentation explicitly states ``only trusted users should be allowed to control your Docker daemon''\footnote{\url{https://docs.docker.com/engine/security/security/}}.
 
 \hfill
 

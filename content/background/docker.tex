@@ -3,26 +3,26 @@ The concept of containerization has been around a long time\footnote{\url{https:
 
 \hfill
 
-Docker was released in 2013 and it does not only offer a containerization platform, but also a way to distribute the containers. This allows developers and companies to create packages that have no dependencies (besides Docker itself, of course). This allows for a lot faster development and deployment processes, because dependencies and installation of software are no longer a concern.
+Docker was released in 2013 and it does not only offer a containerization platform, but also a way to distribute the containers. This allows developers and organizations to create packages that have no dependencies (besides Docker itself, of course). This allows for a lot faster development and deployment processes, because dependencies and installation of software are no longer a concern.
 
 \hfill
 
 Docker also makes it possible to run multiple versions of the same software on the same host, without creating a dependency nightmare. For example, if someone wants to run a Wordpress 4 website and Wordpress 5 website, they only need to create two Wordpress containers. Because the containers are isolated from one another, their conflicting dependencies are not a problem.
 
 \subsection{Docker Concepts}
-Docker is exists of a few concepts: Docker daemon, Docker images, Docker containers and \lstinline{Dockerfile}s.
+Docker is made up of of a few concepts: daemon, images, containers and \lstinline{Dockerfile}s.
 
 \subsubsection{Docker Daemon}
-The daemon is a service that runs (as \lstinline{root}\footnote{An experimental rootless mode is being worked on}\footnote{\url{https://github.com/docker/engine/blob/master/docs/rootless.md}}) on the host. It manages all things related to Docker on that machine. For example if the user wants to build an image or a container needs to restart the docker daemon. It is good to note that, because everything related to Docker is handled by the daemon and Docker has access to all resources of the host, having access to Docker should be viewed as equivalent to having \lstinline{root} access to the host\footnote{\url{https://docs.docker.com/engine/security/security/}}.
+The daemon is a service (a privileged program that runs in the background) that runs (as \lstinline{root}\footnote{An experimental rootless mode is being worked on.}\footnote{\url{https://github.com/docker/engine/blob/master/docs/rootless.md}}) on the host. It manages all things related to Docker on that machine. For example, if a user needs to restart a container, the Docker daemon is the process that restarts the container. It is good to note that, because everything related to Docker is handled by the daemon and Docker has access to all resources of the host (because it runs as \lstinline{root}), having access to Docker is equivalent to having \lstinline{root} access to the host\footnote{\url{https://docs.docker.com/engine/security/security/}}.
 
 \subsubsection{Docker Images}
-A Docker image is packaged software. It is a distributable set of layers. The first layer describes the base of the image. This is either an existing image or nothing (referred to as \lstinline{scratch}). Each layer on top of that is a change to the layer before. For example, if you add a file or run an command it adds a new layer.
+A Docker image is packaged software. It is a distributable set of layers. The first layer describes the base of the image. This is either an existing image or nothing (referred to as \lstinline{scratch}). Each layer on top of that is a change to the layer before. For example, if we add a file or run an command it adds a new layer.
 
 \subsubsection{Docker Containers}
-A container is an instance of a Docker Image. If you run software packaged as a Docker image, you create a container based on that image. If you want to run two instances of the same Docker image, you can create two containers.
+A container is an instance of a Docker image. If we run software packaged as a Docker image, we create a container based on that image. If we want to run two instances of the same Docker image, we can create two containers.
 
 \subsubsection{\texorpdfstring{\lstinline{Dockerfiles}}{Dockerfiles}}
-A \lstinline{Dockerfile} describes what a Docker image is made of. It describes the steps to build the image. Let's look at a very simple example:
+A \lstinline{Dockerfile} describes what layers a Docker image consists of. It describes the steps to build the image. Let's look at a very simple example:
 
 \begin{lstlisting}[caption={Very Basic \lstinline{Dockerfile}.},label={listing:dockerfile-simple},captionpos=b]
 FROM alpine:latest
@@ -34,11 +34,11 @@ These three instructions tell the Docker engine how to create a new Docker image
 The full instruction set can be found in the \lstinline{Dockerfile} reference\footnote{\url{https://docs.docker.com/engine/reference/builder/}}.
 
 \begin{enumerate}
-    \item The \lstinline{FROM} instruction tells the Docker engine what to base the new Docker image on. Instead of creating an image from scratch (a blank image), we use an already existing image as our basis.
+    \item The \lstinline{FROM} instruction tells the Docker engine what to base the new Docker image on. Instead of creating an image from scratch (a blank image), we use an already existing image as our basis (in this case an image based on Alpine Linux).
 
-    \item The \lstinline{LABEL} instruction sets a key value pair for the image. There can be multiple LABEL instructions. These key value pairs get packaged and distributed with the image.
+    \item The \lstinline{LABEL} instruction sets a key-value pair for the image. There can be multiple LABEL instructions. These key-value pairs get packaged and distributed with the image.
 
-    \item The \lstinline{CMD} instruction sets the default command that should be run and which arguments should be passed to it.
+    \item The \lstinline{CMD} instruction sets the default command that should be run when the container is started and which arguments should be passed to it.
 \end{enumerate}
 
 We can use this to create a new image and container from that image.
@@ -50,23 +50,25 @@ We can use this to create a new image and container from that image.
 We first create a Docker image (called \lstinline{thesis-hello-world}) using the \lstinline{docker build} command and then create and start a new container (called \lstinline{thesis-hello-world-container}) from that image.
 
 \subsubsection{Data Persistence}\label{subsection:data-persistence}
-Without additional configuration, a Docker container does not have persistence storage. Its storage is maintained when the container is stopped, but not when the container is removed. It is possible to mount a directory on the host in a Docker container. This allows the container to access files on the host and save them to that mounted directory.
+Without additional configuration, a Docker container does not have persistent storage. Its storage is maintained when the container is stopped, but not when the container is removed. It is possible to mount a directory on the host in a Docker container. This allows the container to access files on the host and save them to that mounted directory.
 
 \begin{lstlisting}[caption={Bind mount example.},label={listing:docker-volume},captionpos=b]
 (host)$ echo test > /tmp/test
-(host)$ docker run -it --rm -v /tmp:/tmp ubuntu:latest bash
-(cont)$ cat /tmp/test
+(host)$ docker run -it --rm -v /tmp:/host-tmp ubuntu:latest bash
+(cont)# cat /host-tmp/test
 test
+(cont)# cat /tmp/test
+cat: /tmp/test: No such file or directory
 \end{lstlisting}
 
-In this example the host \lstinline{/tmp} directory is mounted into the container as \lstinline{/tmp}. We can see that a file that is created on the host is readable by the container.
+In \autoref{listing:docker-volume} the host \lstinline{/tmp} directory is mounted into the container as \lstinline{/host-tmp}. We can see that a file that is created on the host is readable by the container. We also see that the container does have its own \lstinline{/tmp} directory, which has no relation to \lstinline{/host-tmp}.
 
 \subsubsection{Networking}
-When a Docker container is created Docker creates a network sandbox for that container and (by default) connects it to an internal bridge network. This gives the container its own networking resources such as a IPv4 address\footnote{IPv6 support is not enabled by default.}, routes and DNS entries. All outgoing traffic is routed through a bridge interface (by default).
+When a Docker container is created the Docker daemon creates a network sandbox for that container and (by default) connects it to an internal bridge network. This gives the container its own networking resources such as an IPv4 address\footnote{IPv6 support is not enabled by default.}, routes and DNS entries. All outgoing traffic is routed through a bridge interface (by default).
 
 \hfill
 
-Incoming traffic is possible by routing traffic for specific ports from the host to the container.
+Incoming traffic (that is not part of an existing connection) is possible by routing traffic for specific ports from the host to the container.
 Specifying which ports on the host are routed to which ports on the container is done when a container is created. If we, for example, want to expose port \lstinline{80} to the Docker image created from \autoref{listing:dockerfile-simple} we can execute the following commands.
 
 \begin{lstlisting}[caption={Creating a Docker container with exposed port.},label={listing:docker-port},captionpos=b]
@@ -74,7 +76,7 @@ Specifying which ports on the host are routed to which ports on the container is
 (host)$ docker run --rm -p 8000:80 --name=thesis-hello-world-container thesis-hello-world
 \end{lstlisting}
 
-The first command creates a Docker image using the \lstinline{Dockerfile} and we then create (and start) a container from that image. We ``publish'' port \lstinline{8000} on the host to port \lstinline{80} of the container. This means that, while the container is running, all traffic from port \lstinline{8000} on the host is routed to port \lstinline{80} of the container.
+The first command creates a Docker image using the \lstinline{Dockerfile} and we then create (and start) a container from that image. We ``publish'' port \lstinline{8000} on the host to port \lstinline{80} of the container. This means that, while the container is running, all traffic from port \lstinline{8000} on the host is routed to port \lstinline{80} inside the container.
 
 \subsubsection{Docker Internals}
 A Docker container actually is a combination of multiple features within the Linux kernel.
@@ -87,31 +89,31 @@ Mainly \lstinline{namespaces}, \lstinline{cgroups} and \lstinline{OverlayFS}.
     \item \lstinline{Cgroup}: To isolate processes from \lstinline{cgroup} hierarchies.
     \item \lstinline{IPC}: Isolates the inter-process communication. This, for example, isolates shared memory regions.
     \item \lstinline{Network}: Isolates the network stack (e.g. IP addresses, interfaces, routes and ports).
-    \item \lstinline{Mount}: Isolates mount points. When creating a new Mount \lstinline{namespace}, existing mount points are copied from the current \lstinline{namespace}. New mount points are not propagated.
+    \item \lstinline{Mount}: Isolates mount points. When creating a new \lstinline{mount namespace}, existing mount points are copied from the current \lstinline{namespace}. New mount points are not propagated.
     \item \lstinline{PID}: Isolates processes from seeing process ids in other \lstinline{namespaces}. Processes in different \lstinline{namespaces} can have the same \lstinline{PID}.
     \item \lstinline{User}: Isolates the users and groups.
     \item \lstinline{UTS}: Isolates the host and domain names.
 \end{itemize}
 
-When the Docker daemon creates a new container, it creates a new \lstinline{namespace} of each type for the process that runs in the container. That way the container cannot view any of the processes, network interfaces and mount points of the host. This way it seems that the container is actually an other operating system entirely.
+When the Docker daemon creates a new container, it creates a new \lstinline{namespace} of each type for the process that runs in the container. That way the container cannot view any of the processes, network interfaces and mount points of the host (by default it can communicate with other Docker containers, because it is connected to the internal Docker network). To the container it seems that it is actually running an entirely separate operating system.
 
-A \lstinline{mount} \lstinline{namespace} is very similar to a \lstinline{chroot}. A big difference is that a \lstinline{chroot} has a parent directory. The \lstinline{mount} \lstinline{namespace} can also be more easily combined with other \lstinline{namespaces} to create more isolation.
-
-\hfill
-
-Control groups (or \lstinline{cgroups} for short) are a way to limit resources (e.g.\ CPU and RAM usage) to (groups of) processes and to monitor the usage of those processes.
+A \lstinline{mount namespace} is very similar to a \lstinline{chroot}. A big difference is that a \lstinline{chroot} has a parent directory.
 
 \hfill
 
-\lstinline{OverlayFS} is a (union mount) file system that allows combining multiple directories and show them as if they are one. This is used to show the multiple layers in an Docker image as a single root directory.
+Control groups (or \lstinline{cgroups} for short) are a way to limit resources (e.g.\ CPU and RAM usage) to (groups of) processes and to monitor those processes.
+
+\hfill
+
+\lstinline{OverlayFS} is a (union mount) file system that allows combining multiple directories and present them as if they are one. This is used to show the multiple layers in a Docker image as a single root directory.
 
 
 \subsection{\texorpdfstring{\lstinline{docker-compose}}{docker-compose}}
-\lstinline{docker-compose} is a wrapper around Docker that can be used to specify Docker container runtime configurations in files (called \lstinline{docker-compose.yaml}). These files remove the need to execute Docker commands with the correct arguments in the correct order. You have to specify the necessary arguments only once in the \lstinline{docker-compose.yaml} file.
+\lstinline{docker-compose} is a wrapper program (a program that simplifies usage of another program) around Docker that can be used to specify Docker container configurations in files (called \lstinline{docker-compose.yaml}). These files remove the need to execute Docker commands with the correct arguments in the correct order. We only have to specify the necessary arguments once in the \lstinline{docker-compose.yaml} file.
 
 \hfill
 
-\autoref{listing:docker-compose-file} is an advanced example of an \lstinline{docker-compose.yaml} file similar to configuration that I have used in a production environment. A lot of the time creating Docker containers in production environments, they need to have a lot of extra runtime configuration (e.g.\ environment variables, ports and dependencies on other containers). Specifying everything in a single file simplifies the runtime configuration process.
+\autoref{listing:docker-compose-file} is an advanced example of an \lstinline{docker-compose.yaml} file similar to configuration that I have used in a production environment. Docker containers in production environments need to have a lot of runtime configuration (e.g.\ environment variables, exposed ports and dependencies on other containers). Specifying everything in a single file simplifies and stores the runtime configuration process.
 \begin{lstlisting}[caption={Example \lstinline{docker-compose.yaml}.},label={listing:docker-compose-file},captionpos=b]
 ---
 version: "3"
@@ -144,19 +146,13 @@ services:
 Very similar functionality is also built into the Docker Engine, called Docker Stack. It also uses \lstinline{docker-compose.yaml}. Some features that are supported by \lstinline{docker-compose} are not supported by Docker Stack and vice versa.
 
 \subsection{Registries}
-Docker images are distributable through so called registries. A registry is a server (that anybody can host), that stores Docker images. When a client does not have a Docker image that it needs, it can contact a registry to download that image. Note that because registries are a very easy way to distribute Docker images, they are an interesting attack vector.
+Docker images are distributable through registries. A registry is a server (that anybody can host), that stores Docker images. When a client does not have a Docker image that it needs, it can contact a registry to download that image. Note that because registries are an easy way to distribute Docker images, they are an interesting attack vector.
 
 \hfill
 
-The most popular (and public) registry is Docker Hub, which is run by the same company that develops Docker.
-Anybody can create a Docker Hub account and start creating images that anybody can download. Docker Hub also provides default images for popular software.
+The most popular (and default) registry is Docker Hub, which is run by the Docker company itself. Anybody can create a Docker Hub account and start creating and publishing images that anybody can download.
 
 \subsection{Deployment \& Development Pipelines}
 One of the biggest usages of Docker is automating part of the deployment and development process. Many developers use continuous integration and continuous deployment systems to automatically build Docker images that they then automatically pull and run on their production environments. This level of automation allows for very rapid software development.
 
-That automation does have a negative side. It removes scrutiny from the deployment pipeline. If an attacker is able to compromise a link in the chain, they will be able to create their own malicious images that will be automatically run. Without proper monitoring of the full pipeline, such an attack can go unnoticed, because the system is designed to not need any human interaction.
-
-\subsection{Impact of Docker on Existing Vulnerabilities}
-A Docker container isolates software from the host, but does not change it. This means that vulnerabilities in software are not affected by Dockerizing that software. However, the impact of those vulnerabilities is decreased, because the vulnerability exists in an isolated environment.
-
-If, for example, there exists a RCE (remote code execution) vulnerability in Wordpress. Running Wordpress in a Docker container does not fix the vulnerability. An attacker is still able to exploit it. But that attacker is not able to access the host system, because the exploited software is isolated from the host system because of Docker.
+However, automation does have a negative side. It removes scrutiny of the deployment pipeline. If an attacker is able to compromise a link in the chain, they will be able to create and deploy their own malicious images. Without proper monitoring of the full pipeline, such an attack can go unnoticed for a long time, because the system is designed to not need any human interaction.
