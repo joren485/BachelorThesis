@@ -45,15 +45,15 @@ One of the most common type of vulnerability is the possibility for a process ru
     A process (Process C) running inside a container accessing data on the host (that it should not be able to access), in this case Process B.
 \end{figure}
 
-\hfill
+\medskip
 
 An example attack scenario would be a company that offers a Platform as a Service (PaaS) products that allows customers to run Docker containers on their infrastructure\footnote{This is actually quite common nowadays. All major computing providers offer such a service.}. If it is possible for the attacker to submit a Docker image with a malicious process that escapes the container and access the underlying infrastructure, they could access other containers or other internal resources. That would, obviously, be a very big problem for the company.
 
-\hfill
+\medskip
 
 A lot of the known container escapes are possible because the container can access some files on the host. For example, if Docker mounts some necessary directories in \lstinline{/proc} by default (which would be a vulnerability) or if sensitive data is mounted as a volume (which would be a misconfiguration).
 
-\hfill
+\medskip
 
 It be noted that an exploit that allows someone to escape from a Linux \lstinline{namespace} is essentially a container escape exploit, because Docker relies heavily on \lstinline{namespaces} for isolation (see \autoref{subsubsection:internals}). CVE--2017--7308\cite{CVE-2017-7308} is a good example of this.
 

@@ -2,11 +2,11 @@
 
 Docker has a special privileged mode\cite{Docker-in-Docker-blog}. This mode is enabled if a container is created with the \lstinline{--privileged} flag and it enables access to all host devices and kernel capabilities. This is a very powerful mode and enables some very useful features (e.g.\ building Docker images inside a Docker container). But it is also very dangerous as those kernel features allow an attacker inside the container to escape and access the host.
 
-\hfill
+\medskip
 
 A simple example of this, is using a feature in \lstinline{cgroups}\cite{CGroup-Docs}. If a \lstinline{cgroup} does not contain any processes anymore, it is released. It is possible to specify a command (called a \lstinline{release_agent}) that is run in when a \lstinline{cgroup} is released. It is possible to define such a \lstinline{release_agent} in a privileged docker. If the \lstinline{cgroup} is released, the command is run on the host\cite{TrailOfBits-Docker-Escape}.
 
-\hfill
+\medskip
 
 We can look at a proof of concept of this attack developed by security researcher Felix Wilhelm\cite{Felix-Wilhem-Tweet}.
 \begin{lstlisting}[caption={Privileged container escape using \lstinline{cgroups}.},captionpos=b,label={listing:privileged-escape}]
@@ -20,6 +20,6 @@ We can look at a proof of concept of this attack developed by security researche
 
 The proof of concept in \autoref{listing:privileged-escape} first creates a new \lstinline{cgroup}, defines a \lstinline{release_agent} and releases the \lstinline{cgroup}. In this case the \lstinline{release_agent} runs the \lstinline{ps} command on the host and writes the output to \lstinline{/o} in the container.
 
-\hfill
+\medskip
 
 The \lstinline{--privileged} flag is covered by two CIS Benchmark guidelines. Guideline 5.4 (Ensure that privileged containers are not used) recommends to not create containers with privileged mode. 5.22 (Ensure that docker exec commands are not used with the privileged option) recommends to not execute commands in running containers (with \lstinline{docker exec}) in privileged mode.

@@ -1,7 +1,7 @@
 \subsection{Capabilities}\label{misconfigurations:subsection:capabilities}
 As we saw in \autoref{protection-mechanisms:subsection:capabilities}, to perform privileged actions in the Linux kernel, a process needs the relevant \lstinline{capability}. Docker containers are started with minimal capabilities, but it is possible to add extra capabilities on runtime. Giving containers extra capabilities, gives the container permission to perform certain actions. Some of these actions allow Docker escapes. We will look at two such capabilities.
 
-\hfill
+\medskip
 
 The CIS Benchmark covers all of these problems in one guideline: 5.3 (Ensure that Linux kernel capabilities are restricted within containers).
 
@@ -28,7 +28,7 @@ Unlike before, instead of relying on \lstinline{--privileged} to give us write a
 \subsubsection{\texorpdfstring{\lstinline{CAP_DAC_READ_SEARCH}}{CAP DAC READ SEARCH}}
 Before Docker 1.0.0 \lstinline{CAP_DAC_READ_SEARCH} was added to the default capabilities that a containers are given. But this capability allows a process to escape its the container\cite{Docker-Shocker-Seclists}. A process with \lstinline{CAP_DAC_READ_SEARCH} is able to bruteforce the internal index of files outside of the container. To demonstrate this attack a proof of concept exploit was released\cite{Docker-Shocker}\cite{Docker-Shocker-Analysis}. This exploit has been released in 2014, but still works on containers with the \lstinline{CAP_DAC_READ_SEARCH} capability.
 
-\hfill
+\medskip
 
 \begin{lstlisting}[caption={Docker escape using \lstinline{CAP_DAC_READ_SEARCH}.},captionpos=b]
 (host)$ curl -o /tmp/shocker.c http://stealth.openwall.net/xSports/shocker.c

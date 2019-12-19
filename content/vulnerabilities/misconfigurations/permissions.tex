@@ -9,7 +9,7 @@ In short, because the Docker daemon runs as \lstinline{root}, if a user adds a d
 \subsubsection{\texorpdfstring{\lstinline{docker}}{docker} group}
 Every user in the \lstinline{docker} group is allowed to use Docker. This allows simple access management of Docker usage. Sometimes a system administrator does not want to do proper access management and adds every user to the \lstinline{docker} group, because that allows everything to run smoothly. This misconfiguration, however allows every user to access every file on the system, as illustrated in \autoref{listing:docker-group}.
 
-\hfill
+\medskip
 
 Let's say we want the password hash of user \lstinline{admin} on a system where we do not have \lstinline{sudo} privileges, but we are a member of the \lstinline{docker} group.
 
@@ -25,19 +25,19 @@ admin:$6$VOSV5AVQ$jHWxAVAUgl...:18142:0:99999:7:::
 
 We start by checking our permissions. We do not have \lstinline{sudo} permissions, but we are a member of the \lstinline{docker} group. This allows us to create a container with \lstinline{/} mounted as volume and access any file as \lstinline{root}. This includes the file storing password hashes (i.e.\ \lstinline{/etc/passwd}).
 
-\hfill
+\medskip
 
 This is covered by the CIS Benchmark guideline 1.2.2 (Ensure only trusted users are allowed to control Docker daemon).
 
 \subsubsection{\texorpdfstring{\lstinline{setuid}}{setuid} bit}\label{subsubsection:setuid}
 Another way system administrators might skip proper access management is to set the \lstinline{setuid} bit on the \lstinline{docker} binary.
 
-\hfill
+\medskip
 
 The \lstinline{setuid} bit is a permission bit in Unix, that allows users to run binaries as the owner (or group) of the binary instead of themselves.
 This is very useful in specific cases. For example, users should be able to change their own passwords, but should not be able to read password hashes of other users. That is why the \lstinline{passwd} binary (which is used to change a users password) has the \lstinline{setuid} bit set. A user can change their password, because \lstinline{passwd} is run as \lstinline{root} (the owner of \lstinline{passwd}) and, of course, \lstinline{root} is able to read and write to the password file. In this case the \lstinline{setuid} bit is not a security issue, because \lstinline{passwd} asks for the user's password itself and only writes to specific entries in the password file.
 
-\hfill
+\medskip
 
 If a system is misconfigured by having the \lstinline{setuid} bit set for the \lstinline{docker} binary, a user will be able to execute Docker as \lstinline{root} (the owner of \lstinline{docker} binary). Just like before, we can easily recreate this attack.
 
@@ -54,6 +54,6 @@ admin:$6$VOSV5AVQ$jHWxAVAUgl...:18142:0:99999:7:::
 
 We now see that we are not a part of the \lstinline{docker} group, but we can still run \lstinline{docker} because the \lstinline{setuid} bit (and the execute bit for all users) is set.
 
-\hfill
+\medskip
 
 This is not covered by the CIS Benchmark guidelines. There are multiple guidelines about correct file and directory permissions, but none cover the binaries.

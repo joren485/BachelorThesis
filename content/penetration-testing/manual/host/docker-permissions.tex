@@ -8,11 +8,11 @@ docker:x:999:jvrancken
 \end{lstlisting}
 We see that only \lstinline{jvrancken} is part of the \lstinline{docker} group. It might also be interesting to look at which users have \lstinline{sudo} rights (in \lstinline{/etc/sudoers}). Users without \lstinline{sudo} but with Docker permissions still need to be considered \lstinline{sudo} users (see \autoref{subsection:docker-permissions}).
 
-\hfill
+\medskip
 
 It is possible that the Docker socket has permissions that give anybody permission to interact with Docker. Some people set the permissions to read and write for all users (i.e. \lstinline{666}). Giving all users read and write permission to the Docker socket allows them to use Docker.
 
-\hfill
+\medskip
 
 It is also possible that the \lstinline{setuid} bit is set on the Docker client. In that case, we are also able to use Docker (see \autoref{subsubsection:setuid}).
 

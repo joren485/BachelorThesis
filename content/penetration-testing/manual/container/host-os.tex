@@ -1,7 +1,7 @@
 \subsubsection{Identifying Host Operating System}\label{subsubsection:identify-host-os}
 It is also important to look for information about the host. This can be very useful to identify and use relevant exploits.
 
-\hfill
+\medskip
 
 Because containers use the kernel of the host, we can use the kernel version to identify information about the host. Let's take a look at the following example running on an Ubuntu host.
 \begin{lstlisting}[caption={\lstinline{/etc/os-release} and \lstinline{uname} differ.},captionpos=b]
@@ -15,6 +15,6 @@ PRETTY_NAME="Alpine Linux v3.10"
 
 We are running an Alpine Linux container, which we see when we look in the \lstinline{/etc/os-release} file. However, when we look at the kernel version (using the \lstinline{uname} command), we see that we are using an Ubuntu kernel. That means that we are most likely running on an Ubuntu host.
 
-\hfill
+\medskip
 
 We also see the kernel version number (in this case \lstinline{5.0.0-36-generic}). This can be used to see if the system is vulnerable to kernel exploits, because some kernel exploits may be used to escape the container.

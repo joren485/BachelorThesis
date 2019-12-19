@@ -1,11 +1,11 @@
 \chapter{Known Vulnerabilities in Docker}\label{chapter:vulnerabilities}
 In this chapter we will look at Docker from a vulnerability analysis perspective. First we will look conceptually at Docker from a security perspective by examining the attack surface of Docker on an host and the various attacker models that come with it. Then we look at the countermeasures built-in Docker and Linux to prevent or reduce the impact of security problems. We then look at some interesting, practical examples of security problems in Docker. These are split into misconfigurations and security related software bugs.
 
-\hfill
+\medskip
 
 Software bugs and misconfigurations can both be security problems, but they differ in who made the mistake. A \emph{bug} is a problem in a program itself. For example, a buffer overflow is a bug. The problem lies solely in the program itself. To fix it, the code of the program needs to be changed. \emph{Misconfigurations}, on the other hand, are security problems that come from wrong usage of a program. The program is incorrectly configured and that creates a situation that might be exploitable to an attacker. For example, a world-readable file containing passwords is a misconfiguration. To fix a misconfiguration, the user should change the configuration of the program. The developers of the program can only recommend users to configure it correctly.
 
-\hfill
+\medskip
 
 In the \autoref{chapter:pentesting}, we will look at how these vulnerabilities can be used during a penetration test.
 

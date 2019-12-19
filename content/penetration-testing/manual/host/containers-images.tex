@@ -15,7 +15,7 @@ centos      latest  0f3e07c0138f    2 months ago 220MB
 database "docker-entrypoint.sh mysqld" mariadb:latest
 \end{lstlisting}
 
-\hfill
+\medskip
 
 We should also look at the environment variables that have been passed to the containers, because environment variables are used to pass information (including passwords and secrets) to a container when it is created. Using \lstinline{docker inspect} we can see information about containers. Including the set environment variables.
 \begin{lstlisting}[caption={List environment variables passed to Docker container.},captionpos=b]
@@ -26,7 +26,7 @@ We should also look at the environment variables that have been passed to the co
 ...
 \end{lstlisting}
 
-\hfill
+\medskip
 
 The containers might have volumes. Those volumes tell us more about where sensitive and important data might be. We can also list the volumes using \lstinline{docker inspect}.
 \begin{lstlisting}[caption={List bindmounts into Docker container.},captionpos=b]

@@ -48,7 +48,7 @@ A process in a container sees a different part of the host system then processes
 If we look at \autoref{fig:with-without-container}, we see two scenarios. \autoref{subfig:processes} is the normal way to run processes. The operating system starts processes that can communicate with one another. Their view on the file system is the same.
 In \autoref{subfig:container} one of the processes runs inside a container. These processes cannot communicate with one another. If Process A looks at the files in \lstinline{/tmp}, it accesses a different part of the file system than if Process B looks at the files in \lstinline{/tmp}\footnote{Access to files on the host has to be explicitly given (as discussed in \autoref{subsection:data-persistence}).}. Process B can not even see that Process A exists.
 
-\hfill
+\medskip
 
 Process A and Process B see such a different part of the host system that to Process B it looks like it is running on a whole separate system.
 
@@ -56,11 +56,11 @@ Process A and Process B see such a different part of the host system that to Pro
 
 Containers can be made into easily deployable packages (called images). These images only contain the necessary files for specific software to be run. Other files, libraries and binaries are shared between the host operating system (the system running the container). This allows developers to create lightweight software packages containing only the necessary dependencies.
 
-\hfill
+\medskip
 
 Containers also make it possible to run multiple versions of the same software on one host. Each container can contain a specific version and all the containers run on the same host. Because the containers are isolated from each other, their incompatible dependencies are not a problem.
 
-\hfill
+\medskip
 
 For example, if we want to run an instance of Wordpress\footnote{A very popular content management system to build websites with.}, we do not need to install all the Wordpress dependencies. We only need to download the container that the Wordpress developers created, which includes all the necessary dependencies.
 
@@ -68,7 +68,7 @@ Similarly, if we want to move the Wordpress instance from one host to the other,
 
 If we want to test a newer version of Wordpress on the same host, we only have to run the different container on the same host. The incompatible dependencies of the two Wordpress instances are not a problem, because they see another part of the file system and do not even see each other's processes.
 
-\hfill
+\medskip
 
 The simplicity that containerization brings, makes containerization very popular in software development, maintenance and deployment.
 
@@ -152,6 +152,6 @@ A Docker container isolates software from the host, but does not change it. This
 
 If, for example, there exists a RCE (remote code execution) vulnerability in Wordpress. Running Wordpress in a Docker container does not fix the vulnerability. An attacker is still able to exploit it. But that attacker is not able to access the host system, because the exploited software is isolated from the host system because of Docker.
 
-\hfill
+\medskip
 
 Because a container uses the same kernel and resources as the host, a \lstinline{root} exploit (i.e.\ an exploit that allows unprivileged users to escalate their privileges) can be just as effective inside as outside of the container, because the target (e.g.\ the kernel) is the same. CVE--2016--5195(Dirty Cow)\footnote{\url{https://dirtycow.ninja/}} is a good example of an exploit that allows container escapes\cite{Dirty-Cow-Escape}, because it attacks the kernel of the host.

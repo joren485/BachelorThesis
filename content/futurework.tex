@@ -9,11 +9,11 @@ It would be interesting to continue this research by looking at how we could per
 \section{Docker on Windows}
 This bachelor thesis looks at Docker on Linux, because Docker is developed for Linux. However, it is also possible to run Docker on Windows (sort of). Because Docker uses very specific kernel features from Linux, Docker on Windows runs in a Linux virtual machine. That way Windows users can still use Docker exactly as they would use it on Linux (because they practically are).
 
-\hfill
+\medskip
 
 Some of the vulnerabilities and misconfigurations that are described in this thesis might also be relevant on Windows. There are also vulnerabilities that are specific to Docker on Windows (e.g.\ CVE--2019--15752 and CVE--2018--15514).
 
-\hfill
+\medskip
 
 It would be interesting (and relevant to penetration testing) to continue this research by specifically looking at Docker on Windows.
 
@@ -26,16 +26,16 @@ However, it would be interesting to specifically compare the isolation and secur
 The Docker CIS Benchmark contains 115 guidelines with their respective documentation.
 This makes it a 250+ page document. This is not practical for developers and engineers (the intended audience). It would be much more useful to have a smaller, better sorted list that only contains common mistakes and pitfalls to watch out for.
 
-\hfill
+\medskip
 
 The CIS Benchmark do indicate the importance of each guideline.
 With Level 1 indicating that the guideline is a must-have and Level 2 indicating that the guideline is only necessary if extra security is needed. However, only twenty-one guidelines are actually considered Level 2. All the other guidelines are considered Level 1. This still leaves the reader with a lot of guidelines that are considered must-have.
 
-\hfill
+\medskip
 
 It would be a good idea to split the document into multiple sections. The guidelines can be divided by their importance and usefulness. For example, a three section division can be made.
 
-\hfill
+\medskip
 
 The first section would describe obvious and basic guidelines that everyone should follow (and probably already does). This is an example of guidelines that would be part of this section:
 \begin{itemize}
@@ -46,7 +46,7 @@ The first section would describe obvious and basic guidelines that everyone shou
     \item 4.3: Ensure that unnecessary packages are not installed in the container
 \end{itemize}
 
-\hfill
+\medskip
 
 The second section would contain guidelines that are common mistakes and pitfalls. These guidelines would be the most useful to the average developer. For example:
 \begin{itemize}
@@ -57,7 +57,7 @@ The second section would contain guidelines that are common mistakes and pitfall
     \item 5.6 Ensure \lstinline{sshd} is not run within containers
 \end{itemize}
 
-\hfill
+\medskip
 
 The last section would describe guidelines that are intended for systems that need extra hardening. For example:
 \begin{itemize}

@@ -1,11 +1,11 @@
 \section{Docker}
 The concept of containerization has been around a long time\footnote{\url{https://docs.freebsd.org/44doc/papers/jail/jail-9.html}}, but it only gained traction as serious way to package, distribute and run software in the last few years. This is mostly because of Docker.
 
-\hfill
+\medskip
 
 Docker was released in 2013 and it does not only offer a containerization platform, but also a way to distribute the containers. This allows developers and organizations to create packages that have no dependencies (besides Docker itself, of course). This allows for a lot faster development and deployment processes, because dependencies and installation of software are no longer a concern.
 
-\hfill
+\medskip
 
 Docker also makes it possible to run multiple versions of the same software on the same host, without creating a dependency nightmare. For example, if someone wants to run a Wordpress 4 website and Wordpress 5 website, they only need to create two Wordpress containers. Because the containers are isolated from one another, their conflicting dependencies are not a problem.
 
@@ -66,7 +66,7 @@ In \autoref{listing:docker-volume} the host \lstinline{/tmp} directory is mounte
 \subsubsection{Networking}
 When a Docker container is created the Docker daemon creates a network sandbox for that container and (by default) connects it to an internal bridge network. This gives the container its own networking resources such as an IPv4 address\footnote{IPv6 support is not enabled by default.}, routes and DNS entries. All outgoing traffic is routed through a bridge interface (by default).
 
-\hfill
+\medskip
 
 Incoming traffic (that is not part of an existing connection) is possible by routing traffic for specific ports from the host to the container.
 Specifying which ports on the host are routed to which ports on the container is done when a container is created. If we, for example, want to expose port \lstinline{80} to the Docker image created from \autoref{listing:dockerfile-simple} we can execute the following commands.
@@ -82,7 +82,7 @@ The first command creates a Docker image using the \lstinline{Dockerfile} and we
 A Docker container actually is a combination of multiple features within the Linux kernel.
 Mainly \lstinline{namespaces}, \lstinline{cgroups} and \lstinline{OverlayFS}.
 
-\hfill
+\medskip
 
 \lstinline{namespaces} are a way to isolate resources from processes. For example, if we add a process to a process \lstinline{namespace}, it can only see the processes in that \lstinline{namespace}. This allows processes to be isolated from each other. Linux supports the following \lstinline{namespaces} types\footnote{See the \lstinline{man page} of \lstinline{namespaces}.}:
 \begin{itemize}
@@ -99,11 +99,11 @@ When the Docker daemon creates a new container, it creates a new \lstinline{name
 
 A \lstinline{mount namespace} is very similar to a \lstinline{chroot}. A big difference is that a \lstinline{chroot} has a parent directory.
 
-\hfill
+\medskip
 
 Control groups (\lstinline{cgroups}) are a way to limit resources (e.g.\ CPU and RAM usage) to (groups of) processes and to monitor those processes.
 
-\hfill
+\medskip
 
 \lstinline{OverlayFS} is a (union mount) file system that allows combining multiple directories and present them as if they are one. This is used to show the multiple layers in a Docker image as a single root directory.
 
@@ -111,7 +111,7 @@ Control groups (\lstinline{cgroups}) are a way to limit resources (e.g.\ CPU and
 \subsection{\texorpdfstring{\lstinline{docker-compose}}{docker-compose}}
 \lstinline{docker-compose} is a wrapper program (a program that simplifies usage of another program) around Docker that can be used to specify Docker container configurations in files (called \lstinline{docker-compose.yaml}). These files remove the need to execute Docker commands with the correct arguments in the correct order. We only have to specify the necessary arguments once in the \lstinline{docker-compose.yaml} file.
 
-\hfill
+\medskip
 
 \autoref{listing:docker-compose-file} is an advanced example of an \lstinline{docker-compose.yaml} file similar to configuration that I have used in a production environment. Docker containers in production environments need to have a lot of runtime configuration (e.g.\ environment variables, exposed ports and dependencies on other containers). Specifying everything in a single file simplifies and stores the runtime configuration process.
 \begin{lstlisting}[caption={Example \lstinline{docker-compose.yaml}.},label={listing:docker-compose-file},captionpos=b]
@@ -148,7 +148,7 @@ Very similar functionality is also built into the Docker Engine, called Docker S
 \subsection{Registries}
 Docker images are distributable through registries. A registry is a server (that anybody can host), that stores Docker images. When a client does not have a Docker image that it needs, it can contact a registry to download that image. Note that because registries are an easy way to distribute Docker images, they are an interesting attack vector.
 
-\hfill
+\medskip
 
 The most popular (and default) registry is Docker Hub, which is run by the Docker company itself. Anybody can create a Docker Hub account and start creating and publishing images that anybody can download.
 
