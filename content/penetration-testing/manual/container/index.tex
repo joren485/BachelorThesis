@@ -3,7 +3,7 @@ If we have code execution inside of a container, we are going to focus on escapi
 
 \hfill
 
-Many Docker images are stripped from unnecessary tools, binaries and libraries to make the image smaller. However, we might need those tools during a penetration test. If we are \lstinline{root} in a container, we are most likely able to install the necessary tooling. If we only have access to a non-\lstinline{root} user, it might not be possible to install anything. In that case, we will have to work with what is available to us.
+Many Docker images are stripped from unnecessary tools, binaries and libraries to make the image smaller. However, we might need those tools during a penetration test. If we are \lstinline{root} in a container, we are most likely able to install the necessary tooling. If we only have access to a non-\lstinline{root} user, it might not be possible to install anything. In that case, we will have to work with what is available to us or find a way to get statically compiled binaries inside the container.
 
 \input{content/penetration-testing/manual/container/identifying-users}
 \input{content/penetration-testing/manual/container/docker-image}

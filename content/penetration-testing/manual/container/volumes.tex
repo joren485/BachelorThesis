@@ -1,8 +1,8 @@
 \subsubsection{Checking Volumes}\label{subsubsection:volumes}
-Volumes, the directories that are mounted from the host into the container, are the persistent data of the container. This persistent data might contain sensitive information, that is why it is important to check what directories are mounted into the container.
+Volumes, the directories that are mounted from the host into the container, are the persistent data of the container. This persistent data might contain sensitive information, that is why it is important to check what directories are mounted into the container (see \autoref{subsection:data-persistence}).
 
 We can do this by looking at the mounted filesystem locations.
-\begin{lstlisting}[caption={The (very abbreviated) contents of \lstinline{/proc/mounts} in a Docker container.},captionpos=b,label={listing:proc-mounts}]
+\begin{lstlisting}[caption={The (abbreviated) contents of \lstinline{/proc/mounts} in a Docker container.},captionpos=b,label={listing:proc-mounts}]
 (host)$ docker run -it --rm -v /tmp:/host/tmp ubuntu cat /proc/mounts
 overlay / overlay...
 ...
@@ -15,4 +15,4 @@ overlay / overlay...
 
 Every line contains information about one mount. We see many lines (which are abbreviated or omitted from \autoref{listing:proc-mounts}). We see the root OverlayFS mount at the top and to what path it points on the host (some path in \lstinline{/var/lib/docker/overlay2/}). We also see which directories are mounted from the root file system on the host (which in this case is the LVM logical volume \lstinline{root} which is represented in the file system as \lstinline{/dev/mapper/ubuntu--vg-root}). In the command we can see that \lstinline{/tmp} on the host is mounted as \lstinline{/host/tmp} in the container and in \lstinline{/proc/mounts} we see that \lstinline{/host/tmp} is mounted. We unfortunately do not see what path on the host is mounted, only the path inside the container.
 
-We now know this is an interesting path, because its contents need to be saved. During a penetration test, this would be a directory to pay extra attention to.
+We now know this is an interesting path, because its contents need to be persistent. During a penetration test, this would be a directory to pay extra attention to.

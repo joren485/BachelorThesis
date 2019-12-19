@@ -10,11 +10,11 @@ We see that only \lstinline{jvrancken} is part of the \lstinline{docker} group. 
 
 \hfill
 
-It is possible that the Docker socket has permissions that give anybody permission to interact with Docker. Some people set the permissions to \lstinline{666} (i.e.\ read and write for all users). Giving all users read and write permission to the Docker socket allows them to use Docker.
+It is possible that the Docker socket has permissions that give anybody permission to interact with Docker. Some people set the permissions to read and write for all users (i.e. \lstinline{666}). Giving all users read and write permission to the Docker socket allows them to use Docker.
 
 \hfill
 
-It is also possible that the \lstinline{setuid} bit is set on the Docker client. In that case, we are also able to use Docker (as the owner of the Docker client).
+It is also possible that the \lstinline{setuid} bit is set on the Docker client. In that case, we are also able to use Docker (see \autoref{subsubsection:setuid}).
 
 \begin{lstlisting}[caption={Permissions without and with the \lstinline{setuid} bit.},captionpos=b]
 (host)$ ls -l $(which docker)

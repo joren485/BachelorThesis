@@ -1,31 +1,29 @@
 \section{Protection Mechanisms}
 
-To significantly reduce that risk that (future) vulnerabilities and misconfigurations pose to a system with Docker, there are multiple protections built into Docker and the Linux kernel itself. In this section, we will look at the most well-known and important protections.
+To significantly reduce that risk that (future) vulnerabilities pose to a system with Docker, there are multiple protections built into Docker and the Linux kernel itself. In this section, we will look at the most well-known and important protections.
 
 \hfill
 
-It should be noted that because these protections add complexity and features, some vulnerabilities focus solely on bypassing one or more protections. A good example of this is CVE--2019--5021 (see \autoref{subsection:CVE-2019-5021}).
+It should be noted that because these protections add complexity and features, some vulnerabilities focus solely on bypassing one or more protection mechanisms. For example, CVE--2019--5021 (see \autoref{subsection:CVE-2019-5021}).
 
 \subsection{Capabilities}\label{protection-mechanisms:subsection:capabilities}
-To allow or disallow a process to use specific privileged functionality, the Linux kernel has capabilities\footnote{See the \lstinline{man page} of \lstinline{capbilities}}. A capability is a granular way of giving certain privileges to processes. A capability allows a process to perform privileged action without giving the process full \lstinline{root} rights. For example, if we want a process to be able to create its own packets but not read sensitive files we give it the \lstinline{CAP_NET_RAW} capability.
+To allow or disallow a process to use specific privileged functionality, the Linux kernel has a feature called ``capabilities''. A capability is a granular way of giving certain privileges to processes. A capability allows a process to perform a privileged action without giving the process full \lstinline{root} rights. For example, if we want a process to only be able to create its own packets, we only give it the \lstinline{CAP_NET_RAW} capability.
 
 \hfill
 
-By default every Docker container is started with minimum capabilities. The default capabilities can be found in the Docker code\footnote{\url{https://github.com/moby/moby/blob/master/oci/caps/defaults.go}}. It is possible to add or remove capabilities at runtime using the \lstinline{--cap-add} and \lstinline{--cap-drop}\cite{More-Secure-Non-Root-Container} arguments.
+By default, every Docker container is started with only the necessary minimum capabilities. The default capabilities can be found in the Docker code\footnote{\url{https://github.com/moby/moby/blob/master/oci/caps/defaults.go}}. It is possible to add or remove capabilities at runtime using the \lstinline{--cap-add} and \lstinline{--cap-drop}\cite{More-Secure-Non-Root-Container} arguments.
 
 \subsection{Secure Computing Mode}
-Secure Computing Mode (seccomp for short), like capabilities, is a built-in way to limit the privileged functionality that a process is allowed to use. Where capabilities limit functionality (like reading privileged files), Secure Computing Mode limits specific \lstinline{syscalls}. This allows for very granular security control. It does this by using whitelists of \lstinline{syscalls} (called profiles).
-To setup a strict, but still functional seccomp profile requires very specific knowledge of which \lstinline{syscalls} are used by a program. This makes it quite complex to setup
+Secure Computing Mode (\lstinline{seccomp}), like capabilities, is a built-in way to limit the privileged functionality that a process is allowed to use. Where capabilities limit functionality (like reading privileged files), Secure Computing Mode limits specific \lstinline{syscalls}. This allows very granular security control. It does this by using whitelists (called profiles) of \lstinline{syscalls}.
+To setup a strict, but still functional seccomp profile requires very specific knowledge of which \lstinline{syscalls} are used by a program. This makes it quite complex to setup.
 
 \hfill
 
 The default seccomp profile that processes in Docker containers get is available in the source code\footnote{\url{https://github.com/moby/moby/blob/master/profiles/seccomp/default.json}}. To pass a custom seccomp profile the \lstinline{--security-opt seccomp} can be used.
 
 
-\subsection{AppArmor}
-AppArmor (which stands for Application Armor) is a Linux kernel module that allows application-specific limitations of files and system resources.
-
-\hfill
+\subsection{Application Armor}
+Application Armor (AppArmor) is a kernel module that allows application-specific limitations of files and system resources.
 
 Docker adds a default AppArmor profile to every container. This is profile generated at runtime based on a template\footnote{\url{https://github.com/moby/moby/blob/master/profiles/apparmor/template.go}}.
 
@@ -33,14 +31,18 @@ Docker adds a default AppArmor profile to every container. This is profile gener
 
 \lstinline{bane}\footnote{\url{https://github.com/genuinetools/bane}} is a program that generates AppArmor profiles for containers.
 
-\subsection{SELinux}
-SELinux (which stands for Security-Enhanced Linux) is a set of changes to the Linux kernel that support system-wide access control for files and system resources. It is available by default on some Linux distributions.
+\subsection{Security-Enhanced Linux}
+Security-Enhanced Linux (SELinux) is a set of changes to the Linux kernel that support system-wide access control for files and system resources. It is available by default on some Linux distributions(e.g.\ Red Hat Linux based distributions).
 
 \hfill
 
 Docker does not enable SELinux support by default, but it does provide a SELinux policy\footnote{\url{https://www.mankier.com/8/docker_selinux}}.
 
 \subsection{Non-\texorpdfstring{\lstinline{root}}{root} user in containers}\label{subsection:non-root-user}
-Besides the protection mechanisms on the host, there are also protection mechanisms in the Docker images. The most important protection mechanism that Docker image creators can implement is not running processes inside a container as \lstinline{root}.
+Besides the protection mechanisms on the host, there are also protection mechanisms in Docker images. The most important protection mechanism that Docker image creators can implement is not running processes inside a container as \lstinline{root}.
 
-By default processes in Docker containers are executed as \lstinline{root} (the \lstinline{root} user of that \lstinline{namespace}), because the process is isolated from the host system. However, as we will see there exist many ways to escape containers. Most of those ways require \lstinline{root} privileges inside the container. That is why it is recommended to run processes in containers using non-\lstinline{root}. If the container gets compromised in any way, the attacker cannot escape because the user is non-\lstinline{root}.
+By default processes in Docker containers are executed as \lstinline{root} (the \lstinline{root} user of that \lstinline{namespace}), because the process is isolated from the host system. However, as we will see there exist many ways to escape containers. Most of those ways require \lstinline{root} privileges (inside the container). That is why it is recommended to run processes in containers using non-\lstinline{root}. If the container gets compromised in any way, the attacker cannot escape because the attacker does not have \lstinline{root} permissions.
+
+\hfill
+
+This is covered by CIS Docker Benchmark guidelines 4.1 (Ensure that a user for the container has been created) and 5.23 (Ensure that docker exec commands are not used with the user=root option).

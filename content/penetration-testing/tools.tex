@@ -1,7 +1,7 @@
 \section{Automation Tools}\label{section:tools}
 Most security assessments are very time restricted. Large, complex systems need to be assessed in a short amount of time. There are tools that automate part of the assessment process. Instead of taking every step manually, these tools scan systems automatically find known vulnerabilities and possible weak spots in a system.
 
-The advantage of these tools is that they save a lot of time and effort, because they can look at every part of a system in a systematic way. While the tools save time, they do miss the precision and detail that manual testing brings. Many security flaws are complex and might only be vulnerable under very specific circumstances. Manual examination and testing might reveal new vulnerabilities or vulnerable circumstances, while automated testing will only look for known vulnerabilities.
+The advantage of these tools is that they save a lot of time and effort, because they can look at every part of a system in a systematic way. However, while the tools save time, they do miss the precision and detail that manual testing brings. Many security flaws are complex and might only be vulnerable under very specific circumstances. Manual examination and testing might reveal new vulnerabilities or vulnerable circumstances, while automated testing will only look for known vulnerabilities. That is why using tools can help us, but can never fully replace manual examination.
 
 \hfill
 
@@ -11,7 +11,7 @@ In this section we will look at tools that automate scanning, exploitation and d
 Docker itself has released a scanner that is based on the CIS Docker Benchmark\footnote{\url{https://github.com/docker/docker-bench-security}}. It checks a host for every guideline in the CIS Docker Benchmark.
 
 \subsection{Image Analysis}\label{subsection:image-analysis-tools}
-Most Docker security analysis tools focus on static analysis of Docker images. They look for software and libraries inside the images and match these against known vulnerability databases. They also look for sensitive information (i.e.\ passwords) that might be stored inside the image. In \autoref{appendix:static-analysis-list} you will find a list of available Docker image analysis tools.
+Most Docker security analysis tools focus on static analysis of Docker images. They look for software and libraries inside the images and match these against known vulnerability databases. They also look for sensitive information (e.g.\ passwords) that might be stored inside the image. In \autoref{appendix:static-analysis-list} you will find a list of available Docker image analysis tools.
 
 \subsubsection{Continuous Integration}
 Because these tools perform static analysis, they can be run immediately after creating an image. This makes them perfect for CI pipelines. Let's say we have the following very common Git pipeline:

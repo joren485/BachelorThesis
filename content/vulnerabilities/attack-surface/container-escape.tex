@@ -1,5 +1,5 @@
 \subsection{Container Escape}\label{subsection:container-escape}
-One of the most common type of vulnerability (and sometimes misconfiguration) is the possibility for a process running in a container to escape the container and access data (i.e.\ execute commands) on the host.
+One of the most common type of vulnerability is the possibility for a process running in a container to escape the container and access data (i.e.\ execute commands) on the host.
 \begin{figure}[ht]
     \centering
     \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
@@ -47,7 +47,7 @@ One of the most common type of vulnerability (and sometimes misconfiguration) is
 
 \hfill
 
-An example attack scenario would be a company that offers a PaaS (Platform as a Service) products that allows customers to run dockers on their infrastructure\footnote{This is actually quite common nowadays. All major computing providers offer such a service.}. If it is possible for the attacker to submit a Docker image that escapes the container and access the underlying infrastructure, they could access other containers or even other internal resources. That would, obviously, be a very big problem for that company.
+An example attack scenario would be a company that offers a Platform as a Service (PaaS) products that allows customers to run Docker containers on their infrastructure\footnote{This is actually quite common nowadays. All major computing providers offer such a service.}. If it is possible for the attacker to submit a Docker image with a malicious process that escapes the container and access the underlying infrastructure, they could access other containers or other internal resources. That would, obviously, be a very big problem for the company.
 
 \hfill
 
@@ -55,6 +55,5 @@ A lot of the known container escapes are possible because the container can acce
 
 \hfill
 
-As noted before, because a container uses the same kernel and resources as the host, an exploit granting \lstinline{root} can be just as devastating run inside as outside of the docker, because the target kernel and resources are the same. CVE--2016--5195(Dirty Cow)\footnote{\url{https://dirtycow.ninja/}} is a good example of an exploit that allows container escapes\cite{Dirty-Cow-Escape}.
+It be noted that an exploit that allows someone to escape from a Linux \lstinline{namespace} is essentially a container escape exploit, because Docker relies heavily on \lstinline{namespaces} for isolation (see \autoref{subsubsection:internals}). CVE--2017--7308\cite{CVE-2017-7308} is a good example of this.
 
-It should also be noted that an exploit that allows someone to escape from a Linux \lstinline{namespace} is essentially a container escape exploit. CVE--2017--7308\cite{CVE-2017-7308} is a good example of this.

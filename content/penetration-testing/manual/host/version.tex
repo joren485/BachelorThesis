@@ -1,9 +1,9 @@
 \subsubsection{Docker Version}
-The first step we take if we are testing a system that has Docker installed, is checking the Docker version. Docker does not need to be running and we do not need explicit Docker permissions to check the version of Docker\footnote{The version is hardcoded as string in the client.}.
+The first step we take if we are testing a system that has Docker installed, is checking the Docker version. Docker does not need to be running and we do not need any special permissions (i.e. Docker permissions) to check the version of Docker\footnote{The version is hardcoded as string in the Docker client binary.}.
 
 \begin{lstlisting}[caption={Show Docker version.},captionpos=b]
 (host)$ docker -v
 Docker version 19.03.5, build 633a0ea838
 \end{lstlisting}
 
-Once we have the Docker version, we should check for any vulnerabilities (see \autoref{section:bugs}) that are available for that version.
+Once we have the Docker version, we should check for any CVEs (see \autoref{section:bugs} and \autoref{appendix:CVE-List}) that are available for that version.

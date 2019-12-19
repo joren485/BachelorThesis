@@ -1,9 +1,18 @@
 \subsubsection{Searching for the Docker Socket}
-It is quite common for the Docker Socket to be mounted into containers. For example if we want to have a container that monitors the health of all other containers. However, this is very dangerous (as we saw in \autoref{subsection:api}). We can search for the socket using two techniques. We either look at the mounts (like in \autoref{subsubsection:volumes}) or we try to look for files with names similar to \lstinline{docker.sock}.
+It is quite common for the Docker Socket to be mounted into containers. For example if we want to have a container that monitors the health of all other containers. However, this is very dangerous (as discussed in \autoref{subsection:api}). We can search for the socket using two techniques. We either look at the mounts (like in \autoref{subsubsection:volumes}) or we try to look for files with names similar to \lstinline{docker.sock}.
 
-\begin{lstlisting}[caption={\lstinline{docker.sock} in \lstinline{/proc/mounts}.},captionpos=b]
+\begin{lstlisting}[caption={\lstinline{docker.sock} in \lstinline{/proc/mounts}.},captionpos=b,label={listing:socket-proc-mounts}]
 (host)$ docker run -it --rm -v /var/run/docker.sock:/var/run/docker.sock ubuntu grep docker.sock /proc/mounts
 tmpfs /run/docker.sock tmpfs rw,nosuid,noexec,relatime,size=792244k,mode=755 0 0
 \end{lstlisting}
 
-In this example, we mount \lstinline{/var/run/docker.sock} into the container as \lstinline{/var/run/docker.sock}. We can see that the \lstinline{docker.sock} is mounted at \lstinline{/run/docker.sock} (it is not mounted at \lstinline{/var/run/docker.sock} because \lstinline{/var/run/} is a symlink to \lstinline{/run/}).
+In \autoref{listing:socket-proc-mounts}, we mount \lstinline{/var/run/docker.sock} into the container as \lstinline{/var/run/docker.sock} and look at \lstinline{/proc/mounts}. We can see that the \lstinline{docker.sock} is mounted at \lstinline{/run/docker.sock} (it is not actually mounted at \lstinline{/var/run/docker.sock} because \lstinline{/var/run/} is a symlink to \lstinline{/run/}).
+
+\medskip
+
+\begin{lstlisting}[caption={Running \lstinline{find} to search for \lstinline{docker.sock}.},captionpos=b, label={listing:socket-find}]
+(host)$ docker run -it --rm -v /var/run/docker.sock:/var/run/docker.sock ubuntu find . -name "docker.sock" /
+/run/docker.sock
+\end{lstlisting}
+
+In \autoref{listing:socket-find}, we mount \lstinline{/var/run/docker.sock} into the container and search for files called ``\lstinline{docker.sock}''.

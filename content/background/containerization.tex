@@ -154,4 +154,4 @@ If, for example, there exists a RCE (remote code execution) vulnerability in Wor
 
 \hfill
 
-It should be noted, however, that containerization is a lot more risky than virtualization, because containers run using the same kernel and resources as the host. This means that a kernel exploit run inside a container is just as dangerous as the same exploit run directly on the host, because the target (the kernel) is the same.
+Because a container uses the same kernel and resources as the host, a \lstinline{root} exploit (i.e.\ an exploit that allows unprivileged users to escalate their privileges) can be just as effective inside as outside of the container, because the target (e.g.\ the kernel) is the same. CVE--2016--5195(Dirty Cow)\footnote{\url{https://dirtycow.ninja/}} is a good example of an exploit that allows container escapes\cite{Dirty-Cow-Escape}, because it attacks the kernel of the host.

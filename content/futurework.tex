@@ -1,17 +1,17 @@
 \chapter{Future Work}
-This thesis looks at how to penetration test Docker. During the writing of this thesis, I came across some interesting topics that go beyond the scope of this thesis.
+This thesis looks at how to penetration test Docker systems. During the research and writing, I came across some interesting topics that go beyond the scope of this thesis.
 
 \section{Orchestration Software}
 In modern software deployment, containerization is only part of the puzzle. Large companies run a lot of different software and each instance needs to support many connections and a lot of computing power. That means that for many applications, multiple containers of the same image are run to handle everything. To manage all of those containers there is orchestration software. The most famous being Kubernetes and Docker Swarm.
 
-It would be interesting to continue this research to look at orchestration software and how it impacts security on systems.
+It would be interesting to continue this research by looking at how we could perform a penetration test on orchestration software and how orchestration software impacts security on systems.
 
 \section{Docker on Windows}
 This bachelor thesis looks at Docker on Linux, because Docker is developed for Linux. However, it is also possible to run Docker on Windows (sort of). Because Docker uses very specific kernel features from Linux, Docker on Windows runs in a Linux virtual machine. That way Windows users can still use Docker exactly as they would use it on Linux (because they practically are).
 
 \hfill
 
-Some of the vulnerabilities and misconfigurations that are described in this thesis, might also be relevant on Windows. There are also vulnerabilities that are specific to Docker on Windows (CVE--2019--15752 and CVE--2018--15514).
+Some of the vulnerabilities and misconfigurations that are described in this thesis might also be relevant on Windows. There are also vulnerabilities that are specific to Docker on Windows (e.g.\ CVE--2019--15752 and CVE--2018--15514).
 
 \hfill
 

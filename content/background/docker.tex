@@ -78,7 +78,7 @@ Specifying which ports on the host are routed to which ports on the container is
 
 The first command creates a Docker image using the \lstinline{Dockerfile} and we then create (and start) a container from that image. We ``publish'' port \lstinline{8000} on the host to port \lstinline{80} of the container. This means that, while the container is running, all traffic from port \lstinline{8000} on the host is routed to port \lstinline{80} inside the container.
 
-\subsubsection{Docker Internals}
+\subsubsection{Docker Internals}\label{subsubsection:internals}
 A Docker container actually is a combination of multiple features within the Linux kernel.
 Mainly \lstinline{namespaces}, \lstinline{cgroups} and \lstinline{OverlayFS}.
 
@@ -101,7 +101,7 @@ A \lstinline{mount namespace} is very similar to a \lstinline{chroot}. A big dif
 
 \hfill
 
-Control groups (or \lstinline{cgroups} for short) are a way to limit resources (e.g.\ CPU and RAM usage) to (groups of) processes and to monitor those processes.
+Control groups (\lstinline{cgroups}) are a way to limit resources (e.g.\ CPU and RAM usage) to (groups of) processes and to monitor those processes.
 
 \hfill
 
