@@ -1,4 +1,4 @@
-\subsubsection{Checking Network Configuration}
+\subsubsection{Checking Network Configuration}\label{subsubsection:network-scan}
 We should also look at the network of the container. We should look at which containers are in the same network and what the container is able to reach. To do this, we will most likely need to install some tools. Even the most basic networking tools (e.g.\ \lstinline{ping}) are removed from most Docker images, because very few containers will need them.
 
 By default all containers get an IPv4 address in subnet \lstinline{172.17.0.0/16}. It is possible to find the address (without installing anything) of a container we have access to by looking at \lstinline{/etc/hosts/} file. Docker will add a line that resolves the hostname of to the IPv4 address to \lstinline{/etc/hosts}.

@@ -1,4 +1,4 @@
-\subsection{Attack Scenario Detection}
+\subsection{Attack Scenario Detection}\label{subsection:detection}
 In most security assessments and penetration tests it will be clear what kind of system (i.e.\ running as a Docker or not) we are attacking. In some cases, however, it might not be. A good example of this is getting remote code execution on a system during a black box penetration test. In that case, we might get a reverse shell and are able to execute commands, but do not know anything about the systems' internal workings. In such a case it is important to know if we are running in a Docker container or not.
 
 In this section, we will look at fingerprinting a system to see whether we are in a Docker container.

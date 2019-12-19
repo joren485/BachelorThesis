@@ -1,4 +1,4 @@
-\subsubsection{Searching for the Docker Socket}
+\subsubsection{Searching for the Docker Socket}\label{subsubsection:searching-socket}
 It is quite common for the Docker Socket to be mounted into containers. For example if we want to have a container that monitors the health of all other containers. However, this is very dangerous (as discussed in \autoref{subsection:api}). We can search for the socket using two techniques. We either look at the mounts (like in \autoref{subsubsection:volumes}) or we try to look for files with names similar to \lstinline{docker.sock}.
 
 \begin{lstlisting}[caption={\lstinline{docker.sock} in \lstinline{/proc/mounts}.},captionpos=b,label={listing:socket-proc-mounts}]

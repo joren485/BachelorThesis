@@ -1,4 +1,4 @@
-\subsubsection{Control Group}
+\subsubsection{Control Group}\label{subsubsection:detection:cgroup}
 To limit the resources of containers, Docker creates control groups for each container and a parent control group called \lstinline{docker}. If a process is started in a Docker container, that process will have be in the control group of that container. We can verify this by looking at the \lstinline{cgroup} of the initial process(\lstinline{/proc/1/cgroups})\cite{Metasploit-Linux-Gather-Container-Detection}.
 
 \begin{lstlisting}[caption={Process control group inside container\protect\footnotemark.},captionpos=b]

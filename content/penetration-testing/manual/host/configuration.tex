@@ -1,4 +1,4 @@
-\subsubsection{Configuration}
+\subsubsection{Configuration}\label{subsubsection:configuration}
 Docker is configured using multiple files. The most important being the way the Docker daemon is started. Most systems will have a service manager that manages daemon processes. On many modern Linux distributions that is a task of \lstinline{systemd}. On other Linux systems the configuration file \lstinline{/etc/docker/daemon.json}\footnote{\url{https://docs.docker.com/engine/reference/commandline/dockerd/}} is used (and defaults might be set in \lstinline{/etc/default/docker}). These files will also tell us if the Docker API is available over TCP which, if not configured correctly, can be very dangerous (see \autoref{subsubsection:remote-access}).
 
 \hfill

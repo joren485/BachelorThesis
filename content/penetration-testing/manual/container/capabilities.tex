@@ -1,4 +1,4 @@
-\subsubsection{Checking Capabilities}
+\subsubsection{Checking Capabilities}\label{subsubsection:container:capabilities}
 Once we have a clear picture what kind of system we are working with, we can do some more detailed reconnaissance. One of the most important things to look at are the kernel capabilities (see \autoref{protection-mechanisms:subsection:capabilities}) of the container. We can do this by looking at \lstinline{/proc/self/status}\footnote{\lstinline{self} in \lstinline{/proc/self/} refers to the current process.}. This file contains multiple lines that contain information about the granted capabilities.
 
 \begin{lstlisting}[caption={Capabilities of process in container.},captionpos=b]
@@ -28,8 +28,7 @@ We are interested in the \lstinline{CapEff} value, because that value represents
 
 We can use this to check if there are any capabilities that can be used to escape the Docker container (see \autoref{misconfigurations:subsection:capabilities}).
 
-\subsubsection{Checking for Privileged Mode}
-
+\subsubsection{Checking for Privileged Mode}\label{subsubsection:container:privileged}
 As stated before, if the container runs in privileged mode it gets all capabilities. This makes it easy to check if we are running a process in a container in privileged mode. \lstinline{0000003fffffffff} is the representation of all capabilities.
 
 \begin{lstlisting}[caption={\lstinline{capsh} shows privileged capabilities.},captionpos=b]
