@@ -2,6 +2,8 @@
 
 \usepackage[utf8]{inputenc}
 
+\usepackage{todonotes}
+
 % Add figures
 \usepackage{graphicx}
 
@@ -95,8 +97,9 @@
     \tableofcontents
 
     \input{content/introduction}
-    \input{content/notation}
+    \input{content/notation/index}
     \input{content/background/index}
+    \input{content/attack-surface/index}
     \input{content/vulnerabilities/index}
     \input{content/penetration-testing/index}
     \input{content/checklist/index}
@@ -109,7 +112,5 @@
     \bibliography{content/bibliography}
 
     \appendix
-    \input{content/appendix/cisexample}
-    \input{content/appendix/cve-list}
-    \input{content/appendix/static-analysis-list}
+    \input{content/appendix/index}
 \end{document}

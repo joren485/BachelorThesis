@@ -1,0 +1,14 @@
+\subsection{Networking}
+When a Docker container is created the Docker daemon creates a network sandbox for that container and (by default) connects it to an internal bridge network. This gives the container its own networking resources such as an IPv4 address\footnote{IPv6 support is not enabled by default.}, routes and DNS entries. All outgoing traffic is routed through a bridge interface (by default).
+
+\medskip
+
+Incoming traffic (that is not part of an existing connection) is possible by routing traffic for specific ports from the host to the container.
+Specifying which ports on the host are routed to which ports on the container is done when a container is created. If we, for example, want to expose port \lstinline{80} to the Docker image created from \autoref{listing:dockerfile-simple} we can execute the following commands.
+
+\begin{lstlisting}[caption={Creating a Docker container with exposed port.},label={listing:docker-port},captionpos=b]
+(host)$ docker build -t thesis-hello-world .
+(host)$ docker run --rm -p 8000:80 --name=thesis-hello-world-container thesis-hello-world
+\end{lstlisting}
+
+The first command creates a Docker image using the \lstinline{Dockerfile} and we then create (and start) a container from that image. We ``publish'' port \lstinline{8000} on the host to port \lstinline{80} of the container. This means that, while the container is running, all traffic from port \lstinline{8000} on the host is routed to port \lstinline{80} inside the container.

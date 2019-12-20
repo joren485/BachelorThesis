@@ -1,0 +1,28 @@
+\subsection{Docker Internals}\label{subsubsection:internals}
+A Docker container actually is a combination of multiple features within the Linux kernel.
+Mainly \lstinline{namespaces}, \lstinline{cgroups} and \lstinline{OverlayFS}.
+
+\medskip
+
+\lstinline{namespaces} are a way to isolate resources from processes. For example, if we add a process to a process \lstinline{namespace}, it can only see the processes in that \lstinline{namespace}. This allows processes to be isolated from each other. Linux supports the following \lstinline{namespaces} types\footnote{See the \lstinline{man page} of \lstinline{namespaces}.}:
+\begin{itemize}
+    \item \lstinline{Cgroup}: To isolate processes from \lstinline{cgroup} hierarchies.
+    \item \lstinline{IPC}: Isolates the inter-process communication. This, for example, isolates shared memory regions.
+    \item \lstinline{Network}: Isolates the network stack (e.g. IP addresses, interfaces, routes and ports).
+    \item \lstinline{Mount}: Isolates mount points. When creating a new \lstinline{mount namespace}, existing mount points are copied from the current \lstinline{namespace}. New mount points are not propagated.
+    \item \lstinline{PID}: Isolates processes from seeing process ids in other \lstinline{namespaces}. Processes in different \lstinline{namespaces} can have the same \lstinline{PID}.
+    \item \lstinline{User}: Isolates the users and groups.
+    \item \lstinline{UTS}: Isolates the host and domain names.
+\end{itemize}
+
+When the Docker daemon creates a new container, it creates a new \lstinline{namespace} of each type for the process that runs in the container. That way the container cannot view any of the processes, network interfaces and mount points of the host (by default it can communicate with other Docker containers, because it is connected to the internal Docker network). To the container it seems that it is actually running an entirely separate operating system.
+
+A \lstinline{mount namespace} is very similar to a \lstinline{chroot}. A big difference is that a \lstinline{chroot} has a parent directory.
+
+\medskip
+
+Control groups (\lstinline{cgroups}) are a way to limit resources (e.g.\ CPU and RAM usage) to (groups of) processes and to monitor those processes.
+
+\medskip
+
+\lstinline{OverlayFS} is a (union mount) file system that allows combining multiple directories and present them as if they are one. This is used to show the multiple layers in a Docker image as a single root directory.

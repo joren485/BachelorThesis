@@ -1,0 +1,36 @@
+\subsection{\texorpdfstring{\lstinline{docker-compose}}{docker-compose}}
+\lstinline{docker-compose} is a wrapper program (a program that simplifies usage of another program) around Docker that can be used to specify Docker container configurations in files (called \lstinline{docker-compose.yaml}). These files remove the need to execute Docker commands with the correct arguments in the correct order. We only have to specify the necessary arguments once in the \lstinline{docker-compose.yaml} file.
+
+\medskip
+
+\autoref{listing:docker-compose-file} is an advanced example of an \lstinline{docker-compose.yaml} file similar to configuration that I have used in a production environment. Docker containers in production environments need to have a lot of runtime configuration (e.g.\ environment variables, exposed ports and dependencies on other containers). Specifying everything in a single file simplifies and stores the runtime configuration process.
+\begin{lstlisting}[caption={Example \lstinline{docker-compose.yaml}.},label={listing:docker-compose-file},captionpos=b]
+---
+version: "3"
+
+services:
+  postgres:
+    image: "postgres:10.5"
+    restart: "always"
+    environment:
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    volumes:
+      - "/dir/data/:/var/lib/postgresql/data/"
+
+  nextcloud:
+    image: "nextcloud:17-fpm"
+    restart: "always"
+    ports:
+      - "127.0.0.1:9000:9000"
+    depends_on:
+      - "postgres"
+    environment:
+      POSTGRES_DB: "database"
+      POSTGRES_USER: "user"
+      POSTGRES_PASSWORD: "password"
+      POSTGRES_HOST: "postgres"
+    volumes:
+      - "/dir/www/:/var/www/html/"
+\end{lstlisting}
+
+Very similar functionality is also built into the Docker Engine, called Docker Stack. It also uses \lstinline{docker-compose.yaml}. Some features that are supported by \lstinline{docker-compose} are not supported by Docker Stack and vice versa.

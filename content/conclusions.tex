@@ -1,8 +1,9 @@
 \chapter{Conclusions}
+\todo[inline]{Rewrite}
 Because Docker is a whole ecosystem and not just one program, we saw that there are many different attacker models. All of these models should be taken into account when designing infrastructure using containers. Using containers creates more secure environments, because it isolates software. However, using containers also increases the attack surface and risks, because containerization software also adds extra layers of abstraction and complexity. This poses challenges for both attackers and defenders of Docker systems. We will look at the findings of this bachelor thesis from both perspectives.
 
 \section{Takeaways from an Offensive Perspective}
-We looked at the many attacker models that the Docker ecosystem has (see \autoref{section:attack-surface-models}). These are all models to think about when attacking a system. We saw that there are many useful vulnerabilities in Docker. If an attacker finds a Docker instance that is not up to date, they can wreak havoc using these vulnerabilities. The moment the system is updated, the vulnerabilities loose all there importance. Misconfigurations on the other hand are harder to fix, but can just as dangerous and impactful. That is why it is important to know which vulnerabilities exist in older versions of Docker, but it is much more important to know what can go wrong when configuring Docker system.
+We looked at the many attacker models that the Docker ecosystem has (see \autoref{section:attack-surface-models}). These are all models to think about when attacking a system. We saw that there are many useful vulnerabilities in Docker. If an attacker finds a Docker instance that is not up to date, they can cause serious problems using these vulnerabilities. The moment the system is updated, the vulnerabilities loose all there importance. Misconfigurations on the other hand are harder to fix, but can just as dangerous and impactful. That is why it is important to know which vulnerabilities exist in older versions of Docker, but it is much more important to know what can go wrong when configuring Docker system.
 
 \medskip
 
@@ -22,7 +23,7 @@ As we described in \autoref{section:bugs} there are many dangerous vulnerabiliti
 
 \medskip
 
-Docker takes complex concepts from the Linux kernel (e.g. \lstinline{namespaces} and control groups) and beautifully creates an easy interface to interact with them and creates nice abstraction layers like containers and images. However, this means that many developers and engineers will not know what goes on under the hood. This is a recipe for security problems. We saw that there are many ways to misconfigure Docker (see \autoref{section:misconfigurations}). Misconfigurations are a lot harder to fix than vulnerabilities, because they require a change to the system. These kind of patches require system administrators to understand how Docker works.
+Docker takes complex concepts from the Linux kernel (e.g. \lstinline{namespaces} and control groups) and creates an easy interface to interact with them and creates abstraction layers like containers and images. However, this means that many developers and engineers will not know what goes on under the hood. This is a recipe for security problems. We saw that there are many ways to misconfigure Docker (see \autoref{section:misconfigurations}). Misconfigurations are a lot harder to fix than vulnerabilities, because they require a change to the system. These kind of patches require system administrators to understand how Docker works.
 
 
 Understanding how Docker works will also make you think about your systems much more detailed and integratedly than when using guidelines and security checklists, that are most likely not completely fitted to your use-case, very long and incomplete (e.g.\ CIS Docker Benchmark).

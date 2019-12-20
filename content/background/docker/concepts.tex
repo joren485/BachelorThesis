@@ -1,0 +1,39 @@
+\subsection{Docker Concepts}
+Docker is made up of of a few concepts: daemon, images, containers and \lstinline{Dockerfile}s.
+
+\subsubsection{Docker Daemon}
+The daemon is a service (a privileged program that runs in the background) that runs (as \lstinline{root}\footnote{An experimental rootless mode is being worked on.}\footnote{\url{https://github.com/docker/engine/blob/master/docs/rootless.md}}) on the host. It manages all things related to Docker on that machine. For example, if a user needs to restart a container, the Docker daemon is the process that restarts the container. It is good to note that, because everything related to Docker is handled by the daemon and Docker has access to all resources of the host (because it runs as \lstinline{root}), having access to Docker is equivalent to having \lstinline{root} access to the host\footnote{\url{https://docs.docker.com/engine/security/security/}}.
+
+\subsubsection{Images}
+A Docker image is packaged software. It is a distributable set of layers. The first layer describes the base of the image. This is either an existing image or nothing (referred to as \lstinline{scratch}). Each layer on top of that is a change to the layer before. For example, if we add a file or run an command it adds a new layer.
+
+\subsubsection{Containers}
+A container is an instance of a Docker image. If we run software packaged as a Docker image, we create a container based on that image. If we want to run two instances of the same Docker image, we can create two containers.
+
+\subsubsection{\texorpdfstring{\lstinline{Dockerfiles}}{Dockerfiles}}
+A \lstinline{Dockerfile} describes what layers a Docker image consists of. It describes the steps to build the image. Let's look at a very simple example:
+
+\begin{lstlisting}[caption={Very Basic \lstinline{Dockerfile}.},label={listing:dockerfile-simple},captionpos=b]
+FROM alpine:latest
+LABEL maintainer="Joren Vrancken"
+CMD ["echo", "Hello World"]
+\end{lstlisting}
+
+These three instructions tell the Docker engine how to create a new Docker image.
+The full instruction set can be found in the \lstinline{Dockerfile} reference\footnote{\url{https://docs.docker.com/engine/reference/builder/}}.
+
+\begin{enumerate}
+    \item The \lstinline{FROM} instruction tells the Docker engine what to base the new Docker image on. Instead of creating an image from scratch (a blank image), we use an already existing image as our basis (in this case an image based on Alpine Linux).
+
+    \item The \lstinline{LABEL} instruction sets a key-value pair for the image. There can be multiple LABEL instructions. These key-value pairs get packaged and distributed with the image.
+
+    \item The \lstinline{CMD} instruction sets the default command that should be run when the container is started and which arguments should be passed to it.
+\end{enumerate}
+
+We can use this to create a new image and container from that image.
+\begin{lstlisting}[caption={Creating a Docker container from a \lstinline{Dockerfile}.},label={listing:create-container},captionpos=b]
+(host)$ docker build -t thesis-hello-world .
+(host)$ docker run --rm --name=thesis-hello-world-container thesis-hello-world
+\end{lstlisting}
+
+We first create a Docker image (called \lstinline{thesis-hello-world}) using the \lstinline{docker build} command and then create and start a new container (called \lstinline{thesis-hello-world-container}) from that image.

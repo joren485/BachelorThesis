@@ -1,0 +1,13 @@
+\subsection{Data Persistence}\label{subsection:data-persistence}
+Without additional configuration, a Docker container does not have persistent storage. Its storage is maintained when the container is stopped, but not when the container is removed. It is possible to mount a directory on the host in a Docker container. This allows the container to access files on the host and save them to that mounted directory.
+
+\begin{lstlisting}[caption={Bind mount example.},label={listing:docker-volume},captionpos=b]
+(host)$ echo test > /tmp/test
+(host)$ docker run -it --rm -v /tmp:/host-tmp ubuntu:latest bash
+(cont)# cat /host-tmp/test
+test
+(cont)# cat /tmp/test
+cat: /tmp/test: No such file or directory
+\end{lstlisting}
+
+In \autoref{listing:docker-volume} the host \lstinline{/tmp} directory is mounted into the container as \lstinline{/host-tmp}. We can see that a file that is created on the host is readable by the container. We also see that the container does have its own \lstinline{/tmp} directory, which has no relation to \lstinline{/host-tmp}.

@@ -1,4 +1,10 @@
 \chapter{Checklist}
+\todo[inline]{Order?}
+\todo[inline]{Explain order}
+\todo[inline]{tools}
+\todo[inline]{CVE}
+\todo[inline]{Misconfigs}
+\todo[inline]{Rename}
 In \autoref{chapter:vulnerabilities} and \autoref{chapter:pentesting} we looked at common vulnerabilities and how to identify them. In this chapter we will summarize those into a checklist consisting of steps.
 
 This list is kept intentionally short, to make it useful during a penetration test. For more information about each item, please see the referred section.
@@ -7,7 +13,7 @@ This list is kept intentionally short, to make it useful during a penetration te
 
 The first steps (\autoref{section:checklist-detection}) are meant to see if we are running inside a container. When we know whether we are inside a container, we can look for vulnerabilities inside the container (see \autoref{section:checklist-vulnerabilities-container}) or on the host (see \autoref{section:checklist-vulnerabilities-host}).
 
-\section{Are we running in a container?}\label{section:checklist-detection}
+\section{Are We Running in a Container?}\label{section:checklist-detection}
 If the answer to any of the following questions is yes, we are most likely running inside a container.
 
 If we are running inside a container, see \autoref{section:checklist-vulnerabilities-container}. If not, please see \autoref{section:checklist-vulnerabilities-host}.

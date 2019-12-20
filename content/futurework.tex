@@ -21,7 +21,7 @@ It would be interesting (and relevant to penetration testing) to continue this r
 This thesis looks at the security of Docker. As stated in the background, virtualization is another way to achieve isolation. A lot has been written about the comparison of virtualization and containerization\cite{Virtualization-vs-Containerization-to-Support-PaaS}\cite{Hypervisor-vs-Lightweight-Virtualization}\cite{Updated-Performance-Comparison-Virtual-Machines-Containers}.
 However, it would be interesting to specifically compare the isolation and security that virtualization offers to the isolation and security that containerization offers.
 
-\section{Condense Docker CIS Benchmark}
+\section{Condense the Docker CIS Benchmark}
 
 The Docker CIS Benchmark contains 115 guidelines with their respective documentation.
 This makes it a 250+ page document. This is not practical for developers and engineers (the intended audience). It would be much more useful to have a smaller, better sorted list that only contains common mistakes and pitfalls to watch out for.
@@ -67,3 +67,6 @@ The last section would describe guidelines that are intended for systems that ne
     \item 5.26 Ensure that container health is checked at runtime
     \item 5.29 Ensure that Docker's default bridge ``\lstinline{docker0}'' is not used
 \end{itemize}
+
+\section{Docker Man-in-the-Middle}
+In \autoref{subsection:arp-spoofing} we looked at performing a man-in-the-middle attack using ARP spoofing. It would be interesting to look at more complex man-in-the-middle attacks. For example, capturing all traffic of a webserver running in a Docker or modifying traffic.

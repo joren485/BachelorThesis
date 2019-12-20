@@ -1,0 +1,5 @@
+\section{Deployment \& Development Pipelines}
+\todo[inline]{CI and CD}
+One of the biggest usages of Docker is automating part of the deployment and development process. Many developers use continuous integration and continuous deployment systems to automatically build Docker images that they then automatically pull and run on their production environments. This level of automation allows for very rapid software development.
+
+However, automation does have a negative side. It removes scrutiny of the deployment pipeline. If an attacker is able to compromise a link in the chain, they will be able to create and deploy their own malicious images. Without proper monitoring of the full pipeline, such an attack can go unnoticed for a long time, because the system is designed to not need any human interaction.
