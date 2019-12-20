@@ -1,12 +1,15 @@
 \begin{abstract}
-\todo[inline]{Rewrite}
-Containerization software has become extremely popular to streamline software deployments in the last few years. Its popularity has made it a very important attack surface. This bachelor thesis looks at how someone should test the security of systems using Docker.
+Containerization software has become extremely popular to streamline software deployments in the last few years. Its popularity has made it a very interesting attack surface. This bachelor thesis discusses Docker from a security perspective and looks at how a penetration tester (e.g.\ an Employee of security companies like Secura) should test the security of systems that use Docker.
 
 \medskip
 
-We first look at multiple attack scenarios: escaping Docker containers, attacking the host through the Docker daemon and inter-container attacks. We then look at interesting and important vulnerabilities, both misconfigurations and software bugs. We take a practical look at configurations mistakes that Docker users could make. We also look at interesting CVEs (security related bugs) in Docker. We link these vulnerabilities to CIS Docker Benchmarks, which are security guidelines aimed at Docker.
+Because Docker is an ecosystem it has multiple attacker models: escaping Docker containers, inter-container attacks and attacking the host through the Docker daemon. We will look at Docker from these perspectives.
 
 \medskip
 
-Finally, we look at how we identify and use the vulnerabilities we looked at. Specifically, we look at how we should identify and use vulnerabilities during security assessments.
+To get a good understanding of what can go wrong using Docker we discuss configuration mistakes that Docker users could make and look at examples that demonstrate the dangerous consequences. We link these to CIS Docker Benchmarks, which are security guidelines aimed at Docker that are used by companies like Secura as a security benchmark. Recent CVEs that are relevant during penetration tests are also discussed, but less of a focus because they are easily circumvented.
+
+\medskip
+
+Finally, this thesis looks at how a penetration tester should identify the vulnerabilities discussed and presents a checklist that penetration testers can use to test systems using Docker.
 \end{abstract}

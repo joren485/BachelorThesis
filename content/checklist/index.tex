@@ -5,9 +5,9 @@ This list is kept intentionally short and uses only Unix shell commands that can
 
 \medskip
 
-The first steps (\autoref{section:checklist-detection}) are meant to see if we are running inside a container. When we know whether we are inside a container, we can look for vulnerabilities inside the container (see \autoref{section:checklist-vulnerabilities-container}) or on the host (see \autoref{section:checklist-vulnerabilities-host}). For more information about each step, please see the referred section.
+The first steps (\autoref{section:checklist-detection}) are meant to detect whether we are running inside a container. If we know we are inside a container, we can look for vulnerabilities inside the container (see \autoref{section:checklist-vulnerabilities-container}). If we know we are not running inside a container, we can look for vulnerabilities on the host (see \autoref{section:checklist-vulnerabilities-host}).
 
-\section*{Are We Running in a Container?}\label{section:checklist-detection}
+\section{Are We Running in a Container?}\label{section:checklist-detection}
 If the answer to any of the following questions is yes, we are most likely running inside a container. For detailed information, see \autoref{subsection:detection}.
 
 \medskip
@@ -32,7 +32,7 @@ If we are running inside a container, see \autoref{section:checklist-vulnerabili
     We can use the \lstinline{which} command to find available binaries. For example, ``\lstinline{which sudo}'' will tell us if the \lstinline{sudo} binary is available.
 \end{itemize}
 
-\section*{Finding Vulnerabilities in Containers}\label{section:checklist-vulnerabilities-container}
+\section{Finding Vulnerabilities in Containers}\label{section:checklist-vulnerabilities-container}
 The following questions and steps are meant to identify interesting parts and weak spots inside containers. For detailed information, see \autoref{subsection:testing-container}.
 
 \begin{itemize}
@@ -72,7 +72,7 @@ The following questions and steps are meant to identify interesting parts and we
     If possible, use \lstinline{nmap} to scan the local network for reachable hosts. The IPv4 address of the container can be found in \lstinline{/etc/hosts}.
 \end{itemize}
 
-\section*{Finding Vulnerabilities on the Hosts}\label{section:checklist-vulnerabilities-host}
+\section{Finding Vulnerabilities on the Hosts}\label{section:checklist-vulnerabilities-host}
 The following questions and steps are meant to identify interesting parts and weak spots on hosts running Docker. For detailed information, see \autoref{subsection:testing-host}.
 
 \begin{itemize}

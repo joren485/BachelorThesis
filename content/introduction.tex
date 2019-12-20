@@ -1,15 +1,14 @@
 \chapter{Introduction}
-\todo[inline]{Rewrite this}
-Secura, a company specializing in digital security, performs security assessments for clients. In these assessments, Secura evaluates the private and public networks of their clients. They would like to improve those assessments by also looking into containerization software their clients may be running.
+Containerization software allows developers to run package software into small easily reproducible packages and run software in lightweight isolated environments. Because of the ease of use and isolation it brings, containerization has become very popular for development and deployment of software. This is why many companies have started using it.
+
+Secura, a company specializing in digital security, performs security assessments for clients. In these assessments, Secura evaluates the private and public networks of their clients. They would like to improve those assessments by also looking into containerization software their clients run. This thesis will help them do that.
 
 \medskip
 
-Containerization software allows developers to package software into easily reproducible packages. It removes the tedious, repetitive and error-prone process of installing the right dependencies to run software, because the dependencies (e.g.\ libraries and files) are neatly packaged in the container. These containers run isolated from each other and the host they run on.
+We will first look at the necessary concepts (\autoref{chapter:notation}) and background information (\autoref{chapter:background}) on containerization software and Docker (the de facto industry standard for containerization software and focus of this thesis). We will then go into more detail about the attack surface (\autoref{chapter:attack-surface-models}), misconfigurations (\autoref{section:misconfigurations}) and specific security related bugs (\autoref{section:bugs}). We will discuss how these can be identified during a penetration test (\autoref{chapter:pentesting}). Most importantly, we will combine all information into a checklist of questions that penetration testers can use to test the security of systems that use Docker (\autoref{chapter:checklist}).
+
+Finally, we will look at out of scope but interesting ideas to extend this research (\autoref{chapter:futurework}), other research about security and Docker (\autoref{chapter:relatedwork}) and the takeaways of this thesis from both an offensive and a defensive perspective (\autoref{chapter:conclusions}).
 
 \medskip
 
-This thesis will focus on the de facto industry standard for containerization software, Docker. It will focus on Linux, because Docker is developed for Linux (although a Windows version does exist\footnote{Docker on Windows actually runs inside a Linux virtual machine.}). Throughout this thesis we will look at practical examples, so a good understanding of Linux is recommended.
-
-\medskip
-
-We will first look at the necessary background information (\autoref{chapter:background}). We will then go into more detail about the attack surface (\autoref{chapter:attack-surface-models}), misconfigurations (\autoref{section:misconfigurations}) and specific security related bugs (\autoref{section:bugs}). Finally, we will describe how these can be used during a penetration test (\autoref{chapter:pentesting}) and which tools might be useful to automate part of the process (\autoref{section:tools}).
+We will focus on Linux, because Docker is developed for Linux (although a Windows version does exist\footnote{Docker on Windows actually runs inside a Linux virtual machine.}). Throughout this thesis we will look at practical examples, so a good understanding of Linux is recommended.

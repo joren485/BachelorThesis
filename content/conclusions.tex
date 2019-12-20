@@ -1,29 +1,31 @@
-\chapter{Conclusions}
-\todo[inline]{Rewrite}
-Because Docker is a whole ecosystem and not just one program, we saw that there are many different attacker models. All of these models should be taken into account when designing infrastructure using containers. Using containers creates more secure environments, because it isolates software. However, using containers also increases the attack surface and risks, because containerization software also adds extra layers of abstraction and complexity. This poses challenges for both attackers and defenders of Docker systems. We will look at the findings of this bachelor thesis from both perspectives.
+\chapter{Conclusions}\label{chapter:conclusions}
+Using containers creates more secure environments, because it isolates software. However, using containers also increases the attack surface and risks, because containerization software also adds extra layers of abstraction and complexity. This poses challenges for both attackers and defenders of Docker systems. We will look at the findings of this bachelor thesis from both perspectives.
 
 \section{Takeaways from an Offensive Perspective}
-We looked at the many attacker models that the Docker ecosystem has (see \autoref{chapter:attack-surface-models}). These are all models to think about when attacking a system. We saw that there are many useful vulnerabilities in Docker. If an attacker finds a Docker instance that is not up to date, they can cause serious problems using these vulnerabilities. The moment the system is updated, the vulnerabilities loose all there importance. Misconfigurations on the other hand are harder to fix, but can just as dangerous and impactful. That is why it is important to know which vulnerabilities exist in older versions of Docker, but it is much more important to know what can go wrong when configuring Docker system.
 
-\medskip
+\begin{itemize}
+    \item When inside a container, an attacker wants to escape and see what other containers it can reach. As we saw in \autoref{chapter:vulnerabilities} there are many ways to escape a Docker container.
 
-There are a lot of tools to help penetration testers (see \autoref{subsection:offensive-tools}) to identify the weaknesses in systems using Docker. These tools can save you a lot of time searching for weak spots in systems. However, these tools only scan for common and known vulnerabilities. It is also important to manually look for harder to find and unexpected security problems.
-The same goes for guidelines and security checklists (e.g.\ CIS Docker Benchmark). They are most likely not complete (CIS Docker Benchmark is not complete as we see in \autoref{subsection:iptables} and \autoref{subsection:config-files}).
+    \item When on a host that runs Docker, an attacker wants to access privileged information through the Docker daemon. Because being able to use Docker is equivalent to having \lstinline{root} permissions, an attacker wants to find a way to get access to Docker and exploit it.
+
+    \item Misconfigurations are more interesting from an offensive perspective, because they are harder to fix. Security bugs are simply fixed by updating Docker.
+
+    \item Use the checklist provided in \autoref{chapter:checklist} to manually and systematically identify weak spots and misconfigurations that are present in containers or hosts with a Docker installation.
+
+    \item Docker Bench for Security (see \autoref{tools:bench}) is a tool that automates the checking of every guideline in the CIS Docker Benchmark (which is too long to check manually) to see if there are obvious and interesting configuration mistakes in a Docker installation.
+
+\end{itemize}
 
 \section{Takeaways from a Defensive Perspective}
-Docker is hard to get right, especially in large projects. There are many aspects to Docker (from container creation, image distribution, etc). System architects should consider the security of every aspect in their designs.
 
-\medskip
+\begin{itemize}
+    \item Docker is a very complex ecosystem. Understanding how it works internally, is crucial to building stable, secure systems.
 
-Most modern development happens using deployment pipelines, automatically building and deploying Docker images and containers. There are many tools that can be added to these pipelines to scan for security issues after the building and before the deployment of Docker images (see \autoref{subsection:image-analysis-tools}).
+    \item Keep Docker up to date to minimize the risk of software bugs.
 
-\medskip
+    \item Know what are the best practices to configure Docker and be aware of the and common misconfigurations.
 
-As we described in \autoref{section:bugs} there are many dangerous vulnerabilities. However, vulnerabilities become harmless the moment they are patched. That is why keeping your systems up to date is a very important and impactful guideline.
+    \item Best practice guideline lists (e.g.\ CIS Docker Benchmark) are a good start, but are most likely not completely fitted to your use-case, very long and incomplete.
 
-\medskip
-
-Docker takes complex concepts from the Linux kernel (e.g. \lstinline{namespaces} and control groups) and creates an easy interface to interact with them and creates abstraction layers like containers and images. However, this means that many developers and engineers will not know what goes on under the hood. This is a recipe for security problems. We saw that there are many ways to misconfigure Docker (see \autoref{section:misconfigurations}). Misconfigurations are a lot harder to fix than vulnerabilities, because they require a change to the system. These kind of patches require system administrators to understand how Docker works.
-
-
-Understanding how Docker works will also make you think about your systems much more detailed and integratedly than when using guidelines and security checklists, that are most likely not completely fitted to your use-case, very long and incomplete (e.g.\ CIS Docker Benchmark).
+    \item (Automatically) analyze Docker images using static image analysis tools to discover misconfigurations and bugs, before the image is deployed.
+\end{itemize}
