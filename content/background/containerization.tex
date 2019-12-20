@@ -1,4 +1,4 @@
-\section{Containerization Software}
+\section{Containerization Software}\label{background:containerization}
 Containerization software isolates processes running on a host from one another.
 A process in a container sees a different part of the host system then processes outside of the container. A process inside a container sees a different file system, network interfaces and users than processes outside of the container. Processes inside the container can only see other processes inside the container.
 
@@ -52,7 +52,7 @@ In \autoref{subfig:container} one of the processes runs inside a container. Thes
 
 Process A and Process B see such a different part of the host system that to Process B it looks like it is running on a whole separate system.
 
-\subsection{Containerization Advantages}
+\subsection{Advantages of Containerization}
 
 Containers can be made into easily deployable packages (called images). These images only contain the necessary files for specific software to be run. Other files, libraries and binaries are shared between the host operating system (the system running the container). This allows developers to create lightweight software packages containing only the necessary dependencies.
 
@@ -74,7 +74,7 @@ The simplicity that containerization brings, makes containerization very popular
 
 \pagebreak
 
-\subsubsection{Virtualization}
+\subsection{Virtualization}
 Virtualization is an older similar technique to isolate software. In virtualization, a whole system is simulated on top of the host (called the hypervisor). This new virtual machine is called a guest. The guest and the host do not share any system resources. This has some advantages. For example, it allows running a completely different guest operating system (e.g.\ a Windows guest on a Linux host).
 
 \begin{figure}[ht]
@@ -147,7 +147,7 @@ Virtualization is an older similar technique to isolate software. In virtualizat
 
 Because containerization software shares many resources with the host, it is a lot faster and more flexible than virtualization. Where virtualization needs to start a whole new operating system, containerization only needs to start a single process.
 
-\subsubsection{Containers and Security}
+\subsection{The Impact of Containers on Security}
 A Docker container isolates software from the host, but does not change it. This means that vulnerabilities in software are not affected by Dockerizing that software. However, the impact of those vulnerabilities is decreased, because the vulnerability exists in an isolated environment.
 
 If, for example, there exists a RCE (remote code execution) vulnerability in Wordpress. Running Wordpress in a Docker container does not fix the vulnerability. An attacker is still able to exploit it. But that attacker is not able to access the host system, because the exploited software is isolated from the host system because of Docker.

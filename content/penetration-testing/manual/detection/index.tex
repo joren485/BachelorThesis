@@ -1,7 +1,9 @@
 \subsection{Detect If We Are Running in a Container}\label{subsection:detection}
-In most security assessments and penetration tests it will be clear what kind of system (i.e.\ running as a Docker or not) we are attacking. In some cases, however, it might not be. A good example of this is getting remote code execution on a system during a black box penetration test. In that case, we might get a reverse shell and are able to execute commands, but do not know anything about the systems' internal workings. In such a case it is important to know if we are running in a Docker container or not.
+In most security assessments and penetration tests it will be clear what kind of system (i.e.\ running inside a container or not) we are attacking. In some cases, however, it might not be. A good example of this is getting remote code execution on a system during a black box penetration test. In that case, we might get a reverse shell and are able to execute commands, but do not know anything about the systems' internal workings. In such a case it is important to know if we are running in a Docker container or not.
 
-In this section, we will look at fingerprinting a system to see whether we are in a Docker container.
+\medskip
+
+In this section, we will look at fingerprinting a system to see whether we are in a Docker container. These steps are in order of ease and certainty.
 
 \input{content/penetration-testing/manual/detection/dockerenv}
 \input{content/penetration-testing/manual/detection/cgroup}

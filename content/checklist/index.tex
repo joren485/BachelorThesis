@@ -1,24 +1,19 @@
-\chapter{Checklist}
-\todo[inline]{Order?}
-\todo[inline]{Explain order}
-\todo[inline]{tools}
-\todo[inline]{CVE}
-\todo[inline]{Misconfigs}
-\todo[inline]{Rename}
+\chapter{Docker Penetration Test Checklist}\label{chapter:checklist}
 In \autoref{chapter:vulnerabilities} and \autoref{chapter:pentesting} we looked at common vulnerabilities and how to identify them. In this chapter we will summarize those into a checklist consisting of steps.
 
-This list is kept intentionally short, to make it useful during a penetration test. For more information about each item, please see the referred section.
+This list is kept intentionally short and uses only Unix shell commands that can be run manually, to make it easy and quick to use. \autoref{section:tools} describes tools that might be able to automate certain enumeration or exploitation. These are however not necessary to use this checklist.
 
 \medskip
 
-The first steps (\autoref{section:checklist-detection}) are meant to see if we are running inside a container. When we know whether we are inside a container, we can look for vulnerabilities inside the container (see \autoref{section:checklist-vulnerabilities-container}) or on the host (see \autoref{section:checklist-vulnerabilities-host}).
+The first steps (\autoref{section:checklist-detection}) are meant to see if we are running inside a container. When we know whether we are inside a container, we can look for vulnerabilities inside the container (see \autoref{section:checklist-vulnerabilities-container}) or on the host (see \autoref{section:checklist-vulnerabilities-host}). For more information about each step, please see the referred section.
 
-\section{Are We Running in a Container?}\label{section:checklist-detection}
-If the answer to any of the following questions is yes, we are most likely running inside a container.
+\section*{Are We Running in a Container?}\label{section:checklist-detection}
+If the answer to any of the following questions is yes, we are most likely running inside a container. For detailed information, see \autoref{subsection:detection}.
+
+\medskip
 
 If we are running inside a container, see \autoref{section:checklist-vulnerabilities-container}. If not, please see \autoref{section:checklist-vulnerabilities-host}.
 
-For detailed information, see \autoref{subsection:detection}.
 \begin{itemize}
     \item \textbf{Does \lstinline{/.dockerenv} exists?} (see \autoref{subsubsection:dockerenv})\\
     Execute ``\lstinline{ls /.dockerenv}'' to see if \lstinline{/.dockerenv} exists.
@@ -37,10 +32,9 @@ For detailed information, see \autoref{subsection:detection}.
     We can use the \lstinline{which} command to find available binaries. For example, ``\lstinline{which sudo}'' will tell us if the \lstinline{sudo} binary is available.
 \end{itemize}
 
-\section{Finding Vulnerabilities in Containers}\label{section:checklist-vulnerabilities-container}
-The following questions and steps are meant to identify interesting parts and weak spots inside containers.
+\section*{Finding Vulnerabilities in Containers}\label{section:checklist-vulnerabilities-container}
+The following questions and steps are meant to identify interesting parts and weak spots inside containers. For detailed information, see \autoref{subsection:testing-container}.
 
-For detailed information, see \autoref{subsection:testing-container}.
 \begin{itemize}
     \item \textbf{What is the current user?}\\
     (see \autoref{subsubsection:user-enumeration})\\
@@ -68,7 +62,8 @@ For detailed information, see \autoref{subsection:testing-container}.
     \item \textbf{What volumes are mounted?} (see \autoref{subsubsection:volumes})\\
     Read \lstinline{/proc/mounts} to see all mounts including the volumes.
 
-    \item \textbf{Is there sensitive information stored in environment variables?} (see )
+    \item \textbf{Is there sensitive information stored in environment variables?} (see \autoref{pentest:container:env-vars})\\
+    The ``\lstinline{env}'' command will list all environment variables. We should check these for sensitive information.
 
     \item \textbf{Is the Docker Socket mounted inside the container?} (see \autoref{subsubsection:searching-socket})\\
         Check \lstinline{/proc/mounts} to see if \lstinline{docker.sock} (or some similar named socket) is mounted inside the container. \lstinline{/run/docker.sock} is a common mount point. If we find it, we can escape the container and interact with the Docker daemon on the host.
@@ -77,16 +72,18 @@ For detailed information, see \autoref{subsection:testing-container}.
     If possible, use \lstinline{nmap} to scan the local network for reachable hosts. The IPv4 address of the container can be found in \lstinline{/etc/hosts}.
 \end{itemize}
 
-\section{Finding Vulnerabilities on the Hosts}\label{section:checklist-vulnerabilities-host}
-The following questions and steps are meant to identify interesting parts and weak spots on hosts running Docker.
+\section*{Finding Vulnerabilities on the Hosts}\label{section:checklist-vulnerabilities-host}
+The following questions and steps are meant to identify interesting parts and weak spots on hosts running Docker. For detailed information, see \autoref{subsection:testing-host}.
 
-For detailed information, see \autoref{subsection:testing-host}.
 \begin{itemize}
     \item \textbf{What is the version of Docker?} (see \autoref{subsubsection:version})\\
-    ``\lstinline{docker --version}''
+    Run ``\lstinline{docker --version}'' to find the version of Docker. We will need to check if there are any known software related bugs (\autoref{section:bugs}) in this version of Docker. We can find relevant CVEs in the National Vulnerability Database\footnote{\url{https://nvd.nist.gov/}}.
 
-    \item \textbf{Who is the owner and the group of the Docker socket?} (see \autoref{subsubsection:docker-permissions-host})\\
-    Execute ``\lstinline{ls -l /var/run/docker.sock}'' to see the owner and group of \lstinline{/var/run/docker.sock}. The owner and every user in the group is allowed to use Docker.
+    \item \textbf{Run Docker Bench for Security} (see \autoref{tools:bench})\\
+        Run Docker Bench for Security\footnote{\url{https://github.com/docker/docker-bench-security}} to quickly see what CIS Docker Benchmark guidelines are not being followed.
+
+    \item \textbf{Which users are able to interact with the Docker socket?} (see \autoref{subsubsection:docker-permissions-host})\\
+    Execute ``\lstinline{ls -l /var/run/docker.sock}'' to see the which owner and group of \lstinline{/var/run/docker.sock} and which users have read and write access to it. The owner and every user in the group is allowed to use Docker.
 
     \item \textbf{Who is in the \lstinline{docker} group?} (see \autoref{subsubsection:docker-permissions-host})\\
     Check which users are in the group of identified in the last step (by default \lstinline{docker}) by executing ``\lstinline{grep docker /etc/group}''.

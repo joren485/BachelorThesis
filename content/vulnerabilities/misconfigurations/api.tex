@@ -1,15 +1,8 @@
-\subsection{Docker Engine API}\label{subsection:api}
+\subsection{Docker Socket}\label{subsection:api}
+The Docker socket (i.e. \lstinline{/var/run/docker.sock}) is the way clients communicate with the Docker daemon. When a user executes a Docker client command, the Docker client sends a HTTP request to the socket.
 
-The Docker daemon runs a RESTful\footnote{\url{https://restfulapi.net/}} API\footnote{\url{https://docs.docker.com/engine/api/v1.40/}} that is used to communicate with the Docker daemon. For example, when a user executes a Docker client command, it actually makes a request to the API.\@ By default the API listens on a UNIX socket accessible through \lstinline{/var/run/docker.sock}, but it also possible to make it listen for TCP connections.
-
-\medskip
-
-Because API access gives the same exact possibilities as having access to the Docker client, this is very dangerous\cite{The-Dangers-Of-Docker-Sock}. However, giving containers access to the API (by adding the socket as a volume) is a common practice, because it allows containers to monitor and analyze other containers.
-
-\medskip
-
-The following commands (to see all containers) produce the same output (albeit in a different format). The first one is a command using the Docker client and the second is a HTTP request.
-\begin{lstlisting}[caption={Docker client and Socket.},captionpos=b]
+We do not need to use the Docker client, but can send HTTP requests to the socket directly. We see this in \autoref{listing:ps-curl}, which shows two commands (to see all containers) that produce the same output (albeit in a different format). The first one is a command using the Docker client and the second is a HTTP request.
+\begin{lstlisting}[caption={Interaction with the Docker daemon with the Docker client and the socket directly.},captionpos=b, label={listing:ps-curl}]
 (host)$ docker ps -a
 ...
 (host)$ curl --unix-socket /var/run/docker.sock -H 'Content-Type: application/json' "http://localhost/containers/json?all=1"
@@ -18,14 +11,14 @@ The following commands (to see all containers) produce the same output (albeit i
 
 \medskip
 
-In some cases, it might be possible to access the API when it is not possible to access the Docker client. For example, if all users have read and write permissions\footnote{Both read and write permissions are required to interact with Unix sockets.} to \lstinline{/var/run/docker.sock}.
+The Docker socket is covered by CIS Benchmark guidelines 3.15 (Ensure that the Docker socket file ownership is set to root:docker) and 3.16(Ensure that the Docker socket file permissions are set to 660 or more restrictively).
 
 \medskip
 
-This is covered by CIS Benchmark guidelines 3.15 (Ensure that the Docker socket file ownership is set to root:docker) and 3.16(Ensure that the Docker socket file permissions are set to 660 or more restrictively).
+In this section we will look at the multiple ways to misconfigure the socket and the dangers\cite{The-Dangers-Of-Docker-Sock} that comes with it.
 
 \subsubsection{Container Escape Using the Docker Socket}
-If the \lstinline{/var/run/docker.sock} is mounted as a volume to a container, the container has access to the API (even if the socket is mounted as a read-only volume\cite{The-Dangers-Of-Docker-Sock}\cite{Read-Only-Docker-Socket-Tweet}\cite{Read-Only-Docker-Socket-Hackernews}). This means the process in the container has full access to Docker on the host. This can be used to escape, because the container can create another container with arbitrary volumes and commands. It is even possible to create an interactive shell in another container\cite{Escape-Socket-Shell}.
+Giving containers access to the API (by mounting the socket as a volume) is a common practice, because it allows containers to monitor and analyze other containers. If the \lstinline{/var/run/docker.sock} is mounted as a volume to a container, the container has access to the API (even if the socket is mounted as a read-only volume\cite{The-Dangers-Of-Docker-Sock}\cite{Read-Only-Docker-Socket-Tweet}\cite{Read-Only-Docker-Socket-Hackernews}). This means the process in the container has full access to Docker on the host. This can be used to escape, because the container can create another container with arbitrary volumes and commands. It is even possible to create an interactive shell in another container\cite{Escape-Socket-Shell}.
 
 \medskip
 
@@ -81,4 +74,4 @@ It is also possible to make the API listen on a TCP port. Ports 2375 and 2376 ar
 
 A malicious actor misused this feature in May 2019. He used Shodan\footnote{\url{https://www.shodan.io/}} to find unprotected publicly accessible Docker APIs and start containers that mine cryptocurrencies (Monero\footnote{\url{https://www.getmonero.org/}}) and find other hosts to infect\cite{zoolu2-bot-1807}\cite{zoolu2-bot-1809}\cite{zoolu2-bot-1853}.
 
-The Docker CIS Benchmark do not cover anything about the possibility to make the API accessible over \lstinline{TCP}.
+The CIS Docker Benchmark do not cover anything about the possibility to make the API accessible over \lstinline{TCP}.

@@ -1,7 +1,5 @@
-\subsection{Testing from Host}\label{subsection:testing-host}
-\todo[inline]{Link to relevant attack scenario}
-In this section we will look at different steps we can take to get information about the system and the configuration of Docker. When testing a host system with Docker installed on it, we are going to look at the version to see if there are any known bugs and we are going to look at the configuration to see if something is misconfigured.
-
+\subsection{Penetration Testing on a Host Running Docker}\label{subsection:testing-host}
+When testing a host system with Docker installed on it, we are going to look at the version to see if there are any known bugs and we are going to look at the configuration to see if something is misconfigured. In this section we will look at different steps we can take to get information about the system and the configuration of Docker. This will tell us if it is possible to escalate our privileges using the Docker daemon (see \autoref{attacker-model:daemon-attacks}).
 \input{content/penetration-testing/manual/host/version}
 \input{content/penetration-testing/manual/host/docker-permissions}
 \input{content/penetration-testing/manual/host/configuration}

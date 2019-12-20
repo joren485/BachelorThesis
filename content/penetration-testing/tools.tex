@@ -1,41 +1,71 @@
 \section{Automation Tools}\label{section:tools}
-Most security assessments are very time restricted. Large, complex systems need to be assessed in a short amount of time. There are tools that automate part of the assessment process. Instead of taking every step manually, these tools scan systems automatically find known vulnerabilities and possible weak spots in a system.
-
-The advantage of these tools is that they save a lot of time and effort, because they can look at every part of a system in a systematic way. However, while the tools save time, they do miss the precision and detail that manual testing brings. Many security flaws are complex and might only be vulnerable under very specific circumstances. Manual examination and testing might reveal new vulnerabilities or vulnerable circumstances, while automated testing will only look for known vulnerabilities. That is why using tools can help us, but can never fully replace manual examination.
+Most security assessments are very time restricted. Large, complex systems need to be assessed in a short amount of time. There are tools that automate part of the assessment process. Instead of taking every step manually, these tools scan systems automatically and systematically to find known vulnerabilities and possible weak spots in a system. Because Docker is a very popular ecosystem, there exist many different tools and scanners. Created by both companies (including Docker itself) and individuals interested in the security of Docker.
 
 \medskip
 
-In this section we will look at tools that automate scanning, exploitation and detection of Docker vulnerabilities. Because Docker is a very popular ecosystem, there exist many different tools and scanners. Created by both companies (including Docker itself) and individuals interested in Docker security.
+The advantage of these tools is that they save a lot of time and effort, because they can look at every part of a system in a systematic way. However, while the tools save time, they do miss the precision and detail that manual testing brings. Many security flaws are complex and might only be vulnerable under very specific circumstances. Manual examination and testing might reveal new vulnerabilities or vulnerable circumstances, while automated testing will only look for known vulnerabilities.
 
-\subsection{Docker Bench Security}
-Docker itself has released a scanner that is based on the CIS Docker Benchmark\footnote{\url{https://github.com/docker/docker-bench-security}}. It checks a host for every guideline in the CIS Docker Benchmark.
+As we will see, most tools have a specific vulnerability or part of the system they scan. No single tool will automate all parts of an assessment.
 
-\subsection{Image Analysis}\label{subsection:image-analysis-tools}
-Most Docker security analysis tools focus on static analysis of Docker images. They look for software and libraries inside the images and match these against known vulnerability databases. They also look for sensitive information (e.g.\ passwords) that might be stored inside the image. In \autoref{appendix:static-analysis-list} you will find a list of available Docker image analysis tools.
+That is why using tools can help us, but can never fully replace manual examination.
 
-\subsubsection{Continuous Integration}
-Because these tools perform static analysis, they can be run immediately after creating an image. This makes them perfect for CI pipelines. Let's say we have the following very common Git pipeline:
-\begin{enumerate}
-    \item A commit is made on feature branch.
-    \item A pull request is opened to merge branch into \lstinline{master}.
-    \item A new Docker image is build.
-    \item Unit, integration and linting tests are run using CI\@.
-    \item Docker image is pushed to registry
-    \item New Docker image is deployed.
-\end{enumerate}
+\medskip
+In this section we will look at the different types of tools that are available to automate parts of what we looked at in \autoref{section:identify-vulnerabilities}.
 
-In step 4, tests are automatically run on the newly created image using CI\@. It is possible to also check whether everything inside the image is up to date and no sensitive information is leaked. Some registries (e.g.\ Docker Hub) do this automatically (if enabled).
+\subsection{Host Configuration Scanners}
+The tools described in this section are run on a host running Docker (see \autoref{subsection:testing-host}). They check for issues in the configuration of Docker, available images and available containers.
 
-\subsection{Offensive Tools}\label{subsection:offensive-tools}
-There are some tools that specifically focus on the attacker perspective on Docker systems. These tools focus on escaping containers or escalating privileges on the host.
+\subsubsection{Docker Bench for Security}\label{tools:bench}
+Docker itself has released a scanner (called Docker Bench for Security\footnote{\url{https://github.com/docker/docker-bench-security}}) that is based on the CIS Docker Benchmark. It is meant to run on a host running Docker. The scanner checks whether the Docker configuration, images and containers on the host follow every guideline in the CIS Docker Benchmark. Some guidelines might be irrelevant to every host (e.g.\ Docker Swarm related guidelines). These are skipped.
 
+\medskip
+
+Docker Bench for Security solves the biggest problem of the CIS Docker Benchmark: its length. The CIS Docker Benchmark is a very long document, which makes it hard to use (as discussed in \autoref{futurework:CIS}). Because Docker Bench for Security automatically checks all guidelines, we only need to look at the guidelines that do not pass the check. This makes it a very helpful tool during a security assessment.
+
+\subsubsection{dockscan}
+dockscan\footnote{\url{https://github.com/kost/dockscan}} checks a host and the running containers for misconfigurations (not every misconfiguration is security related). It is quite old (the last change is made in august 2016) and as such less useful during a penetration test.\ dockscan scans for the following misconfigurations:
 \begin{itemize}
-    \item Break out the Box\footnote{\url{https://github.com/brompwnie/botb}}. BOtB is a tool that specialize in container escapes. It uses some well-known techniques and exploits. (that we looked at in \autoref{chapter:vulnerabilities})
-    \item Metasploit specific modules: Metasploit is an exploitation framework (for all software, not only Docker). It has some Docker system scanners and exploits\cite{Docker-Credentials-Metasploit}\cite{Metasploit-Linux-Gather-Container-Detection}\cite{Metasploit-Unprotected-TCP-Socket}.
-    \item Harpoon\footnote{\url{https://github.com/ProfessionallyEvil/harpoon}}: Harpoon is a simple tool that can identify whether it is running inside a container and tries to escape using a mounted Docker socket (see \autoref{subsection:api}).
-    \item dockerscan\footnote{\url{https://github.com/cr0hn/dockerscan}}: dockerscan is a tool that is used to exploit registries. It tries to find and attack vulnerable registries inside a network.
-    \item dockscan\footnote{\url{https://github.com/kost/dockscan}}: Checks running containers and for misconfigurations.
+    \item The number of changed but not persistent files of running containers.
+    \item Empty passwords in containers (similar to \autoref{subsection:CVE-2019-5021}).
+    \item The number of processes running inside a container.
+    \item Whether a SSH server is running inside a container.
+    \item If a non-stable version of Docker is installed.
+    \item The use of insecure registries.
+    \item Whether memory limits have been set for containers.
+    \item Whether IPv4 traffic forwarding is enabled in Docker.
+    \item Whether a mirror registry is used.
+    \item If the AUFS storage driver is used.
 \end{itemize}
 
-\subsection{Integrated Monitoring Platforms}
-There are also companies that sell security monitoring platforms. Customers need to install software inside their images and on their hosts and the monitoring system will try to detect malicious behavior. To popular options seem to be Twistlock\footnote{\url{https://www.twistlock.com/}}\footnote{Twistlock has a very detailed blog about Docker security.} and Sysdig Falco\footnote{\url{https://sysdig.com/opensource/falco/}}.
+\subsection{Docker Image Analysis Tools}\label{subsection:image-analysis-tools}
+Most Docker security analysis tools focus on static analysis of Docker images. They look for software and libraries inside the images and match these against known vulnerability databases. Some also look for sensitive information (e.g.\ passwords) that might be stored inside the image. In \autoref{appendix:static-analysis-list} you will find a list of available Docker image analysis tools.
+
+Although these tools are more useful from a defensive perspective (e.g.\ scanning images for problems before they are deployed), they might reveal vulnerabilities or sensitive information during a penetration test.
+
+\subsection{Exploitation Tools}\label{subsection:offensive-tools}
+There are tools that specifically focus on the exploitation of vulnerabilities. These tools focus on escaping containers or escalating privileges on the host. They can be useful during a penetration test, because they will automate exploitation of specific vulnerabilities.
+
+\subsubsection{Break out of the Box}
+Break out of the Box\footnote{\url{https://github.com/brompwnie/botb}} (BOtb) is a tool that identifies and exploits common container escape vulnerabilities. It is able to do the following escapes:
+
+\begin{itemize}
+    \item If BOtB finds the Docker socket mounted inside the container (which we manually do in \autoref{subsubsection:searching-socket}), BOtB can escape the container using the same technique we discuss in \autoref{subsection:api}.
+
+    \item BOtB is able to escape containers using CVE--2019--5736 (see \autoref{CVE-2019-5736}).
+
+    \item BOtB is able to identify sensitive information in environment variables (see \autoref{pentest:container:env-vars}).
+
+    \item If the container is running in privileged mode, BOtB tries to escape using the same vulnerability\cite{TrailOfBits-Docker-Escape}\footnote{It should be noted that privileged mode is not needed for this container escape to work (as discussed in \autoref{CAP_SYS_ADMIN}).} we looked at in \autoref{CAP_SYS_ADMIN}.
+\end{itemize}
+
+\subsubsection{Metasploit}
+Metasploit\footnote{\url{https://www.metasploit.com/}} is an exploitation framework (not only for Docker). It has some modules specific to Docker:
+
+\begin{itemize}
+    \item Linux Gather Container Detection\cite{Metasploit-Linux-Gather-Container-Detection}, checks whether it is running inside a container (similar to the checks we look at in \autoref{subsection:detection}).
+    \item Multi Gather Docker Credentials Collection\cite{Docker-Credentials-Metasploit}, collects all \lstinline{.docker/config.json} files in the home directories of users (see \autoref{config-files:docker-config-json}).
+    \item Unprotected TCP Socket Exploit\cite{Metasploit-Unprotected-TCP-Socket}, gets \lstinline{root} access to a remote host which exposes its Docker API over TCP by creating a container with the host filesystem mounted as a volume (see \autoref{subsection:api} and specifically \autoref{subsubsection:remote-access}).
+\end{itemize}
+
+\subsubsection{Harpoon}
+Harpoon\footnote{\url{https://github.com/ProfessionallyEvil/harpoon}} is a simple tool that can identify whether it is running inside a container by looking at the \lstinline{cgroup} (see \autoref{subsubsection:detection:cgroup}) and tries to find and escape using a mounted Docker socket (see \autoref{subsection:api}).

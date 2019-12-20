@@ -1,4 +1,13 @@
-\subsection{Permissions}
-\todo[inline]{Misconfig: Docker Socket}
-\todo[inline]{Misconfig: Docker permissions}
-\todo[inline]{Pentesting host}
+\subsection{Docker Socket}\label{background:docker-socket}
+The Docker daemon runs a RESTful\footnote{\url{https://restfulapi.net/}} API\footnote{\url{https://docs.docker.com/engine/api/v1.40/}} that is used by clients to communicate with the Docker daemon. For example, when a user uses the Docker client command, it actually makes a HTTP request to the API.\@ By default, the API listens on a UNIX socket accessible through \lstinline{/var/run/docker.sock}, but it also possible to make it listen for TCP connections.
+
+\medskip
+
+Which users are allowed to interact with the Docker daemon is defined by the permissions of the Docker socket. To use a Unix socket a user needs to have both read and write permissions.
+
+\begin{lstlisting}[caption={Default Docker socket permissions.},captionpos=b,label={listing:docker-socket-permissions}]
+(host)$ ls -l /var/run/docker.sock
+srw-rw---- 1 root docker 0 Dec 20 13:16 /var/run/docker.sock
+\end{lstlisting}
+
+\autoref{listing:docker-socket-permissions} shows the default permissions of \lstinline{/var/run/docker.sock}. As we can see, the owner of \lstinline{/var/run/docker.sock} is \lstinline{root} and the group is \lstinline{docker}. Both the owner and the group have read and write access to the socket. This means that \lstinline{root} and every user in the \lstinline{docker} group is allowed to communicate with the Docker daemon and as such use Docker.

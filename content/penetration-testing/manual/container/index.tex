@@ -1,10 +1,5 @@
-\subsection{Testing from Container}\label{subsection:testing-container}
-\todo[inline]{Link to relevant attack scenarios}
-\todo[inline]{Reorder}
-\todo[inline]{Explain order}
-\todo[inline]{Environment variables}
-\todo[inline]{Beter aansluiten op checklist}
-If we have code execution inside of a container, we are going to focus on escaping. Because the Docker daemon runs as \lstinline{root}, we will most likely get \lstinline{root} access to the host if we escape. We will take a look at steps we can take to identify the container operating system, the container image, the host operating system and weak spots in the container.
+\subsection{Penetration Testing inside a Container}\label{subsection:testing-container}
+If we have code execution inside of a container, we are going to focus on escaping the container (see \autoref{subsection:container-escape}) and reaching hosts outside of the container (see \autoref{attacker-model:container-to-container-attacks}). Because the Docker daemon runs as \lstinline{root}, we will most likely get \lstinline{root} access to the host if we escape the container. We will take a look at steps we can take to identify the container operating system, the container image, the host operating system and weak spots in the container.
 
 \medskip
 
@@ -13,6 +8,7 @@ Many Docker images are stripped from unnecessary tools, binaries and libraries t
 \input{content/penetration-testing/manual/container/identifying-users}
 \input{content/penetration-testing/manual/container/docker-image}
 \input{content/penetration-testing/manual/container/host-os}
+\input{content/penetration-testing/manual/container/env-vars}
 \input{content/penetration-testing/manual/container/capabilities}
 \input{content/penetration-testing/manual/container/volumes}
 \input{content/penetration-testing/manual/container/socket}

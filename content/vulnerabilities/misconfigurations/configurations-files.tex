@@ -1,5 +1,4 @@
 \subsection{Readable Configuration Files}\label{subsection:config-files}
-\todo[inline]{Does this need to be here or in the pentesting chapter?}
 Because setting up environments with Docker can be quite complex, many Docker users use programs to save all necessary Docker settings to configuration files (e.g. \lstinline{docker-compose}) to remove the need of repeating complex steps and configuration. These configuration files often contain very sensitive information. If the permissions on these files are misconfigured, users that should not be able to read the files, might be able to read the files.
 
 Too very common files that contain sensitive information are \lstinline{.docker/config.json} and \lstinline{docker-compose.yaml} files.
@@ -8,7 +7,7 @@ Too very common files that contain sensitive information are \lstinline{.docker/
 
 This is not covered in any guideline in the CIS Docker Benchmark. Multiple configuration files (.e.g. \lstinline{/etc/docker/daemon.json}) are covered, but no user defined files.
 
-\subsubsection{\texorpdfstring{\lstinline{.docker/config.json}}{.docker/config.json}}
+\subsubsection{\texorpdfstring{\lstinline{.docker/config.json}}{.docker/config.json}}\label{config-files:docker-config-json}
 When pushing images to a registry, users need to login to the registry to authenticate themselves.
 It would be quite annoying to login every time a user wants to push and image. That is why \lstinline{.docker/config.json} caches those credentials. These are stored in Base64 encoding in the home directory of the user by default\footnote{\url{https://docs.docker.com/engine/reference/commandline/login/}}. An attacker with access to the file can use the credentials to login and push malicious Docker images\cite{Docker-Credentials-Metasploit}.
 

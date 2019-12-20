@@ -1,5 +1,11 @@
 \subsubsection{Who is Allowed to use Docker?}\label{subsubsection:docker-permissions-host}
-Docker permissions are defined by the permission bits on the Docker socket (i.e.\ \lstinline{/var/run/docker.sock}). By default, the owner (\lstinline{root}) and the group (\lstinline{docker}) have read and write permissions. Meaning that \lstinline{root} and every user in the \lstinline{docker} group are allowed to interact with the Docker socket.
+Because having access to Docker is equivalent to having \lstinline{root} permissions, the users that are allowed to use Docker are interesting targets. If there is a way to become one of those users, we will essentially have access to everything on the host.
+
+As discussed in \autoref{background:docker-socket}, every user with read an write access to the Docker socket (i.e. \lstinline{/var/run/docker.sock}) has permissions to use Docker. That is why the first thing we should do is see which users have read and write access to the Docker socket. This is shown in \autoref{listing:docker-socket-permissions}.
+
+By default, \lstinline{root} and every user in the \lstinline{docker} group has read and write permissions to the socket.
+
+\medskip
 
 We can see who is in the \lstinline{docker} group by looking in \lstinline{/etc/group}.
 \begin{lstlisting}[caption={See what users are in the \lstinline{docker} group.},captionpos=b]
@@ -10,12 +16,7 @@ We see that only \lstinline{jvrancken} is part of the \lstinline{docker} group. 
 
 \medskip
 
-It is possible that the Docker socket has permissions that give anybody permission to interact with Docker. Some people set the permissions to read and write for all users (i.e. \lstinline{666}). Giving all users read and write permission to the Docker socket allows them to use Docker.
-
-\medskip
-
-It is also possible that the \lstinline{setuid} bit is set on the Docker client. In that case, we are also able to use Docker (see \autoref{subsubsection:setuid}).
-
+It is also possible that the \lstinline{setuid} bit is set on the Docker client. In that case, we are also able to use Docker (as discussed in \autoref{subsubsection:setuid}).
 \begin{lstlisting}[caption={Permissions without and with the \lstinline{setuid} bit.},captionpos=b]
 (host)$ ls -l $(which docker)
 -rwxr-xr-x 1 root root 88965248 nov 13 08:28 /usr/bin/docker

@@ -1,0 +1,18 @@
+\subsubsection{Reading Environment Variables}\label{pentest:container:env-vars}
+The environment variables are a way to communicate information to containers when they are started. When a container is started, environment variables are passed to it. These variables often contain passwords and other sensitive information.
+
+\medskip
+
+We can list all the environment variables that are set inside a Docker using the \lstinline{env} command (or by looking at the \lstinline{/proc/pid/environ} file of a process).
+
+\begin{lstlisting}[caption={Listing all environment variables in a container}, captionpos=b]
+(host)$ docker run --rm -e MYSQL_ROOT_PASSWORD=supersecret --name=database mariadb:latest
+(host)$ docker exec -it database bash
+(cont)# env
+...
+MYSQL_ROOT_PASSWORD=supersecret
+...
+\end{lstlisting}
+
+It should be noted that this is not a misconfiguration. Using environment variables is the intended way to pass sensitive information to a Docker at runtime. However, during a black box penetration test, the sensitive information stored in the environment variables might be useful.
+

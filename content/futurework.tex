@@ -4,7 +4,7 @@ This thesis looks at how to penetration test Docker systems. During the research
 \section{Orchestration Software}
 In modern software deployment, containerization is only part of the puzzle. Large companies run a lot of different software and each instance needs to support many connections and a lot of computing power. That means that for many applications, multiple containers of the same image are run to handle everything. To manage all of those containers there is orchestration software. The most famous being Kubernetes and Docker Swarm.
 
-It would be interesting to continue this research by looking at how we could perform a penetration test on orchestration software and how orchestration software impacts security on systems.
+It would be interesting to continue this research by looking at how we could perform penetration tests on orchestration software and how orchestration software impacts the security of systems.
 
 \section{Docker on Windows}
 This bachelor thesis looks at Docker on Linux, because Docker is developed for Linux. However, it is also possible to run Docker on Windows (sort of). Because Docker uses very specific kernel features from Linux, Docker on Windows runs in a Linux virtual machine. That way Windows users can still use Docker exactly as they would use it on Linux (because they practically are).
@@ -21,9 +21,8 @@ It would be interesting (and relevant to penetration testing) to continue this r
 This thesis looks at the security of Docker. As stated in the background, virtualization is another way to achieve isolation. A lot has been written about the comparison of virtualization and containerization\cite{Virtualization-vs-Containerization-to-Support-PaaS}\cite{Hypervisor-vs-Lightweight-Virtualization}\cite{Updated-Performance-Comparison-Virtual-Machines-Containers}.
 However, it would be interesting to specifically compare the isolation and security that virtualization offers to the isolation and security that containerization offers.
 
-\section{Condense the Docker CIS Benchmark}
-
-The Docker CIS Benchmark contains 115 guidelines with their respective documentation.
+\section{Condense the CIS Docker Benchmark}\label{futurework:CIS}
+The CIS Docker Benchmark contains 115 guidelines with their respective documentation.
 This makes it a 250+ page document. This is not practical for developers and engineers (the intended audience). It would be much more useful to have a smaller, better sorted list that only contains common mistakes and pitfalls to watch out for.
 
 \medskip
@@ -70,3 +69,6 @@ The last section would describe guidelines that are intended for systems that ne
 
 \section{Docker Man-in-the-Middle}
 In \autoref{subsection:arp-spoofing} we looked at performing a man-in-the-middle attack using ARP spoofing. It would be interesting to look at more complex man-in-the-middle attacks. For example, capturing all traffic of a webserver running in a Docker or modifying traffic.
+
+\section{Penetration Testing Tools}
+In \autoref{section:tools} we discuss multiple tools that automate part of security assessments. However we see that most tools are not interesting from an attackers perspective or focus on very specific vulnerabilities. It would be interesting to develop a new or extend an existing tool that focusses on an attacker model (\autoref{chapter:attack-surface-models}) and not only specific vulnerabilities.

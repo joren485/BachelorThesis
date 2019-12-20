@@ -5,7 +5,7 @@ As we saw in \autoref{protection-mechanisms:subsection:capabilities}, to perform
 
 The CIS Benchmark covers all of these problems in one guideline: 5.3 (Ensure that Linux kernel capabilities are restricted within containers).
 
-\subsubsection{\texorpdfstring{\lstinline{CAP_SYS_ADMIN}}{CAP SYS ADMIN}}
+\subsubsection{\texorpdfstring{\lstinline{CAP_SYS_ADMIN}}{CAP SYS ADMIN}}\label{CAP_SYS_ADMIN}
 The Docker escape by Felix Wilhelm\cite{Felix-Wilhem-Tweet} we used in \autoref{subsection:privileged} needs to be run in privileged mode to work, but it can be rewritten to only need the permission to run \lstinline{mount}\cite{TrailOfBits-Docker-Escape}, which is granted by the \lstinline{CAP_SYS_ADMIN} capability.
 
 \begin{lstlisting}[caption={Docker escape using \lstinline{CAP_SYS_ADMIN}.},captionpos=b]
