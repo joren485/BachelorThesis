@@ -15,7 +15,7 @@ By default, every Docker container is started with only the necessary minimum ca
 
 \subsubsection{Secure Computing Mode}
 Secure Computing Mode (\lstinline{seccomp}), like capabilities, is a built-in way to limit the privileged functionality that a process is allowed to use. Where capabilities limit functionality (like reading privileged files), Secure Computing Mode limits specific \lstinline{syscalls}. This allows very granular security control. It does this by using whitelists (called profiles) of \lstinline{syscalls}.
-To setup a strict, but still functional seccomp profile requires very specific knowledge of which \lstinline{syscalls} are used by a program. This makes it quite complex to setup.
+To setup a strict, but still functional seccomp profile requires very specific knowledge of which \lstinline{syscalls} are used by a program. This makes it quite complex to set up.
 
 \medskip
 
