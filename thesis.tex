@@ -2,6 +2,8 @@
 
 \usepackage[utf8]{inputenc}
 
+\usepackage{todonotes}
+
 % Use different enumerate list items
 \usepackage[shortlabels]{enumitem}
 
@@ -49,6 +51,9 @@
         upquote = true,
         breaklines = true,
 }
+
+\let\subsectionautorefname\sectionautorefname
+\let\subsubsectionautorefname\sectionautorefname
 
 \setcounter{tocdepth}{4}
 \setcounter{secnumdepth}{4}

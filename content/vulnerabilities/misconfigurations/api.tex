@@ -1,5 +1,5 @@
 \subsection{Docker Socket}\label{subsection:api}
-The Docker socket (i.e. \lstinline{/var/run/docker.sock}) is the way clients communicate with the Docker daemon. When a user executes a Docker client command, the Docker client sends a HTTP request to the socket.
+The Docker socket (i.e. \lstinline{/var/run/docker.sock}) is the way clients communicate with the Docker daemon. Whenever a user executes a Docker client command, the Docker client sends a HTTP request to the socket.
 
 We do not need to use the Docker client, but can send HTTP requests to the socket directly. We see this in \autoref{listing:ps-curl}, which shows two commands (to see all containers) that produce the same output (albeit in a different format). The first one is a command using the Docker client and the second is a HTTP request.
 \begin{lstlisting}[caption={Interaction with the Docker daemon with the Docker client and the socket directly.},captionpos=b, label={listing:ps-curl}]
@@ -18,7 +18,7 @@ The Docker socket is covered by CIS Docker Benchmark guidelines 3.15 (Ensure tha
 In this section we will look at the multiple ways to misconfigure the socket and the dangers\cite{The-Dangers-Of-Docker-Sock} that comes with it.
 
 \subsubsection{Container Escape Using the Docker Socket}
-Giving containers access to the API (by mounting the socket as a volume) is a common practice, because it allows containers to monitor and analyze other containers. If the \lstinline{/var/run/docker.sock} is mounted as a volume to a container, the container has access to the API (even if the socket is mounted as a read-only volume\cite{The-Dangers-Of-Docker-Sock}\cite{Read-Only-Docker-Socket-Tweet}\cite{Read-Only-Docker-Socket-Hackernews}). This means the process in the container has full access to Docker on the host. This can be used to escape, because the container can create another container with arbitrary volumes and commands. It is even possible to create an interactive shell in another container\cite{Escape-Socket-Shell}.
+Giving containers access to the API (by mounting the socket as a volume) is a common practice, because it allows containers to monitor and analyze other containers. If the \lstinline{/var/run/docker.sock} is mounted as a volume to a container, the container has access to the API (even if the socket is mounted as a read-only volume\cite{The-Dangers-Of-Docker-Sock}\cite{Read-Only-Docker-Socket-Tweet}\cite{Read-Only-Docker-Socket-Hackernews}). This means the process in the container has full access to Docker on the host. This can be used to escape, because the container can create another container with arbitrary volumes and commands. It is even possible to create an interactive shell in other containers\cite{Escape-Socket-Shell}.
 
 \medskip
 
@@ -68,10 +68,12 @@ Let's start a Postgres\footnote{\url{https://www.postgresql.org/}} database insi
 This is also covered by CIS Docker Benchmark guideline 5.31 (Ensure that the Docker socket is not mounted inside any containers).
 
 \subsubsection{Remote Access}\label{subsubsection:remote-access}
-It is also possible to make the API listen on a TCP port. Ports 2375 and 2376 are usually used for HTTP and HTTPS communication of the Docker API, respectively. This, however, does bring all the extra complexity of TCP sockets with it. If not configured to only listen on \lstinline{localhost}, this gives every host on the network access to Docker. If the host is directly accessible by the internet, it gives everybody access to the full capabilities of Docker on the host. An attacker can exploit this by starting malicious containers\cite{Metasploit-Unprotected-TCP-Socket}.
+It is also possible to make the Docker API listen on a TCP port. Ports 2375 and 2376 are usually used for HTTP and HTTPS communication of the Docker API, respectively. This, however, brings all the extra complexity of TCP sockets with it. If not configured to only listen on \lstinline{localhost}, this gives every host on the network access to Docker. If the host is directly accessible by the internet, it gives everybody access to the full capabilities of Docker on the host. An attacker could exploit this misconfiguration by starting other containers that could lead to further compromise of the containers and the underlying infrastructure\cite{Metasploit-Unprotected-TCP-Socket}.
 
 \medskip
 
 A malicious actor misused this feature in May 2019. He used Shodan\footnote{\url{https://www.shodan.io/}} to find unprotected publicly accessible Docker APIs and start containers that mine cryptocurrencies (Monero\footnote{\url{https://www.getmonero.org/}}) and find other hosts to infect\cite{zoolu2-bot-1807}\cite{zoolu2-bot-1809}\cite{zoolu2-bot-1853}.
 
-The CIS Docker Benchmark do not cover anything about the possibility to make the API accessible over \lstinline{TCP}.
+\medskip
+
+No CIS Docker Benchmark guideline covers making the Docker API accessible over \lstinline{TCP}.

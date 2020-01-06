@@ -1,7 +1,14 @@
 \chapter{Docker Penetration Test Checklist}\label{chapter:checklist}
+\todo[inline]{Rename checklist to something like methodology eveywhere}
+\todo[inline]{Dave:you may add the text that Secura explisitly asked for this list}
+\todo[inline]{Jos: What is your contribution? What is new?}
+\todo[inline]{Jos: How long will it remain useful/ up to date?}
+\todo[inline]{Jos: To what extent can this checklist be automated?}
+\todo[inline]{Jos: What are problems with automation?}
+\todo[inline]{autoref section:tools capital S}
 In \autoref{chapter:vulnerabilities} and \autoref{chapter:pentesting} we looked at common vulnerabilities and how to identify them. In this chapter we will summarize those into a checklist consisting of steps.
 
-This list is kept intentionally short and uses only Unix shell commands that can be run manually, to make it easy and quick to use. \autoref{section:tools} describes tools that might be able to automate certain enumeration or exploitation. These are however not necessary to use this checklist.
+This list is kept intentionally short and uses only Unix shell commands that can be run manually, to make it easy and quick to use. \autoref{section:tools} describes tools help automating certain enumeration or exploitation of vulnerabilities. These are however not necessary to use this checklist.
 
 \medskip
 
@@ -18,15 +25,14 @@ If we are running inside a container, see \autoref{section:checklist-vulnerabili
     \item \textbf{Does \lstinline{/.dockerenv} exists?} (see \autoref{subsubsection:dockerenv})\\
     Execute ``\lstinline{ls /.dockerenv}'' to see if \lstinline{/.dockerenv} exists.
 
-    \item \textbf{Does \lstinline{/proc/1/cgroup} contain ``\lstinline{/docker/}''?}\\
-    (see \autoref{subsubsection:detection:cgroup})\\
+    \item \textbf{Does \lstinline{/proc/1/cgroup} contain ``\lstinline{/docker/}''?} (see \autoref{subsubsection:detection:cgroup})\\
     Execute ``\lstinline{grep '/docker/' /proc/1/cgroup}'' to find all lines in \lstinline{/proc/1/cgroup} containing ``\lstinline{/docker/}''.
 
     \item \textbf{Are there fewer than 5 processes?} (see \autoref{subsubsection:processes})\\
     Execute ``\lstinline{ps aux}'' to view all processes.
 
     \item \textbf{Is the process with process id 1 a common initial process?} (see \autoref{subsubsection:processes})\\
-    Execute ``\lstinline{ps -p1}'' to view the process with process id 1.
+        Execute ``\lstinline{ps -p1}'' to view the process with process id 1 and check if it is a common initial process (.e.g.\ \lstinline{systemd} or \lstinline{init}).
 
     \item \textbf{Are common libraries and binaries not present on the system?} (see \autoref{subsubsection:binaries})\\
     We can use the \lstinline{which} command to find available binaries. For example, ``\lstinline{which sudo}'' will tell us if the \lstinline{sudo} binary is available.
@@ -36,28 +42,27 @@ If we are running inside a container, see \autoref{section:checklist-vulnerabili
 The following questions and steps are meant to identify interesting parts and weak spots inside containers. For detailed information, see \autoref{subsection:testing-container}.
 
 \begin{itemize}
-    \item \textbf{What is the current user?}\\
-    (see \autoref{subsubsection:user-enumeration})\\
-    Execute ``\lstinline{id}'' to what the current user is and what groups it is in.
+    \item \textbf{What is the current user?} (see \autoref{subsubsection:user-enumeration})\\
+    Execute ``\lstinline{id}'' to see what the current user is and what groups it is in.
 
-    \item \textbf{What users are available on the system?}\\
-    (see \autoref{subsubsection:user-enumeration})\\
+    \item \textbf{Which users are available on the system?} (see \autoref{subsubsection:user-enumeration})\\
     Read \lstinline{/etc/passwd} to see what users are available.
 
     \item \textbf{What is the operating system of the container?} (see \autoref{subsubsection:idenitfy-container-os})\\
     Read \lstinline{/etc/os-release} to get information about the operating system.
 
-    \item \textbf{What processes are running?} (see \autoref{subsubsection:idenitfy-container-os})\\
+    \item \textbf{Which processes are running?} (see \autoref{subsubsection:idenitfy-container-os})\\
     Execute ``\lstinline{ps aux}'' to view all processes.
 
     \item \textbf{What is the host operating system?} (see \autoref{subsubsection:identify-host-os})\\
     Execute ``\lstinline{uname -a}'' to get information about the kernel and the underlying host operating system.
 
-    \item \textbf{What capabilities do the processes in the container have?} (see \autoref{subsubsection:container:capabilities})\\
-        Get the current capabilities value by running ``\lstinline{grep CapEff /proc/self/status}'' and decode it with ``\lstinline{capsh --decode=value}\footnote{``value'' should look like \lstinline{00000000a80425fb}}''. \lstinline{capsh} can be run on a different system.
+    \item \textbf{Which capabilities do the processes in the container have?} (see \autoref{subsubsection:container:capabilities})\\
+    Get the current capabilities value by running ``\lstinline{grep CapEff /proc/self/status}'' and decode it with ``\lstinline{capsh --decode=value}\footnote{``value'' should look like \lstinline{00000000a80425fb}}''. \lstinline{capsh} can be run on a different system.
 
-    \item \textbf{Is the container running in privileged mode?} (see \autoref{subsubsection:container:privileged})\\
-        If the \lstinline{CapEff} value of the previous step equals \lstinline{0000003fffffffff}, the container is running in privileged mode and we are able to escape it (see \autoref{subsection:privileged}).
+    \item \textbf{Is the container running in privileged mode?} 
+    \\(see \autoref{subsubsection:container:privileged})\\
+    If the \lstinline{CapEff} value of the previous step equals \lstinline{0000003fffffffff}, the container is running in privileged mode and we are able to escape it (see \autoref{subsection:privileged}).
 
     \item \textbf{What volumes are mounted?} (see \autoref{subsubsection:volumes})\\
     Read \lstinline{/proc/mounts} to see all mounts including the volumes.
@@ -72,7 +77,7 @@ The following questions and steps are meant to identify interesting parts and we
     If possible, use \lstinline{nmap} to scan the local network for reachable hosts. The IPv4 address of the container can be found in \lstinline{/etc/hosts}.
 \end{itemize}
 
-\section{Finding Vulnerabilities on the Hosts}\label{section:checklist-vulnerabilities-host}
+\section{Finding Vulnerabilities on the Host}\label{section:checklist-vulnerabilities-host}
 The following questions and steps are meant to identify interesting parts and weak spots on hosts running Docker. For detailed information, see \autoref{subsection:testing-host}.
 
 \begin{itemize}
@@ -83,10 +88,10 @@ The following questions and steps are meant to identify interesting parts and we
         Run Docker Bench for Security\footnote{\url{https://github.com/docker/docker-bench-security}} to quickly see what CIS Docker Benchmark guidelines are not being followed.
 
     \item \textbf{Which users are able to interact with the Docker socket?} (see \autoref{subsubsection:docker-permissions-host})\\
-    Execute ``\lstinline{ls -l /var/run/docker.sock}'' to see the which owner and group of \lstinline{/var/run/docker.sock} and which users have read and write access to it. The owner and every user in the group is allowed to use Docker.
+    Execute ``\lstinline{ls -l /var/run/docker.sock}'' to see the owner and group of \lstinline{/var/run/docker.sock} and which users have read and write access to it. The owner and every user in the group is allowed to use Docker.
 
     \item \textbf{Who is in the \lstinline{docker} group?} (see \autoref{subsubsection:docker-permissions-host})\\
-    Check which users are in the group of identified in the last step (by default \lstinline{docker}) by executing ``\lstinline{grep docker /etc/group}''.
+    Check which users are in the group identified in the previous step (by default \lstinline{docker}) by executing ``\lstinline{grep docker /etc/group}''.
 
     \item \textbf{Is the \lstinline{setuid} bit set on the Docker client binary?} (see \autoref{subsubsection:docker-permissions-host})\\
     Check the permissions (including whether the \lstinline{setuid} bit is set) of the Docker binary by executing ``\lstinline{ls -l $(which docker)}''.
@@ -100,12 +105,10 @@ The following questions and steps are meant to identify interesting parts and we
     \item \textbf{How is the Docker daemon started?} (see \autoref{subsubsection:configuration})\\
     Check configuration files (e.g. \lstinline{/usr/lib/systemd/system/docker.service} and \lstinline{/etc/docker/daemon.json}) for information on how the Docker daemon is started.
 
-    \item \textbf{Do any \lstinline{docker-compose.yaml} files exist?}\\
-    (see \autoref{subsection:config-files} and \autoref{subsubsection:configuration})\\
+    \item \textbf{Do any \lstinline{docker-compose.yaml} files exist?} (see \autoref{subsection:config-files} and \autoref{subsubsection:configuration})\\
     Find all \lstinline{docker-compose.yaml} files using ``\lstinline{find / -name "docker-compose.*"}''.
 
-    \item \textbf{Do any \lstinline{.docker/config.json} files exist?}\\
-    (see \autoref{subsection:config-files} and \autoref{subsubsection:configuration})\\
+    \item \textbf{Do any \lstinline{.docker/config.json} files exist?} (see \autoref{subsection:config-files} and \autoref{subsubsection:configuration})\\
     Read the \lstinline{config.json} files in all directories by running ``\lstinline{cat /home/*/.docker/config.json}''.
 
     \item \textbf{Are the \lstinline{iptables} rules set for both the host and the containers?} (see \autoref{subsubsection:iptables-host})\\

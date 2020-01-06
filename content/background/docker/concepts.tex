@@ -1,19 +1,19 @@
 \subsection{Docker Concepts}
-Docker is made up of of a few concepts: daemon, images, containers and \lstinline{Dockerfile}s.
+Docker is made up of a few concepts: daemon, images, containers and \lstinline{Dockerfile}s.
 
 \subsubsection{Docker Daemon}
-The daemon is a service (a privileged program that runs in the background) that runs (as \lstinline{root}\footnote{An experimental rootless mode is being worked on.}\footnote{\url{https://github.com/docker/engine/blob/master/docs/rootless.md}}) on the host. It manages all things related to Docker on that machine. For example, if a user needs to restart a container, the Docker daemon is the process that restarts the container. It is good to note that, because everything related to Docker is handled by the daemon and Docker has access to all resources of the host (because it runs as \lstinline{root}), having access to Docker is equivalent to having \lstinline{root} access to the host\footnote{\url{https://docs.docker.com/engine/security/security/}}.
+The daemon is a service (a privileged program that runs in the background) that runs (as \lstinline{root}\footnote{An experimental rootless mode is being worked on.}\footnote{\url{https://github.com/docker/engine/blob/master/docs/rootless.md}}) on the host. It manages all things related to Docker on that machine. For example, if a user needs to restart a container, the Docker daemon is the process that restarts the container. It is good to note that, because everything related to Docker is handled by the daemon and Docker has access to all resources of the host (because it runs as \lstinline{root}), being able to use Docker is equivalent to having \lstinline{root} access to the host\footnote{\url{https://docs.docker.com/engine/security/security/}}.
 
 \subsubsection{Images}
-A Docker image is packaged software. It is a distributable set of layers. The first layer describes the base of the image. This is either an existing image or nothing (referred to as \lstinline{scratch}). Each layer on top of that is a change to the layer before. For example, if we add a file or run an command it adds a new layer.
+A Docker image is a packaged directory structure. It is a set of layers. Each layer adding, changing or removing specific files or directories in the image. The first layer (called the base image) is either an existing image or nothing (referred to as \lstinline{scratch}). Each layer on top of that is a change to the layer before.
 
 \subsubsection{Containers}
-A container is an instance of a Docker image. If we run software packaged as a Docker image, we create a container based on that image. If we want to run two instances of the same Docker image, we can create two containers.
+A container is a running instance of a Docker image. If we run software packaged as a Docker image, we create a container based on that image. If we want to run two instances of the same Docker image, we can create two containers.
 
 \subsubsection{\texorpdfstring{\lstinline{Dockerfiles}}{Dockerfiles}}
-A \lstinline{Dockerfile} describes what layers a Docker image consists of. It describes the steps to build the image. Let's look at a very simple example:
+A \lstinline{Dockerfile} describes what layers a Docker image consists of. It describes the steps to build the image. Let's look at a basic example:
 
-\begin{lstlisting}[caption={Very Basic \lstinline{Dockerfile}.},label={listing:dockerfile-simple},captionpos=b]
+\begin{lstlisting}[caption={A basic \lstinline{Dockerfile}.},label={listing:dockerfile-simple},captionpos=b]
 FROM alpine:latest
 LABEL maintainer="Joren Vrancken"
 CMD ["echo", "Hello World"]

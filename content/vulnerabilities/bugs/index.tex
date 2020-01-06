@@ -1,8 +1,8 @@
 \section{Security Related Software Bugs}\label{section:bugs}
-In this section we will look at security related bugs that have been found in the last few years. Although there have been many security related bugs found in the Docker ecosystem, not all of them have a large impact. Others are not fully publicly disclosed. We will look (from most recent to least recent) at recent, fully disclosed bugs that might be of use during a penetration test. In the \hyperref[appendix:CVE-List]{appendix} you will find a list of other less interesting Docker related bugs I have looked at.
+In this section we will look at security related bugs that have been found in the last few years. Although there have been many security related bugs found in the Docker ecosystem, not all of them have a large impact. Others are not fully publicly disclosed. We will look (from most recent to least recent) at recent, fully disclosed bugs that might be of use during a penetration test. In the \hyperref[appendix:CVE-List]{appendix} you will find a list of other less interesting Docker related bugs that were researched during this thesis.
 
 Each bug is not immediately a complete container escape or other attack scenario. Most are useful during during an attack when used in combination with other vulnerabilities. For example by bypassing a protection mechanism.
-However, some severe bugs are complete attacks. For example, CVE--2019--16884 (see \autoref{subsection:CVE-2019-16884}) is a container escape.
+However, some severe bugs are even dangerous when used by themselves. For example, CVE--2019--16884 (see \autoref{subsection:CVE-2019-16884}) is a container escape.
 
 \input{content/vulnerabilities/bugs/cve-2019-16884.tex}
 \input{content/vulnerabilities/bugs/cve-2019-13139.tex}

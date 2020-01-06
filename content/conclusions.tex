@@ -8,24 +8,24 @@ Using containers creates more secure environments, because it isolates software.
 
     \item When on a host that runs Docker, an attacker wants to access privileged information through the Docker daemon. Because being able to use Docker is equivalent to having \lstinline{root} permissions, an attacker wants to find a way to get access to Docker and exploit it.
 
-    \item Misconfigurations are more interesting from an offensive perspective, because they are harder to fix. Security bugs are simply fixed by updating Docker.
+    \item Misconfigurations are more interesting from an offensive perspective, as these are harder to fix. Security bugs are simply fixed by updating Docker.
 
     \item Use the checklist provided in \autoref{chapter:checklist} to manually and systematically identify weak spots and misconfigurations that are present in containers or hosts with a Docker installation.
 
-    \item Docker Bench for Security (see \autoref{tools:bench}) is a tool that automates the checking of every guideline in the CIS Docker Benchmark (which is too long to check manually) to see if there are obvious and interesting configuration mistakes in a Docker installation.
+    \item Docker Bench for Security (see \autoref{tools:bench}) is a tool that automates the checking of every guideline in the CIS Docker Benchmark (as manually checking every guideline in the CIS Docker Benchmark takes a long time). It audits a host system for guidelines that are not followed and generates a report on its findings. This is very useful to see if there are obvious and interesting configuration mistakes in a Docker installation.
 
 \end{itemize}
 
 \section{Takeaways from a Defensive Perspective}
 
 \begin{itemize}
-    \item Docker is a very complex ecosystem. Understanding how it works internally, is crucial to building stable, secure systems.
+    \item Docker is a very complex ecosystem. Understanding how it works internally is crucial to building stable, secure systems.
 
-    \item Keep Docker up to date to minimize the risk of software bugs.
+    \item Keep Docker up to date to minimize the risks of software bugs.
 
-    \item Know what are the best practices to configure Docker and be aware of the and common misconfigurations.
+    \item Know what the best practices to configure Docker are and be aware of common misconfigurations.
 
-    \item Best practice guideline lists (e.g.\ CIS Docker Benchmark) are a good start, but are most likely not completely fitted to your use-case, very long and incomplete.
+    \item Best practice guideline lists (e.g.\ CIS Docker Benchmark) are a good start, but are not well fitted to every use-case, very long and incomplete.
 
-    \item (Automatically) analyze Docker images using static image analysis tools to discover misconfigurations and bugs, before the image is deployed.
+    \item Analyze Docker images (automatically) using static image analysis tools (see \autoref{subsection:image-analysis-tools}) to discover misconfigurations and bugs, before the images are deployed.
 \end{itemize}

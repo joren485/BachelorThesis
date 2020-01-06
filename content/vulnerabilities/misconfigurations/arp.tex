@@ -12,7 +12,7 @@ We start three Docker containers using the \lstinline{ubuntu:latest} image (whic
     \item \lstinline{attacker}: \lstinline{172.17.0.4} and \lstinline{02:42:ac:11:00:04}
 \end{itemize}
 
-We use \lstinline{vic0}, \lstinline{vic1} and \lstinline{atck} instead of \lstinline{cont} to indicate in which container a command is executed.
+We shorten their names to \lstinline{vic0}, \lstinline{vic1} and \lstinline{atck}, respectively, instead of \lstinline{cont} to indicate in which container a command is executed.
 
 \begin{lstlisting}[caption={Docker container ARP spoof},captionpos=b]
 (host)$ docker run --rm -it --name=victim0 -h victim0 ubuntu:latest /bin/bash
@@ -49,3 +49,5 @@ We first start three containers and install dependencies. We then start to poiso
 \medskip
 
 Disabling inter-container communication by default is covered in the CIS Docker Benchmark by guideline 2.1 (Ensure network traffic is restricted between containers on the default bridge).
+
+We would like to note that \lstinline{ARP} spoofing is very invasive and could stability of a network with containers. This should only be done during a penetration test with the explicit permission of the owner of a network.

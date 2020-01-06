@@ -1,15 +1,17 @@
 \begin{abstract}
-Containerization software has become extremely popular to streamline software deployments in the last few years. Its popularity has made it a very interesting attack surface. This bachelor thesis discusses Docker from a security perspective and looks at how a penetration tester (e.g.\ an Employee of security companies like Secura) should test the security of systems that use Docker.
+\todo[inline]{Jos: 1.5 page would be more appropriate}
+\todo[inline]{Jos: Make actors explicit}
+Containerization software, such as Docker, has become extremely popular to streamline software deployments in the past few years. Its popularity has also made it an interesting attack surface. This bachelor thesis discusses Docker from a security perspective and looks at how a penetration tester (e.g.\ an employee of security companies like Secura) should assess the security of systems that use Docker.
 
 \medskip
 
-Because Docker is an ecosystem it has multiple attacker models: escaping Docker containers, inter-container attacks and attacking the host through the Docker daemon. We will look at Docker from these perspectives.
+Because Docker is an ecosystem, it has multiple attack models: escaping Docker containers, inter-container attacks and attacking the host through the Docker daemon. We will look at Docker from these perspectives.
 
 \medskip
 
-To get a good understanding of what can go wrong using Docker we discuss configuration mistakes that Docker users could make and look at examples that demonstrate the dangerous consequences. We link these to CIS Docker Benchmarks, which are security guidelines aimed at Docker that are used by companies like Secura as a security benchmark. Recent CVEs that are relevant during penetration tests are also discussed, but less of a focus because they are easily circumvented.
+To get a good understanding of what can go wrong using Docker we discuss configuration mistakes that Docker users could make and look at examples that demonstrate the dangerous consequences. We link these to CIS Docker Benchmarks, which are security guidelines aimed at Docker. These are used by companies like Secura as a security benchmark. Recent CVEs that are relevant during penetration tests, are also discussed, but with less emphasis because they are easily circumvented.
 
 \medskip
 
-Finally, this thesis looks at how a penetration tester should identify the vulnerabilities discussed and presents a checklist that penetration testers can use to test systems using Docker.
+Finally, this thesis looks at how penetration testers should identify the vulnerabilities discussed. Additionally, a checklist is presented that summarizes the enumeration, identification and exploitation of systems that use Docker to ease assessments.
 \end{abstract}

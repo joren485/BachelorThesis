@@ -1,5 +1,5 @@
-\section{Unix shell}
-The following conventions are used to represent the different contexts in which the commands are executed.
+\section{Unix Shell Commands}
+The following conventions are used to represent the different contexts in which commands are executed.
 
 \begin{itemize}
     \item If a command is executed directly on a host system, it is prefixed by ``\lstinline{(host)}''.
@@ -8,6 +8,8 @@ The following conventions are used to represent the different contexts in which 
     \item If a command is executed by a privileged user (i.e. \lstinline{root}), it is prefixed by ``\lstinline{#}''.
     \item Long or irrelevant output of commands is replaced by ``\ldots''.
 \end{itemize}
+
+\medskip
 
 In \autoref{listing:notation:example1}, an unprivileged user executes the command ``\lstinline{echo Hello, World!}'' on a host system.
 \begin{lstlisting}[caption={Shell command notation example 1.}, captionpos=b, label={listing:notation:example1}]
@@ -27,7 +29,7 @@ In \autoref{listing:notation:example2}, the \lstinline{root} user executes two c
 
 \medskip
 
-We will look at many examples using shell commands. Although I prefer using non-abbreviated arguments and quoted values (see \autoref{listing:notation:example3}) to make it more clear what a command does, throughout this thesis we will use abbreviated non-quoted arguments (see \autoref{listing:notation:example4}) where possible to make the commands smaller and more readable.
+We will look at many examples using shell commands. Although I prefer using non-abbreviated arguments and quoted values (see \autoref{listing:notation:example3}) to make looking up the meaning of an argument (abbreviation) unnecessary. Throughout this thesis we will use abbreviated non-quoted arguments (see \autoref{listing:notation:example4}) where possible to make the commands smaller and more readable.
 
 \begin{lstlisting}[caption={Abbreviated non-quoted command example.}, captionpos=b, label={listing:notation:example3}]
 (host)$ docker run --tty="true" --interactive="true" --rm --volume="/:/host/" ubuntu:latest

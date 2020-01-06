@@ -1,7 +1,8 @@
 \subsection{Readable Configuration Files}\label{subsection:config-files}
-Because setting up environments with Docker can be quite complex, many Docker users use programs to save all necessary Docker settings to configuration files (e.g. \lstinline{docker-compose}) to remove the need of repeating complex steps and configuration. These configuration files often contain very sensitive information. If the permissions on these files are misconfigured, users that should not be able to read the files, might be able to read the files.
+\todo[inline]{Dave: I would ad a conclusion to this part. something like: Implementers and assesors should take these files in considoration as this could result in a}
+Because setting up environments with Docker can be quite complex, many Docker users use programs (e.g. \lstinline{docker-compose}) to save all necessary Docker settings to configuration files to remove the need of repeating complex steps and configurations. These configuration files often contain very sensitive information. If the permissions on these files are misconfigured, users that should not be able to read the files, might be able to do so.
 
-Too very common files that contain sensitive information are \lstinline{.docker/config.json} and \lstinline{docker-compose.yaml} files.
+Two very common files that contain sensitive information are \lstinline{.docker/config.json} and \lstinline{docker-compose.yaml} files.
 
 \medskip
 

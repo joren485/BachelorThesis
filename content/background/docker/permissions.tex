@@ -1,5 +1,5 @@
 \subsection{Docker Socket}\label{background:docker-socket}
-The Docker daemon runs a RESTful\footnote{\url{https://restfulapi.net/}} API\footnote{\url{https://docs.docker.com/engine/api/v1.40/}} that is used by clients to communicate with the Docker daemon. For example, when a user uses the Docker client command, it actually makes a HTTP request to the API.\@ By default, the API listens on a UNIX socket accessible through \lstinline{/var/run/docker.sock}, but it also possible to make it listen for TCP connections.
+The Docker daemon runs a RESTful\footnote{\url{https://restfulapi.net/}} API\footnote{\url{https://docs.docker.com/engine/api/v1.40/}} that is used by clients to communicate with the Docker daemon. For example, when a user uses the Docker client command, it actually makes an HTTP request to the API.\@ By default, the API listens on a UNIX socket accessible through \lstinline{/var/run/docker.sock}, but it also possible to make it listen for TCP connections.
 
 \medskip
 

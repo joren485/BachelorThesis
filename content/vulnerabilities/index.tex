@@ -1,15 +1,17 @@
 \chapter{Known Vulnerabilities in Docker}\label{chapter:vulnerabilities}
-Because Docker is such popular software, many security researchers are trying to find and document vulnerabilities. In this chapter we discuss high-impact vulnerabilities that are useful during a penetration test. These are split into misconfigurations (\autoref{section:misconfigurations}) and software bugs (\autoref{section:bugs}).
+Because Docker is so popular, many security researchers are trying to find and document vulnerabilities. In this chapter we discuss high-impact vulnerabilities that are useful during a penetration test. These are split into misconfigurations (\autoref{section:misconfigurations}) and bugs (\autoref{section:bugs}).
 
 \medskip
 
-Software bugs and misconfigurations can both be security problems, but they differ in who made the mistake. A \emph{bug} is a problem in a program itself. For example, a buffer overflow is a bug. The problem lies solely in the program itself. To fix it, the code of the program needs to be changed. \emph{Misconfigurations}, on the other hand, are security problems that come from wrong usage of a program. The program is incorrectly configured and that creates a situation that might be exploitable to an attacker. For example, a world-readable file containing passwords is a misconfiguration. To fix a misconfiguration, the user should change the configuration of the program. The developers of the program can only recommend users to configure it correctly.
+Software bugs and misconfigurations can both be security problems, but they differ in who made the mistake. A \emph{bug} is a problem in a program itself. For example, a buffer overflow is a bug. The problem lies solely in the program itself. To fix it, the code of the program needs to be changed. 
+
+\emph{Misconfigurations}, on the other hand, are security problems that come from the wrong use of a program. The program is incorrectly configured and that creates a situation that might be exploitable for an attacker. For example, a world-readable file containing passwords is a misconfiguration. To fix a misconfiguration, the user should change the configuration of the program. The developers of the program can only recommend users to configure it correctly.
 
 \medskip
 
-Because there are many security researchers looking for bugs in containerization software, \autoref{section:bugs} will likely become quickly outdated and as such should not be used as an inclusive list of important bugs.
+Because there are many security researchers looking for bugs in containerization software, \autoref{section:bugs} will likely become quickly outdated and as such should not be used as an exhaustive list of important bugs.
 
-All of the risk of these bugs can be prevented by using the latest version of Docker and Docker images. This is covered by CIS Docker Benchmark guidelines 1.1.2 (Ensure that the version of Docker is up to date) and 5.27 (Ensure that Docker commands always make use of the latest version of their image), respectively.
+All of the risk, of these bugs can be prevented by using the latest version of Docker and Docker images. This is covered by the CIS Docker Benchmark guidelines 1.1.2 (Ensure that the version of Docker is up to date) and 5.27 (Ensure that Docker commands always make use of the latest version of their image), respectively.
 
 In the \autoref{chapter:pentesting}, we will look at how these vulnerabilities, bugs and misconfigurations, can be used during a penetration test, but because of the reasons above we will focus more on misconfigurations.
 

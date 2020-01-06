@@ -1,34 +1,37 @@
 \chapter{Future Work}\label{chapter:futurework}
-This thesis looks at how to penetration test Docker systems. During the research and writing, I came across some interesting topics that go beyond the scope of this thesis.
+This thesis looks at how to do penetration tests on Docker systems. During the research and writing, I came across some interesting topics that go beyond the scope of this thesis.
 
 \section{Orchestration Software}
-In modern software deployment, containerization is only part of the puzzle. Large companies run a lot of different software and each instance needs to support many connections and a lot of computing power. That means that for many applications, multiple containers of the same image are run to handle everything. To manage all of those containers there is orchestration software. The most famous being Kubernetes and Docker Swarm.
+In modern software deployment, containerization is only part of the puzzle. Large companies run a lot of different software and each instance needs to support many connections and a lot of computing power. That means that for many applications, many containers are required. To manage all of those containers there is orchestration software. The most famous are Kubernetes\footnote{\url{https://kubernetes.io/}} and Docker Swarm\footnote{\url{https://docs.docker.com/engine/swarm/}}.
 
 It would be interesting to continue this research by looking at how we could perform penetration tests on orchestration software and how orchestration software impacts the security of systems.
 
-\section{Docker on Windows}
-This bachelor thesis looks at Docker on Linux, because Docker is developed for Linux. However, it is also possible to run Docker on Windows (sort of). Because Docker uses very specific kernel features from Linux, Docker on Windows runs in a Linux virtual machine. That way Windows users can still use Docker exactly as they would use it on Linux (because they practically are).
+\section{Docker on Non-Linux Operating Systems}
+This bachelor thesis looks at Docker on Linux, because Docker uses features only present in the Linux kernel. However, it is also possible to run Docker on non-Linux operating systems (e.g.\ Windows and MacOS). By running a Linux virtual machine that runs Docker.
+
+This virtual machine is an extra abstraction layer that itself is also an attack surface and adds more risk.
 
 \medskip
 
-Some of the vulnerabilities and misconfigurations that are described in this thesis might also be relevant on Windows. There are also vulnerabilities that are specific to Docker on Windows (e.g.\ CVE--2019--15752 and CVE--2018--15514).
+Some of the vulnerabilities and misconfigurations that are described in this thesis might also be relevant on non-Linux operating systems. 
+
+There are also vulnerabilities that are relevant to specific operating systems. For example, CVE--2019--15752 and CVE--2018--15514 are only relevant on Windows. 
 
 \medskip
 
-It would be interesting (and relevant to penetration testing) to continue this research by specifically looking at Docker on Windows.
+It would be interesting (and relevant to penetration testing) to continue this research by specifically looking at Docker on non-Linux operating systems.
 
 \section{Comparison of Virtualization and Containerization}
 This thesis looks at the security of Docker. As stated in the background, virtualization is another way to achieve isolation. A lot has been written about the comparison of virtualization and containerization\cite{Virtualization-vs-Containerization-to-Support-PaaS}\cite{Hypervisor-vs-Lightweight-Virtualization}\cite{Updated-Performance-Comparison-Virtual-Machines-Containers}.
 However, it would be interesting to specifically compare the isolation and security that virtualization offers to the isolation and security that containerization offers.
 
-\section{Condense the CIS Docker Benchmark}\label{futurework:CIS}
+\section{Abridge the CIS Docker Benchmark}\label{futurework:CIS}
 The CIS Docker Benchmark contains 115 guidelines with their respective documentation.
 This makes it a 250+ page document. This is not practical for developers and engineers (the intended audience). It would be much more useful to have a smaller, better sorted list that only contains common mistakes and pitfalls to watch out for.
 
 \medskip
 
-The CIS Benchmarks do indicate the importance of each guideline.
-With Level 1 indicating that the guideline is a must-have and Level 2 indicating that the guideline is only necessary if extra security is needed. However, only twenty-one guidelines are actually considered Level 2. All the other guidelines are considered Level 1. This still leaves the reader with a lot of guidelines that are considered must-have.
+The CIS Benchmarks do indicate the importance of each guideline, with Level 1 indicating that the guideline is a must-have and Level 2 indicating that the guideline is only necessary if extra security is needed. However, only twenty-one guidelines are actually considered Level 2. All the other guidelines are considered Level 1. This still leaves the reader with a lot of guidelines that are considered must-have.
 
 \medskip
 
@@ -68,7 +71,7 @@ The last section would describe guidelines that are intended for systems that ne
 \end{itemize}
 
 \section{Docker Man-in-the-Middle}
-In \autoref{subsection:arp-spoofing} we looked at performing a man-in-the-middle attack using ARP spoofing. It would be interesting to look at more complex man-in-the-middle attacks. For example, capturing all traffic of a webserver running in a Docker or modifying traffic.
+In \autoref{subsection:arp-spoofing} we looked at performing a man-in-the-middle attack using ARP spoofing. It would be interesting to look at more complex man-in-the-middle attacks. For example, capturing all traffic to and from a webserver running in a Docker or modifying traffic.
 
-\section{Docker Specific Penetration Testing Tool}
-In \autoref{section:tools} we discuss multiple tools that automate part of security assessments. However, we see that some tools are not interesting from an attackers perspective and most tools focus on very specific vulnerabilities. It would be interesting to develop a new tool or extend an existing tool that focuses on the full spectrum of exploits and vulnerabilities of one or more attacker model (\autoref{chapter:attack-surface-models}) and not only specific vulnerabilities.
+\section{A Docker Specific Penetration Testing Tool}
+In \autoref{section:tools} we discuss multiple tools that automate part of security assessments. However, we see that some tools are not interesting from an attackers perspective and most tools focus on very specific vulnerabilities. It would be interesting to develop a new tool or extend an existing tool that focuses on the full spectrum of exploits and vulnerabilities of one or more attacker models (\autoref{chapter:attack-surface-models}) and not only on specific vulnerabilities.
