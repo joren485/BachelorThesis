@@ -60,7 +60,7 @@ The following questions and steps are meant to identify interesting parts and we
     \item \textbf{Which capabilities do the processes in the container have?} (see \autoref{subsubsection:container:capabilities})\\
     Get the current capabilities value by running ``\lstinline{grep CapEff /proc/self/status}'' and decode it with ``\lstinline{capsh --decode=value}\footnote{``value'' should look like \lstinline{00000000a80425fb}}''. \lstinline{capsh} can be run on a different system.
 
-    \item \textbf{Is the container running in privileged mode?} 
+    \item \textbf{Is the container running in privileged mode?}
     \\(see \autoref{subsubsection:container:privileged})\\
     If the \lstinline{CapEff} value of the previous step equals \lstinline{0000003fffffffff}, the container is running in privileged mode and we are able to escape it (see \autoref{subsection:privileged}).
 
