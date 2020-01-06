@@ -13,7 +13,7 @@ Control groups (\lstinline{cgroups}) are a way to limit resources (e.g.\ CPU and
     \item \lstinline{Cgroup}: To isolate processes from \lstinline{cgroup} hierarchies.
     \item \lstinline{IPC}: Isolates the inter-process communication. This, for example, isolates shared memory regions.
     \item \lstinline{Network}: Isolates the network stack (e.g. IP addresses, interfaces, routes and ports).
-    \item \lstinline{Mount}\footnote{A \lstinline{mount namespace} is very similar to a \lstinline{chroot}.}: Isolates mount points. When creating a \lstinline{mount namespace}, the existing mount points are copied from the current \lstinline{namespace}. New mount points are not propagated.
+    \item \lstinline{Mount}\footnote{A \lstinline{mount namespace} is similar to a \lstinline{chroot}.}: Isolates mount points. When creating a \lstinline{mount namespace}, the existing mount points are copied from the current \lstinline{namespace}. New mount points are not propagated.
     \item \lstinline{PID}: Isolates processes from seeing process ids in other \lstinline{namespaces}. Processes in different \lstinline{namespaces} can have the same \lstinline{PID}.
     \item \lstinline{User}: Isolates the users and groups.
     \item \lstinline{UTS}: Isolates the host and domain names.

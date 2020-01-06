@@ -1,5 +1,5 @@
 \subsection{Docker Permissions}\label{subsection:docker-permissions}
-A very common (and notorious) misconfiguration is giving unprivileged users access to Docker, which allows them to create, start and otherwise interact with Docker containers (through the Docker daemon). This is very dangerous because this allows the unprivileged users to access all files as \lstinline{root}. The Docker documentation says\footnote{\url{https://docs.docker.com/engine/security/security/}}:
+A common (and notorious) misconfiguration is giving unprivileged users access to Docker, which allows them to create, start and otherwise interact with Docker containers (through the Docker daemon). This is dangerous because this allows the unprivileged users to access all files as \lstinline{root}. The Docker documentation says\footnote{\url{https://docs.docker.com/engine/security/security/}}:
 \begin{quote}
 \emph{First of all, only trusted users should be allowed to control your Docker daemon. This is a direct consequence of some powerful Docker features. Specifically, Docker allows you to share a directory between the Docker host and a guest container; and it allows you to do so without limiting the access rights of the container. This means that you can start a container where the /host directory is the / directory on your host; and the container can alter your host filesystem without any restriction}.
 \end{quote}
@@ -7,7 +7,7 @@ A very common (and notorious) misconfiguration is giving unprivileged users acce
 In short, because the Docker daemon runs as \lstinline{root}, if a user adds a directory as a volume to a container, that file is accessed as \lstinline{root}. There a few ways for unprivileged users to access Docker. In this section we will look at those.
 
 \subsubsection{\texorpdfstring{\lstinline{docker}}{docker} Group}
-Every user in the \lstinline{docker} group is allowed to use Docker (see \autoref{background:docker-socket}). This allows simple access management of Docker usage. Sometimes a system administrator does not want to do proper access management and adds every user to the \lstinline{docker} group, because that allows everything to run smoothly. This misconfiguration, however, allows every user to access every file on the system, as illustrated in \autoref{listing:docker-group}.
+Every user in the \lstinline{docker} group is allowed to use Docker (see \autoref{background:docker-socket}). This allows access management of Docker usage. Sometimes a system administrator does not want to do proper access management and adds every user to the \lstinline{docker} group, because that allows everything to run smoothly. This misconfiguration, however, allows every user to access every file on the system, as illustrated in \autoref{listing:docker-group}.
 
 \medskip
 
@@ -49,7 +49,7 @@ Another way system administrators might skip proper access management is to set 
 \medskip
 
 The \lstinline{setuid} bit is a permission bit in Unix, that allows users to run binaries as the owner (or group) of the binary instead of themselves.
-This is very useful in specific cases. For example, users should be able to change their own passwords, but should not be able to read password hashes of other users. That is why the \lstinline{passwd} binary (which is used to change a users password) has the \lstinline{setuid} bit set. A user can change their password, because \lstinline{passwd} is run as \lstinline{root} (the owner of \lstinline{passwd}) and, of course, \lstinline{root} is able to read from and write to the password file. In this case the \lstinline{setuid} bit is not a security issue, because \lstinline{passwd} asks for the user's password itself and will only change specific entries in the password file.
+This is useful in specific cases. For example, users should be able to change their own passwords, but should not be able to read password hashes of other users. That is why the \lstinline{passwd} binary (which is used to change a users password) has the \lstinline{setuid} bit set. A user can change their password, because \lstinline{passwd} is run as \lstinline{root} (the owner of \lstinline{passwd}) and, of course, \lstinline{root} is able to read from and write to the password file. In this case the \lstinline{setuid} bit is not a security issue, because \lstinline{passwd} asks for the user's password itself and will only change specific entries in the password file.
 
 \medskip
 

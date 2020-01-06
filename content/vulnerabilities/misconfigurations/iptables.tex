@@ -11,7 +11,7 @@ It is, however, a bit counterintuitive, because we would assume that if a firewa
 
 \medskip
 
-We will look at the following simple example of bypassing a firewall rule with Docker.
+We will look at the following example of bypassing a firewall rule with Docker.
 
 \begin{lstlisting}[caption={Bypass \lstinline{iptables} firewall rules using Docker.},captionpos=b,label={listing:iptables-bypass}]
 (host)# iptables -A OUTPUT -p tcp --dport 80 -j DROP
