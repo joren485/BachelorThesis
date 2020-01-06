@@ -6,7 +6,7 @@ A very common (and notorious) misconfiguration is giving unprivileged users acce
 
 In short, because the Docker daemon runs as \lstinline{root}, if a user adds a directory as a volume to a container, that file is accessed as \lstinline{root}. There a few ways for unprivileged users to access Docker. In this section we will look at those.
 
-\subsubsection{\texorpdfstring{\lstinline{docker}}{docker} group}
+\subsubsection{\texorpdfstring{\lstinline{docker}}{docker} Group}
 Every user in the \lstinline{docker} group is allowed to use Docker (see \autoref{background:docker-socket}). This allows simple access management of Docker usage. Sometimes a system administrator does not want to do proper access management and adds every user to the \lstinline{docker} group, because that allows everything to run smoothly. This misconfiguration, however, allows every user to access every file on the system, as illustrated in \autoref{listing:docker-group}.
 
 \medskip
@@ -43,7 +43,7 @@ admin:$6$VOSV5AVQ$jHWxAVAUgl...:18142:0:99999:7:::
 
 In \autoref{listing:read-write-socket}, we see that we are not a member of the Docker group, but because every user has read and write access (i.e.\ the read and write permissions are set for \lstinline{other}) we are still able to use Docker.
 
-\subsubsection{\texorpdfstring{\lstinline{setuid}}{setuid} bit}\label{subsubsection:setuid}
+\subsubsection{\texorpdfstring{\lstinline{setuid}}{setuid} Bit}\label{subsubsection:setuid}
 Another way system administrators might skip proper access management is to set the \lstinline{setuid} bit on the \lstinline{docker} binary.
 
 \medskip
