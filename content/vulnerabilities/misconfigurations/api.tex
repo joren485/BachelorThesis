@@ -11,7 +11,7 @@ We do not need to use the Docker client, but can send HTTP requests to the socke
 
 \medskip
 
-The Docker socket is covered by CIS Benchmark guidelines 3.15 (Ensure that the Docker socket file ownership is set to root:docker) and 3.16(Ensure that the Docker socket file permissions are set to 660 or more restrictively).
+The Docker socket is covered by CIS Docker Benchmark guidelines 3.15 (Ensure that the Docker socket file ownership is set to root:docker) and 3.16(Ensure that the Docker socket file permissions are set to 660 or more restrictively).
 
 \medskip
 
@@ -38,7 +38,7 @@ admin:$6$VOSV5AVQ$jHWxAVAUgl...:18142:0:99999:7:::
 
 \medskip
 
-This is also covered by CIS Benchmark guideline 5.31 (Ensure that the Docker socket is not mounted inside any containers).
+This is also covered by CIS Docker Benchmark guideline 5.31 (Ensure that the Docker socket is not mounted inside any containers).
 
 \subsubsection{Sensitive Information}
 
@@ -65,7 +65,7 @@ Let's start a Postgres\footnote{\url{https://www.postgresql.org/}} database insi
 
 \medskip
 
-This is also covered by CIS Benchmark guideline 5.31 (Ensure that the Docker socket is not mounted inside any containers).
+This is also covered by CIS Docker Benchmark guideline 5.31 (Ensure that the Docker socket is not mounted inside any containers).
 
 \subsubsection{Remote Access}\label{subsubsection:remote-access}
 It is also possible to make the API listen on a TCP port. Ports 2375 and 2376 are usually used for HTTP and HTTPS communication of the Docker API, respectively. This, however, does bring all the extra complexity of TCP sockets with it. If not configured to only listen on \lstinline{localhost}, this gives every host on the network access to Docker. If the host is directly accessible by the internet, it gives everybody access to the full capabilities of Docker on the host. An attacker can exploit this by starting malicious containers\cite{Metasploit-Unprotected-TCP-Socket}.

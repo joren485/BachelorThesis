@@ -27,7 +27,7 @@ In \autoref{listing:docker-group} we first check our permissions. We do not have
 
 \medskip
 
-This is covered by the CIS Benchmark guideline 1.2.2 (Ensure only trusted users are allowed to control Docker daemon).
+This is covered by the CIS Docker Benchmark guideline 1.2.2 (Ensure only trusted users are allowed to control Docker daemon).
 
 \subsubsection{World Read and Writable Docker Socket}
 By default, only \lstinline{root} and every user in the \lstinline{docker} group have access to Docker, because they have read and write access to the Docker socket. However, some administrators administrators set the permissions to read and write for all users (i.e. \lstinline{666}), giving all users access to the Docker daemon.
@@ -70,4 +70,4 @@ In \autoref{listing:setuid} we see that we are not a part of the \lstinline{dock
 
 \medskip
 
-This is not covered by the CIS Benchmark guidelines. There are multiple guidelines about correct file and directory permissions, but none cover the binaries.
+This is not covered by the CIS Docker Benchmark guidelines. There are multiple guidelines about correct file and directory permissions, but none cover the binaries.
