@@ -1,7 +1,6 @@
 \section{Containerization Software}\label{background:containerization}
-\todo[inline]{Jos: Better models with examples}
-Containerization software isolates processes running on a host from each other.
-A process in a container sees a different part of the host system than processes outside of the container. A process inside a container sees a different file system, network interfaces and users than processes outside of the container. Processes inside the container can only see other processes inside the container.
+\todo[inline]{Add detailed figure with an application, dependencies, container, host, kernel etc.}
+Containerization software isolates processes running on a host from each other. A process in a container sees a different part of the host system than processes outside of the container. A process inside a container sees a different file system, network interfaces and users than processes outside of the container. Processes inside the container can only see other processes inside the container.
 
 \begin{figure}[ht]
     \centering
@@ -54,8 +53,9 @@ In \autoref{subfig:container} one of the processes runs inside a container. Thes
 Process A and Process B see such a different part of the host system that to Process B it looks like it is running on a wholly different system.
 
 \subsection{Advantages of Containerization}
-\todo[inline]{Jos: better explanation}
 Containers can be made into easily deployable packages (called images). These images only contain the necessary files for specific software to run. Other files, libraries and binaries are shared between the host operating system (the system running the container). This allows developers to create lightweight software packages containing only the necessary dependencies.
+
+These images can be made to simulate a file system of a different Linux distribution. For example, if an application is specifically developed for CentOS and does not run on Ubuntu, it is possible to create an image that contains all the necessary CentOS-specific files and other dependencies. This image can then be run on a host running Ubuntu. To the application running inside a container that runs an instance of the image, the operating system is CentOS\@.
 
 \medskip
 
@@ -63,9 +63,7 @@ Containers also make it possible to run multiple versions of the same software o
 
 \medskip
 
-For example, if we want to run an instance of Wordpress\footnote{A popular content management system to build websites with.}, we do not need to install all the Wordpress dependencies. We only need to download the container that the Wordpress developers created, which includes all the necessary dependencies.
-
-Similarly, if we want to move the Wordpress instance from one host to another, we just have to copy the Wordpress database and run the image on the new host. Even if the new host is a completely different operating system.
+For example, if we want to run an instance of Wordpress\footnote{A popular content management system to build websites with.}, we do not need to install all the Wordpress dependencies. We only need to download the image that the Wordpress developers created. The image contains all dependencies pre-installed.
 
 If we want to test a newer version of Wordpress on the same host, we only have to run the different container on the same host. The incompatible dependencies of the two Wordpress instances are not a problem, because they see different parts of the file system and do not even see each other's processes.
 
@@ -76,8 +74,9 @@ The simplicity that containerization brings, makes containerization popular in s
 \pagebreak
 
 \subsection{Virtualization}
-\todo[inline]{Jos: Hypervisior separate from host in image}
-Virtualization is an older, similar technique to isolate software. In virtualization, a whole system is simulated on top of the host (called the hypervisor). This new virtual machine is called a guest. The guest and the host do not share any system resources. This has some advantages. For example, it allows running a completely different guest operating system (e.g.\ a Windows guest on a Linux host).
+Virtualization is an older, similar technique to isolate software. In virtualization, a whole system is simulated on top of the host. This new virtual machine is called a guest. The guest and the host do not share any system resources. This has some advantages. For example, it allows running a completely different guest operating system (e.g.\ a Windows guest on a Linux host).
+
+The software that manages the virtual machine is called a hypervisor. The hypervisor can be run on top of an OS or run directly on hardware directly (called a bare-metal hypervisor).
 
 \begin{figure}[ht]
     \centering
@@ -116,7 +115,7 @@ Virtualization is an older, similar technique to isolate software. In virtualiza
             \draw (0,125) -- (205,125) -- (205,155) -- (0,155) -- cycle ;
             \draw (102.5,140) node {Linux Host};
         \end{tikzpicture}
-        \caption{Virtual Machines\protect\footnotemark.}
+        \caption{Virtual Machines}
     \end{subfigure}
     \begin{subfigure}[t]{.45\textwidth}
         \centering
@@ -141,19 +140,17 @@ Virtualization is an older, similar technique to isolate software. In virtualiza
             \draw (0,55) -- (200,55) -- (200,85) -- (0,85) -- cycle ;
             \draw (100, 70) node {Linux Host};
         \end{tikzpicture}
-        \caption{Containers.}
+        \caption{Containers}
     \end{subfigure}
     \caption{}
 \end{figure}
-\footnotetext{Hypervisors can also run on the bare metal. This removes the need for a host OS, which adds security.}
 
 Because containerization software shares many resources with the host, it is a lot faster and more flexible than virtualization. Where virtualization needs to start a whole new operating system, containerization only needs to start a single process.
 
 \subsection{The Impact of Containers on Security}
-\todo[inline]{Jos: explain RCE}
 A Docker container isolates software from the host, but does not change it. This means that vulnerabilities in software are not affected by Dockerizing that software. However, the impact of those vulnerabilities is decreased, because the vulnerability exists in an isolated environment.
 
-If, for example, there exists a remote code execution (RCE) vulnerability in Wordpress. Running Wordpress in a Docker container does not fix the vulnerability. An attacker is still able to exploit it. But the attacker is far less likely to access the host system, because the exploited software is isolated from the host system because of Docker.
+If, for example, there exists a remote code execution\footnote{Remote code execution is a vulnerability where a malicious actor is able to execute arbitrary code on a vulnerable system.} (RCE) vulnerability in Wordpress. Running Wordpress in a Docker container does not fix the vulnerability. An attacker is still able to exploit it. But the attacker is far less likely to access the host system, because the exploited software is isolated from the host system because of Docker.
 
 \medskip
 
