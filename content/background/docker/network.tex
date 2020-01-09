@@ -1,6 +1,5 @@
 \subsection{Networking}
-\todo[inline]{Jos: bridge? networking resources internal to the container?}
-When a Docker container is created, the Docker daemon creates a network sandbox for that container and (by default) connects it to an internal bridge network. This gives the container its own networking resources such as an IPv4 address\footnote{IPv6 support is not enabled by default.}, routes and DNS entries. All outgoing traffic is routed through a bridge interface (by default).
+When a Docker container is created, the Docker daemon creates a network sandbox for that container and (by default) connects it to an internal network. This gives the container networking resources (e.g.\ an IPv4 address\footnote{IPv6 support is not enabled by default.}, routes and DNS entries) that are separate from the host. All incoming and outgoing traffic to the container is routed through an interface (by default) which is bridged\footnote{A bridge interface is an interface that connects the network connection of one interface to another.} to an interface on the host.
 
 \medskip
 
