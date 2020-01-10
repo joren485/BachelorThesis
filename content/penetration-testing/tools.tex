@@ -55,16 +55,16 @@ Break Out of the Box\footnote{\url{https://github.com/brompwnie/botb}} (BOtB) is
 
     \item BOtB is able to identify sensitive information in environment variables (see \autoref{pentest:container:env-vars}).
 
-    \item If the container is running in privileged mode, BOtB tries to escape using the same vulnerability\cite{TrailOfBits-Docker-Escape}\footnote{It should be noted that privileged mode is not needed for this container escape to work (as discussed in \autoref{CAP_SYS_ADMIN}).} we looked at in \autoref{CAP_SYS_ADMIN}.
+    \item If the container is running in privileged mode, BOtB tries to escape using the same vulnerability\footnote{It should be noted that privileged mode is not needed for this container escape to work (as discussed in \autoref{CAP_SYS_ADMIN}).} we looked at in \autoref{CAP_SYS_ADMIN}~\cite{TrailOfBits-Docker-Escape}.
 \end{itemize}
 
 \subsubsection{Metasploit}
 Metasploit\footnote{\url{https://www.metasploit.com/}} is an exploitation framework (not only for Docker). It has some modules specific to Docker:
 
 \begin{itemize}
-    \item Linux Gather Container Detection\cite{Metasploit-Linux-Gather-Container-Detection}, checks whether it is running inside a container (similar to the checks we look at in \autoref{subsection:detection}).
-    \item Multi Gather Docker Credentials Collection\cite{Docker-Credentials-Metasploit}, collects all \lstinline{.docker/config.json} files in the home directories of users (see \autoref{config-files:docker-config-json}).
-    \item Unprotected TCP Socket Exploit\cite{Metasploit-Unprotected-TCP-Socket}, gets \lstinline{root} access to a remote host which exposes its Docker API over TCP by creating a container with the host filesystem mounted as a volume (see \autoref{subsection:api} and specifically \autoref{subsubsection:remote-access}).
+    \item The ``Linux Gather Container Detection'' module checks whether it is running inside a container (similar to the checks we look at in \autoref{subsection:detection})~\cite{Metasploit-Linux-Gather-Container-Detection}.
+    \item The ``Multi Gather Docker Credentials Collection'' module collects all \lstinline{.docker/config.json} files in the home directories of users (see \autoref{config-files:docker-config-json})~\cite{Docker-Credentials-Metasploit}.
+    \item The ``Unprotected TCP Socket Exploit'' module gets \lstinline{root} access to a remote host which exposes its Docker API over TCP by creating a container with the host filesystem mounted as a volume (see \autoref{subsection:api} and specifically \autoref{subsubsection:remote-access})~\cite{Metasploit-Unprotected-TCP-Socket}.
 \end{itemize}
 
 \subsubsection{Harpoon}

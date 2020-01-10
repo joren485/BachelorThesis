@@ -1,5 +1,5 @@
 \subsubsection{Checking Capabilities}\label{subsubsection:container:capabilities}
-Once we have a clear picture what kind of system we are working with, we can do some more detailed reconnaissance. One of the most important things to look at are the kernel capabilities (see \autoref{protection-mechanisms:subsection:capabilities}) of the container. We can do this by looking at \lstinline{/proc/self/status}\footnote{\lstinline{self} in \lstinline{/proc/self/} refers to the current process.}. This file contains multiple lines that contain information about the granted capabilities.
+Once we have a clear picture what kind of system we are working with, we can do some more detailed reconnaissance. One of the most important things to look at are the kernel capabilities (see \autoref{protection-mechanisms:subsection:capabilities}) of the container. We can do this by looking at \lstinline{/proc/self/status}.\footnote{\lstinline{self} in \lstinline{/proc/self/} refers to the current process.} This file contains multiple lines that contain information about the granted capabilities.
 
 \begin{lstlisting}[caption={Capabilities of process in container.},captionpos=b]
 (cont)# grep Cap /proc/self/status

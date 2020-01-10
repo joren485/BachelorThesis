@@ -2,7 +2,7 @@
 Docker is made up of a few concepts: daemons, images, containers and \lstinline{Dockerfile}s. These will be covered in the following sections.
 
 \subsubsection{Docker Daemon}
-The daemon is a service (a privileged program that runs in the background) that runs (as \lstinline{root}\footnote{An experimental rootless mode is being worked on.}\footnote{\url{https://github.com/docker/engine/blob/master/docs/rootless.md}}) on the host. It manages all things related to Docker on that machine. For example, if a user needs to restart a container, the Docker daemon is the process that restarts the container. It is good to note that, because everything related to Docker is handled by the daemon and Docker has access to all resources of the host (because it runs as \lstinline{root}), being able to use Docker is equivalent to having \lstinline{root} access to the host\footnote{\url{https://docs.docker.com/engine/security/security/}}.
+The daemon is a service (a privileged program that runs in the background) that runs (as \lstinline{root}\footnote{An experimental rootless mode is being worked on.}\footnote{\url{https://github.com/docker/engine/blob/master/docs/rootless.md}}) on the host. It manages all things related to Docker on that machine. For example, if a user needs to restart a container, the Docker daemon is the process that restarts the container. It is good to note that, because everything related to Docker is handled by the daemon and Docker has access to all resources of the host (because it runs as \lstinline{root}), being able to use Docker is equivalent to having \lstinline{root} access to the host.\footnote{\url{https://docs.docker.com/engine/security/security/}}
 
 \subsubsection{Images}
 A Docker image is a packaged directory structure. It is a set of layers. Each layer adding, changing or removing specific files or directories in the image. The first layer (called the base image) is either an existing image or nothing (referred to as \lstinline{scratch}). Each layer on top of that is a change to the layer before.
@@ -20,7 +20,7 @@ CMD ["echo", "Hello World"]
 \end{lstlisting}
 
 These three instructions tell the Docker engine how to create a new Docker image.
-The full instruction set can be found in the \lstinline{Dockerfile} reference\footnote{\url{https://docs.docker.com/engine/reference/builder/}}.
+The full instruction set can be found in the \lstinline{Dockerfile} reference.\footnote{\url{https://docs.docker.com/engine/reference/builder/}}
 
 \begin{enumerate}
     \item The \lstinline{FROM} instruction tells the Docker engine what to base the new Docker image on. Instead of creating an image from scratch (a blank image), we use an already existing image as our basis (in this case an image based on Alpine Linux).

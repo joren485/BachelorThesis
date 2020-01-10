@@ -59,7 +59,7 @@ The following questions and steps are meant to identify interesting parts and we
     Execute ``\lstinline{uname -a}'' to get information about the kernel and the underlying host operating system.
 
     \item \textbf{Which capabilities do the processes in the container have?} (see \autoref{subsubsection:container:capabilities})\\
-    Get the current capabilities value by running ``\lstinline{grep CapEff /proc/self/status}'' and decode it with ``\lstinline{capsh --decode=value}\footnote{``value'' should look like \lstinline{00000000a80425fb}}''. \lstinline{capsh} can be run on a different system.
+    Get the current capabilities value by running ``\lstinline{grep CapEff /proc/self/status}'' and decode it with ``\lstinline{capsh --decode=value}''. \lstinline{capsh} can be run on a different system.
 
     \item \textbf{Is the container running in privileged mode?}
     \\(see \autoref{subsubsection:container:privileged})\\
@@ -83,7 +83,7 @@ The following questions and steps are meant to identify interesting parts and we
 
 \begin{itemize}
     \item \textbf{What is the version of Docker?} (see \autoref{subsubsection:version})\\
-    Run ``\lstinline{docker --version}'' to find the version of Docker. We will need to check if there are any known software related bugs (\autoref{section:bugs}) in this version of Docker. We can find relevant CVEs in the National Vulnerability Database\footnote{\url{https://nvd.nist.gov/}}.
+    Run ``\lstinline{docker --version}'' to find the version of Docker. We will need to check if there are any known software related bugs (\autoref{section:bugs}) in this version of Docker. We can find relevant CVEs in the National Vulnerability Database.\footnote{\url{https://nvd.nist.gov/}}
 
     \item \textbf{Run Docker Bench for Security} (see \autoref{tools:bench})\\
         Run Docker Bench for Security\footnote{\url{https://github.com/docker/docker-bench-security}} to quickly see what CIS Docker Benchmark guidelines are not being followed.

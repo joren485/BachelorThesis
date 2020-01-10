@@ -2,7 +2,7 @@
 This thesis looks at how to do penetration tests on Docker systems. During the research and writing, I came across some interesting topics that go beyond the scope of this thesis.
 
 \section{Orchestration Software}
-In modern software deployment, containerization is only part of the puzzle. Large companies run a lot of different software and each instance needs to support many connections and a lot of computing power. That means that for many applications, many containers are required. To manage all of those containers there is orchestration software. The most famous are Kubernetes\footnote{\url{https://kubernetes.io/}} and Docker Swarm\footnote{\url{https://docs.docker.com/engine/swarm/}}.
+In modern software deployment, containerization is only part of the puzzle. Large companies run a lot of different software and each instance needs to support many connections and a lot of computing power. That means that for many applications, many containers are required. To manage all of those containers there is orchestration software. The most famous are Kubernetes\footnote{\url{https://kubernetes.io/}} and Docker Swarm.\footnote{\url{https://docs.docker.com/engine/swarm/}}
 
 It would be interesting to continue this research by looking at how we could perform penetration tests on orchestration software and how orchestration software impacts the security of systems.
 
@@ -22,7 +22,7 @@ There are also vulnerabilities that are relevant to specific operating systems. 
 It would be interesting (and relevant to penetration testing) to continue this research by specifically looking at Docker on non-Linux operating systems.
 
 \section{Comparison of Virtualization and Containerization}
-This thesis looks at the security of Docker. As stated in the background, virtualization is another way to achieve isolation. A lot has been written about the comparison of virtualization and containerization\cite{Virtualization-vs-Containerization-to-Support-PaaS}\cite{Hypervisor-vs-Lightweight-Virtualization}\cite{Updated-Performance-Comparison-Virtual-Machines-Containers}.
+This thesis looks at the security of Docker. As stated in the background, virtualization is another way to achieve isolation. A lot has been written about the comparison of virtualization and containerization~\cite{Virtualization-vs-Containerization-to-Support-PaaS}~\cite{Hypervisor-vs-Lightweight-Virtualization}~\cite{Updated-Performance-Comparison-Virtual-Machines-Containers}.
 However, it would be interesting to specifically compare the isolation and security that virtualization offers to the isolation and security that containerization offers.
 
 \section{Abridge the CIS Docker Benchmark}\label{futurework:CIS}

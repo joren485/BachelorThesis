@@ -15,10 +15,10 @@ The Docker socket is covered by CIS Docker Benchmark guidelines 3.15 (Ensure tha
 
 \medskip
 
-In this section we will look at the multiple ways to misconfigure the socket and the dangers\cite{The-Dangers-Of-Docker-Sock} that comes with it.
+In this section we will look at the multiple ways to misconfigure the socket and the dangers~\cite{The-Dangers-Of-Docker-Sock} that comes with it.
 
 \subsubsection{Container Escape Using the Docker Socket}
-Giving containers access to the API (by mounting the socket as a volume) is a common practice, because it allows containers to monitor and analyze other containers. If the \lstinline{/var/run/docker.sock} is mounted as a volume to a container, the container has access to the API (even if the socket is mounted as a read-only volume\cite{The-Dangers-Of-Docker-Sock}\cite{Read-Only-Docker-Socket-Tweet}\cite{Read-Only-Docker-Socket-Hackernews}). This means the process in the container has full access to Docker on the host. This can be used to escape, because the container can create another container with arbitrary volumes and commands. It is even possible to create an interactive shell in other containers\cite{Escape-Socket-Shell}.
+Giving containers access to the API (by mounting the socket as a volume) is a common practice, because it allows containers to monitor and analyze other containers. If the \lstinline{/var/run/docker.sock} is mounted as a volume to a container, the container has access to the API (even if the socket is mounted as a read-only volume~\cite{The-Dangers-Of-Docker-Sock}~\cite{Read-Only-Docker-Socket-Tweet}~\cite{Read-Only-Docker-Socket-Hackernews}). This means the process in the container has full access to Docker on the host. This can be used to escape, because the container can create another container with arbitrary volumes and commands. It is even possible to create an interactive shell in other containers~\cite{Escape-Socket-Shell}.
 
 \medskip
 
@@ -46,7 +46,7 @@ When a container has access to \lstinline{/var/run/docker.sock} (i.e.\ when \lst
 
 \medskip
 
-Let's start a Postgres\footnote{\url{https://www.postgresql.org/}} database inside a Docker. From the documentation of the Postgres Docker image\footnote{\url{https://hub.docker.com/_/postgres}}, we know that we can provide a password using the \lstinline{POSTGRES_PASSWORD} environment variable. If we have access to another container which has access to the Docker API, we can read that password from the environment variable.
+Let's start a Postgres\footnote{\url{https://www.postgresql.org/}} database inside a Docker. From the documentation of the Postgres Docker image,\footnote{\url{https://hub.docker.com/_/postgres}} we know that we can provide a password using the \lstinline{POSTGRES_PASSWORD} environment variable. If we have access to another container which has access to the Docker API, we can read that password from the environment variable.
 
 \begin{lstlisting}[caption={Example extract secrets using the Docker API.},captionpos=b]
 (host)$ docker run --name database -e POSTGRES_PASSWORD=thisshouldbesecret -d postgres

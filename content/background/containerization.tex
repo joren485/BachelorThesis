@@ -46,7 +46,7 @@ Containerization software isolates processes running on a host from each other. 
 \end{figure}
 
 If we look at \autoref{fig:with-without-container}, we see two scenarios. \autoref{subfig:processes} is the normal way to run processes. The operating system starts processes that can communicate with other processes. Their view on the file system is the same.
-In \autoref{subfig:container} one of the processes runs inside a container. These processes cannot communicate with one another. If Process A looks at the files in \lstinline{/tmp}, it accesses a different part of the file system than when Process B looks at the files in \lstinline{/tmp}\footnote{Access to files on the host has to be explicitly given (as discussed in \autoref{subsection:data-persistence}).}. Process B can not even see that Process A exists.
+In \autoref{subfig:container} one of the processes runs inside a container. These processes cannot communicate with one another. If Process A looks at the files in \lstinline{/tmp}, it accesses a different part of the file system than when Process B looks at the files in \lstinline{/tmp}.\footnote{Access to files on the host has to be explicitly given (as discussed in \autoref{subsection:data-persistence}).} Process B can not even see that Process A exists.
 
 \medskip
 
@@ -63,7 +63,7 @@ Containers also make it possible to run multiple versions of the same software o
 
 \medskip
 
-For example, if we want to run an instance of Wordpress\footnote{A popular content management system to build websites with.}, we do not need to install all the Wordpress dependencies. We only need to download the image that the Wordpress developers created. The image contains all dependencies pre-installed.
+For example, if we want to run an instance of Wordpress,\footnote{A popular content management system to build websites with.} we do not need to install all the Wordpress dependencies. We only need to download the image that the Wordpress developers created. The image contains all dependencies pre-installed.
 
 If we want to test a newer version of Wordpress on the same host, we only have to run the different container on the same host. The incompatible dependencies of the two Wordpress instances are not a problem, because they see different parts of the file system and do not even see each other's processes.
 
@@ -154,4 +154,4 @@ If, for example, there exists a remote code execution\footnote{Remote code execu
 
 \medskip
 
-Because a container uses the same kernel and resources as the host, a \lstinline{root} exploit (i.e.\ an exploit that allows unprivileged users to escalate their privileges) can be just as effective inside as outside of the container, because the target (e.g.\ the kernel) is the same. CVE--2016--5195 (Dirty Cow)\footnote{\url{https://dirtycow.ninja/}} is a good example of an exploit that allows container escapes, because it attacks the kernel of the host.\cite{Dirty-Cow-Escape}
+Because a container uses the same kernel and resources as the host, a \lstinline{root} exploit (i.e.\ an exploit that allows unprivileged users to escalate their privileges) can be just as effective inside as outside of the container, because the target (e.g.\ the kernel) is the same. CVE--2016--5195 (Dirty Cow)\footnote{\url{https://dirtycow.ninja/}} is a good example of an exploit that allows container escapes, because it attacks the kernel of the host~\cite{Dirty-Cow-Escape}.

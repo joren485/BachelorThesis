@@ -46,7 +46,7 @@ If user permissions are incorrectly configured, an unprivileged user can access 
     An unprivileged process B accessing privileged data (in the image process A) using the Docker daemon.
 \end{figure}
 
-Because Docker needs a lot of kernel features to function properly, the Docker daemon needs to run as \lstinline{root}. Docker has many (powerful) features, which allows a user with permissions to use Docker to gain \lstinline{root} privileges. This is why the Docker documentation explicitly states ``only trusted users should be allowed to control your Docker daemon''\footnote{\url{https://docs.docker.com/engine/security/security/}}.
+Because Docker needs a lot of kernel features to function properly, the Docker daemon needs to run as \lstinline{root}. Docker has many (powerful) features, which allows a user with permissions to use Docker to gain \lstinline{root} privileges. This is why the Docker documentation explicitly states ``only trusted users should be allowed to control your Docker daemon''.\footnote{\url{https://docs.docker.com/engine/security/security/}}
 
 \medskip
 

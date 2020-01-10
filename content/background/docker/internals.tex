@@ -1,4 +1,5 @@
 \subsection{Docker Internals}\label{subsubsection:internals}
+\todo[inline]{Geert: Add more explanation about chroots}
 A Docker container actually is a combination of multiple features within the Linux kernel.
 Mainly \lstinline{cgroups}, \lstinline{namespaces} and \lstinline{OverlayFS}.
 
@@ -8,7 +9,7 @@ Control groups (\lstinline{cgroups}) are a way to limit resources (e.g.\ CPU and
 
 \medskip
 
-\lstinline{namespaces} are a way to isolate resources from processes. For example, if we add a process to a process \lstinline{namespace}, it can only see the processes in that \lstinline{namespace}. This allows processes to be isolated from each other. Linux supports the following \lstinline{namespaces} types\footnote{See the \lstinline{man page} of \lstinline{namespaces}.}:
+\lstinline{namespaces} are a way to isolate resources from processes. For example, if we add a process to a process \lstinline{namespace}, it can only see the processes in that \lstinline{namespace}. This allows processes to be isolated from each other. Linux supports the following \lstinline{namespaces} types:\footnote{See the \lstinline{man page} of \lstinline{namespaces}.}
 \begin{itemize}
     \item \lstinline{Cgroup}: To isolate processes from \lstinline{cgroup} hierarchies.
     \item \lstinline{IPC}: Isolates the inter-process communication. This, for example, isolates shared memory regions.

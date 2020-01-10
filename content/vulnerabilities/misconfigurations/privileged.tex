@@ -1,15 +1,15 @@
 \subsection{\texorpdfstring{\lstinline{--privileged}}{--privileged} Flag}\label{subsection:privileged}
 
-Docker has a special privileged mode\cite{Docker-in-Docker-blog}. This mode is enabled if a container is created with the \lstinline{--privileged} flag and it enables access to all host devices and kernel capabilities. This is a powerful mode and enables some useful features (e.g.\ building Docker images inside a Docker container). The downside of privileged mode is that all functionality of the kernel allows an attacker inside the container to escape and access the host.
+Docker has a special privileged mode~\cite{Docker-in-Docker-blog}. This mode is enabled if a container is created with the \lstinline{--privileged} flag and it enables access to all host devices and kernel capabilities. This is a powerful mode and enables some useful features (e.g.\ building Docker images inside a Docker container). The downside of privileged mode is that all functionality of the kernel allows an attacker inside the container to escape and access the host.
 
 \medskip
 
-An example of this, is abusing a feature in \lstinline{cgroups}\cite{CGroup-Docs}. Whenever a \lstinline{cgroup} is released due to an absence of any running processes, it is possible to run a command (called a \lstinline{release_agent}). It is possible to define such a \lstinline{release_agent} in a privileged docker. If the \lstinline{cgroup} is released, the command is run on the host\cite{TrailOfBits-Docker-Escape}.
+An example of this, is abusing a feature in \lstinline{cgroups}~\cite{CGroup-Docs}. Whenever a \lstinline{cgroup} is released due to an absence of any running processes, it is possible to run a command (called a \lstinline{release_agent}). It is possible to define such a \lstinline{release_agent} in a privileged docker. If the \lstinline{cgroup} is released, the command is run on the host~\cite{TrailOfBits-Docker-Escape}.
 
 \medskip
 
 \todo[inline]{Geert: Explain using line numbers}
-We can look at a proof of concept of this attack developed by security researcher Felix Wilhelm\cite{Felix-Wilhem-Tweet}.
+We can look at a proof of concept of this attack developed by security researcher Felix Wilhelm~\cite{Felix-Wilhem-Tweet}.
 \begin{lstlisting}[caption={Privileged container escape using \lstinline{cgroups}.},captionpos=b,label={listing:privileged-escape}]
 (host)$ docker run -it --rm --privileged ubuntu:latest bash
 (cont)# d=`dirname $(ls -x /s*/fs/c*/*/r* |head -n1)`
