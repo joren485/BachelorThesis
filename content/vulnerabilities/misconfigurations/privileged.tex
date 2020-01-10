@@ -8,6 +8,7 @@ An example of this, is abusing a feature in \lstinline{cgroups}\cite{CGroup-Docs
 
 \medskip
 
+\todo[inline]{Geert: Explain using line numbers}
 We can look at a proof of concept of this attack developed by security researcher Felix Wilhelm\cite{Felix-Wilhem-Tweet}.
 \begin{lstlisting}[caption={Privileged container escape using \lstinline{cgroups}.},captionpos=b,label={listing:privileged-escape}]
 (host)$ docker run -it --rm --privileged ubuntu:latest bash
@@ -22,4 +23,4 @@ The proof of concept in \autoref{listing:privileged-escape} first creates a new 
 
 \medskip
 
-The \lstinline{--privileged} flag is covered by two CIS Docker Benchmark guidelines. Guideline 5.4 (Ensure that privileged containers are not used) recommends to not create containers with privileged mode. 5.22 (Ensure that docker exec commands are not used with the privileged option) recommends to not execute commands in running containers (with \lstinline{docker exec}) in privileged mode.
+The \lstinline{--privileged} flag is covered by two CIS Docker Benchmark guidelines. Guideline 5.4 (Ensure that privileged containers are not used) recommends to not create containers with privileged mode. Guideline 5.22 (Ensure that docker exec commands are not used with the privileged option) recommends to not execute commands in running containers (with \lstinline{docker exec}) in privileged mode.

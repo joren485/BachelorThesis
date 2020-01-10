@@ -1,5 +1,5 @@
 \subsection{Capabilities}\label{misconfigurations:subsection:capabilities}
-As we saw in \autoref{protection-mechanisms:subsection:capabilities}, in order to perform privileged actions in the Linux kernel, a process needs the relevant \lstinline{capability}. Docker containers are started with minimal capabilities, but it is possible to add extra capabilities on runtime. Giving containers extra capabilities, gives the container permission to perform certain actions. Some of these actions allow Docker escapes. We will look at two such capabilities.
+As we saw in \autoref{protection-mechanisms:subsection:capabilities}, in order to perform privileged actions in the Linux kernel, a process needs the relevant \lstinline{capability}. Docker containers are started with minimal capabilities, but it is possible to add extra capabilities at runtime. Giving containers extra capabilities gives the container permission to perform certain actions. Some of these actions allow Docker escapes. We will look at two such capabilities in the following sections.
 
 \medskip
 
@@ -8,6 +8,7 @@ The CIS Docker Benchmark covers all of these problems in one guideline: 5.3 (Ens
 \subsubsection{\texorpdfstring{\lstinline{CAP_SYS_ADMIN}}{CAP SYS ADMIN}}\label{CAP_SYS_ADMIN}
 The Docker escape by Felix Wilhelm\cite{Felix-Wilhem-Tweet} we used in \autoref{subsection:privileged} needs to be run in privileged mode to work, but it can be rewritten to only need the permission to run \lstinline{mount}\cite{TrailOfBits-Docker-Escape}, which is granted by the \lstinline{CAP_SYS_ADMIN} capability.
 
+\todo[inline]{Geert: Explain using line numbers}
 \begin{lstlisting}[caption={Docker escape using \lstinline{CAP_SYS_ADMIN}.},captionpos=b]
 (host)$ docker run --rm -it --cap-add=CAP_SYS_ADMIN --security-opt apparmor=unconfined ubuntu /bin/bash
 (cont)# mkdir /tmp/cgrp

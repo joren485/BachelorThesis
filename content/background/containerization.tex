@@ -1,6 +1,6 @@
 \section{Containerization Software}\label{background:containerization}
 \todo[inline]{Add detailed figure with an application, dependencies, container, host, kernel etc.}
-Containerization software isolates processes running on a host from each other. A process in a container sees a different part of the host system than processes outside of the container. A process inside a container sees a different file system, network interfaces and users than processes outside of the container. Processes inside the container can only see other processes inside the container.
+Containerization software isolates processes running on a host from each other. A process in a container has a different view of the host system than processes outside of the container. A process inside a container has access to different files, network interfaces and users than processes outside of the container. Processes inside the container can only see other processes inside the container.
 
 \begin{figure}[ht]
     \centering
@@ -42,7 +42,7 @@ Containerization software isolates processes running on a host from each other. 
         \end{tikzpicture}
         \caption{One process in a container.}\label{subfig:container}
     \end{subfigure}
-    \caption{}\label{fig:with-without-container}
+    \caption{Running two processes with and without a container.}\label{fig:with-without-container}
 \end{figure}
 
 If we look at \autoref{fig:with-without-container}, we see two scenarios. \autoref{subfig:processes} is the normal way to run processes. The operating system starts processes that can communicate with other processes. Their view on the file system is the same.
@@ -53,7 +53,7 @@ In \autoref{subfig:container} one of the processes runs inside a container. Thes
 Process A and Process B see such a different part of the host system that to Process B it looks like it is running on a wholly different system.
 
 \subsection{Advantages of Containerization}
-Containers can be made into easily deployable packages (called images). These images only contain the necessary files for specific software to run. Other files, libraries and binaries are shared between the host operating system (the system running the container). This allows developers to create lightweight software packages containing only the necessary dependencies.
+Containers can be made into easily deployable packages (called images). These images only contain the necessary files for specific software to run. Other files, libraries and binaries are shared between the host operating system (the system running the container). This allows developers to create lightweight software distributions containing only the necessary dependencies.
 
 These images can be made to simulate a file system of a different Linux distribution. For example, if an application is specifically developed for CentOS and does not run on Ubuntu, it is possible to create an image that contains all the necessary CentOS-specific files and other dependencies. This image can then be run on a host running Ubuntu. To the application running inside a container that runs an instance of the image, the operating system is CentOS\@.
 
@@ -148,10 +148,10 @@ The software that manages the virtual machine is called a hypervisor. The hyperv
 Because containerization software shares many resources with the host, it is a lot faster and more flexible than virtualization. Where virtualization needs to start a whole new operating system, containerization only needs to start a single process.
 
 \subsection{The Impact of Containers on Security}
-A Docker container isolates software from the host, but does not change it. This means that vulnerabilities in software are not affected by Dockerizing that software. However, the impact of those vulnerabilities is decreased, because the vulnerability exists in an isolated environment.
+A container isolates software from the host, but does not change it. This means that vulnerabilities in software are not affected by running that software inside a container. However, the impact of those vulnerabilities is decreased, because the vulnerability exists in an isolated environment.
 
-If, for example, there exists a remote code execution\footnote{Remote code execution is a vulnerability where a malicious actor is able to execute arbitrary code on a vulnerable system.} (RCE) vulnerability in Wordpress. Running Wordpress in a Docker container does not fix the vulnerability. An attacker is still able to exploit it. But the attacker is far less likely to access the host system, because the exploited software is isolated from the host system because of Docker.
+If, for example, there exists a remote code execution\footnote{Remote code execution is a vulnerability where a malicious actor is able to execute arbitrary code on a vulnerable system.} (RCE) vulnerability in Wordpress, running Wordpress in a container does not fix the vulnerability. An attacker is still able to exploit it. But the attacker is far less likely to access the host system, because the exploited software is isolated from the host system because of containerization.
 
 \medskip
 
-Because a container uses the same kernel and resources as the host, a \lstinline{root} exploit (i.e.\ an exploit that allows unprivileged users to escalate their privileges) can be just as effective inside as outside of the container, because the target (e.g.\ the kernel) is the same. CVE--2016--5195(Dirty Cow)\footnote{\url{https://dirtycow.ninja/}} is a good example of an exploit that allows container escapes\cite{Dirty-Cow-Escape}, because it attacks the kernel of the host.
+Because a container uses the same kernel and resources as the host, a \lstinline{root} exploit (i.e.\ an exploit that allows unprivileged users to escalate their privileges) can be just as effective inside as outside of the container, because the target (e.g.\ the kernel) is the same. CVE--2016--5195 (Dirty Cow)\footnote{\url{https://dirtycow.ninja/}} is a good example of an exploit that allows container escapes, because it attacks the kernel of the host.\cite{Dirty-Cow-Escape}

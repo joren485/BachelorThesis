@@ -5,6 +5,7 @@
 \todo[inline]{Jos: How long will it remain useful/ up to date?}
 \todo[inline]{Jos: To what extent can this checklist be automated?}
 \todo[inline]{Jos: What are problems with automation?}
+\todo[inline]{Split into separate files}
 In \autoref{chapter:vulnerabilities} and \autoref{chapter:pentesting} we looked at common vulnerabilities and how to identify them. In this chapter we will summarize those into a checklist consisting of steps.
 
 This list is kept intentionally short and uses only Unix shell commands that can be run manually, to make it easy and quick to use. In \autoref{section:tools} we look at tools help automating certain enumeration or exploitation of vulnerabilities. These are however not necessary to use this checklist.
@@ -14,6 +15,7 @@ This list is kept intentionally short and uses only Unix shell commands that can
 The first steps (\autoref{section:checklist-detection}) are meant to detect whether we are running inside a container. If we know we are inside a container, we can look for vulnerabilities inside the container (see \autoref{section:checklist-vulnerabilities-container}). If we know we are not running inside a container, we can look for vulnerabilities on the host (see \autoref{section:checklist-vulnerabilities-host}).
 
 \section{Are We Running in a Container?}\label{section:checklist-detection}
+\todo[inline]{Geert: Change the title. Casing looks bad}
 If the answer to any of the following questions is yes, we are most likely running inside a container. For detailed information, see \autoref{subsection:detection}.
 
 \medskip

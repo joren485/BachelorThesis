@@ -1,15 +1,13 @@
 \section{Docker}\label{background:docker}
+\todo[inline]{Geert: Add reference about Docker growth}
 The concept of containerization has been around for a long time\footnote{\url{https://docs.freebsd.org/44doc/papers/jail/jail-9.html}}, but it only gained traction as a serious way to package, distribute and run software in the last few years. This is mostly because of Docker.
 
 \medskip
 
-Docker was released in 2013 and it does not only offer a way to containerize software, but also a way to distribute the containers. This enables creators of software (i.e.\ developers and organizations) to create and distribute packages that have no dependencies (besides Docker itself, of course). If we want to run a specific application, we only need to download the package that the developers of the application have created.
+Docker was released in 2013 and it does not only offer a way to containerize software, but also a way to distribute the containers. This enables creators of software (i.e.\ developers and organizations) to create and distribute packages that have no dependencies. If we want to run a specific application, we only need to download the package that the developers of the application have created.
 
 This allows for much faster development and deployment, because dependencies and installation of software are no longer a concern.
 
-\medskip
-
-Docker also makes it possible to run multiple versions of the same software on the same host, without creating a dependencies nightmare. For example, if someone wants to run a Wordpress 4 website and Wordpress 5 website, they only need to create two Wordpress containers. Wordpress 5 depends on much newer libraries that might not be compatible with Wordpress 4. Because the containers are isolated from one another, their conflicting dependencies are not a problem.
 \input{content/background/docker/concepts}
 \input{content/background/docker/volumes}
 \input{content/background/docker/network}

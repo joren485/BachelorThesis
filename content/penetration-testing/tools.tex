@@ -38,15 +38,15 @@ Dockscan\footnote{\url{https://github.com/kost/dockscan}} checks a host and the 
 \end{itemize}
 
 \subsection{Docker Image Analysis Tools}\label{subsection:image-analysis-tools}
-Most Docker security analysis tools focus on static analysis of Docker images. They look for software and libraries inside the images and match these against known vulnerability databases. Some also look for sensitive information (e.g.\ passwords) that might be stored inside the image. In \autoref{appendix:static-analysis-list} you will find a list of available Docker image analysis tools.
+Most Docker security analysis tools focus on static analysis of Docker images. They look for software and libraries inside the images and match these against known vulnerability databases. Some also look for sensitive information (e.g.\ passwords) that might be stored inside the image. \autoref{appendix:static-analysis-list} lists the available Docker image analysis tools.
 
 Although these tools are more useful from a defensive perspective (e.g.\ scanning images for problems before they are deployed), they might reveal vulnerabilities or sensitive information during a penetration test.
 
 \subsection{Exploitation Tools}\label{subsection:offensive-tools}
 There are tools that specifically focus on the exploitation of vulnerabilities. These tools focus on escaping containers or escalating privileges on the host. They can be useful during a penetration test, because they will automate exploitation of specific vulnerabilities.
 
-\subsubsection{Break out of the Box}
-Break out of the Box\footnote{\url{https://github.com/brompwnie/botb}} (BOtb) is a tool that identifies and exploits common container escape vulnerabilities. It is able to do the following escapes:
+\subsubsection{Break Out of the Box}
+Break Out of the Box\footnote{\url{https://github.com/brompwnie/botb}} (BOtB) is a tool that identifies and exploits common container escape vulnerabilities. It is able to do the following escapes:
 
 \begin{itemize}
     \item If BOtB finds the Docker socket mounted inside the container (which we manually do in \autoref{subsubsection:searching-socket}), BOtB can escape the container using the same technique we discuss in \autoref{subsection:api}.

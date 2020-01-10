@@ -1,5 +1,5 @@
 \subsection{Docker Concepts}
-Docker is made up of a few concepts: daemon, images, containers and \lstinline{Dockerfile}s.
+Docker is made up of a few concepts: daemons, images, containers and \lstinline{Dockerfile}s. These will be covered in the following sections.
 
 \subsubsection{Docker Daemon}
 The daemon is a service (a privileged program that runs in the background) that runs (as \lstinline{root}\footnote{An experimental rootless mode is being worked on.}\footnote{\url{https://github.com/docker/engine/blob/master/docs/rootless.md}}) on the host. It manages all things related to Docker on that machine. For example, if a user needs to restart a container, the Docker daemon is the process that restarts the container. It is good to note that, because everything related to Docker is handled by the daemon and Docker has access to all resources of the host (because it runs as \lstinline{root}), being able to use Docker is equivalent to having \lstinline{root} access to the host\footnote{\url{https://docs.docker.com/engine/security/security/}}.
