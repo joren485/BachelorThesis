@@ -8,12 +8,11 @@ The CIS Docker Benchmark covers all of these problems in one guideline: 5.3 (Ens
 \subsubsection{\texorpdfstring{\lstinline{CAP_SYS_ADMIN}}{CAP SYS ADMIN}}\label{CAP_SYS_ADMIN}
 The Docker escape by Felix Wilhelm~\cite{Felix-Wilhem-Tweet} we used in \autoref{subsection:privileged} needs to be run in privileged mode to work, but it can be rewritten to only need the permission to run \lstinline{mount}~\cite{TrailOfBits-Docker-Escape}, which is granted by the \lstinline{CAP_SYS_ADMIN} capability.
 
-\todo[inline]{Geert: Explain using line numbers}
-\begin{lstlisting}[caption={Docker escape using \lstinline{CAP_SYS_ADMIN}.},captionpos=b]
+\begin{lstlisting}[numbers=left, escapechar=@, caption={Docker escape using \lstinline{CAP_SYS_ADMIN}.},captionpos=b]
 (host)$ docker run --rm -it --cap-add=CAP_SYS_ADMIN --security-opt apparmor=unconfined ubuntu /bin/bash
-(cont)# mkdir /tmp/cgrp
-(cont)# mount -t cgroup -o rdma cgroup /tmp/cgrp
-(cont)# mkdir /tmp/cgrp/x
+(cont)# mkdir /tmp/cgrp@\label{line:capabilities:cgrp}@
+(cont)# mount -t cgroup -o rdma cgroup /tmp/cgrp@\label{line:capabilities:mount-cgrp}@
+(cont)# mkdir /tmp/cgrp/x@\label{line:capabilities:x}@
 (cont)# echo 1 > /tmp/cgrp/x/notify_on_release
 (cont)# host_path=`sed -n 's/.*\perdir=\([^,]*\).*/\1/p' /etc/mtab`
 (cont)# echo "$host_path/cmd" > /tmp/cgrp/release_agent
@@ -24,7 +23,7 @@ The Docker escape by Felix Wilhelm~\cite{Felix-Wilhem-Tweet} we used in \autoref
 (cont)# cat /output
 \end{lstlisting}
 
-Unlike before, instead of relying on \lstinline{--privileged} to give us write access to a \lstinline{cgroup}, we just need to mount our own. This gives us exactly the same scenario as we saw in \autoref{subsection:privileged}. We use a \lstinline{release_agent} to run code on the host. The only difference being that we have to do some manual work ourselves.
+Unlike before, instead of relying on \lstinline{--privileged} to give us write access to a \lstinline{cgroup}, we just need to mount our own. On \autoref{line:capabilities:cgrp} and \autoref{line:capabilities:mount-cgrp} a new \lstinline{cgroup} \lstinline{cgrp} is created and mounted to \lstinline{/tmp/cgrp}. Now we have a \lstinline{cgroup} that we have write access too, we can perform the same exploit as in \autoref{subsection:privileged}.
 
 \subsubsection{\texorpdfstring{\lstinline{CAP_DAC_READ_SEARCH}}{CAP DAC READ SEARCH}}
 Before Docker 1.0.0 \lstinline{CAP_DAC_READ_SEARCH} was added to the default capabilities that a containers are given. But this capability allows a process to escape its the container~\cite{Docker-Shocker-Seclists}. A process with \lstinline{CAP_DAC_READ_SEARCH} is able to bruteforce the internal index of files outside of the container. To demonstrate this attack a proof of concept exploit was released~\cite{Docker-Shocker}~\cite{Docker-Shocker-Analysis}. This exploit has been released in 2014, but still works on containers with the \lstinline{CAP_DAC_READ_SEARCH} capability.
