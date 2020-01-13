@@ -1,6 +1,9 @@
 \subsection{Readable Configuration Files}\label{subsection:config-files}
-\todo[inline]{Dave: I would ad a conclusion to this part. something like: Implementers and assesors should take these files in considoration as this could result in a}
 Because setting up environments with Docker can be quite complex, many Docker users use programs (e.g. \lstinline{docker-compose}) to save all necessary Docker settings to configuration files to remove the need of repeating steps and configurations. These configuration files often contain sensitive information. If the permissions on these files are misconfigured, users that should not be able to read the files, might be able to do so.
+
+Docker users and penetration testers should pay extra attention to these files, because they could easily lead to secrets being leaked.
+
+\medskip
 
 Two common files that might contain sensitive information are \lstinline{.docker/config.json} and \lstinline{docker-compose.yaml}.
 
@@ -13,4 +16,4 @@ When pushing images to a registry, users need to login to the registry to authen
 It would be quite annoying to login every time a user wants to push and image. That is why \lstinline{.docker/config.json} caches those credentials. These are stored in Base64 encoding in the home directory of the user by default.\footnote{\url{https://docs.docker.com/engine/reference/commandline/login/}} An attacker with access to the file can use the credentials to login and push malicious Docker images~\cite{Docker-Credentials-Metasploit}.
 
 \subsubsection{\texorpdfstring{\lstinline{docker-compose.yaml}}{docker-compose.yaml}}
-\lstinline{docker-compose.yaml} files often contain secrets (e.g.\ passwords and API keys), because all information that should be passed to a container is saved in the \lstinline{docker-compose.yaml} file. Please note that both \lstinline{yaml} and \lstinline{yml} are valid extensions.
+\lstinline{docker-compose.yaml} files often contain secrets (e.g.\ passwords and API keys), because all information that should be passed to a container is saved in the \lstinline{docker-compose.yaml} file.\footnote{Both \lstinline{yml} and \lstinline{yaml} are valid YAML extensions, but \lstinline{yaml} is the official extension.}
