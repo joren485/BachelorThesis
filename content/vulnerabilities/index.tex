@@ -4,9 +4,11 @@ Because Docker is so popular, many security researchers are trying to find and d
 
 \medskip
 
-Software bugs and misconfigurations can both be security problems, but they differ in who made the mistake. A \emph{bug} is a problem in a program itself. For example, a buffer overflow is a bug. The problem lies solely in the program itself. To fix it, the code of the program needs to be changed.
+Software bugs and misconfigurations can both be security problems, but they differ in who made the mistake.
 
-\emph{Misconfigurations}, on the other hand, are security problems that come from the wrong use of a program. The program is incorrectly configured and that creates a situation that might be exploitable for an attacker. For example, a world-readable file containing passwords is a misconfiguration. To fix a misconfiguration, the user should change the configuration of the program. The developers of the program can only recommend users to configure it correctly.
+A \emph{bug} is a problem in a program itself. For example, a buffer overflow is a bug. The problem lies solely in the program itself. To fix it, the code of the program needs to be changed.
+
+\emph{Misconfigurations}, on the other hand, are security problems that come from the wrong use of a program. The program is incorrectly configured and that creates a situation that might be exploitable for an attacker. A publicly available debugging console on a website\footnote{This is how Patreon got hacked a few years ago. See \url{https://labs.detectify.com/2015/10/02/how-patreon-got-hacked-publicly-exposed-werkzeug-debugger/}} or a world-readable file containing passwords are examples of misconfigurations. To fix a misconfiguration, the user should change the configuration of the program or their infrastructure. The developers of the program can only recommend correct configuration that the users should implement.
 
 \medskip
 
