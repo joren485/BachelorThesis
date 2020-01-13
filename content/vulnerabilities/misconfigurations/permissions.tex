@@ -29,7 +29,7 @@ In \autoref{listing:docker-group} we first check our permissions. We do not have
 
 This is covered by the CIS Docker Benchmark guideline 1.2.2 (Ensure only trusted users are allowed to control Docker daemon).
 
-\subsubsection{The World Readable and Writable Docker Socket}
+\subsubsection{World Readable and Writable Docker Socket}
 By default, only \lstinline{root} and every user in the \lstinline{docker} group have access to Docker, because they have read and write access to the Docker socket. However, some administrators set the permissions to read and write for all users (i.e. \lstinline{666}), giving all users access to the Docker daemon.
 
 \begin{lstlisting}[caption={All users can use Docker if they have read and write access to the Socket},captionpos=b,label={listing:read-write-socket}]
@@ -41,7 +41,11 @@ srw-rw-rw- 1 root docker 0 Dec 20 13:16 /var/run/docker.sock
 admin:$6$VOSV5AVQ$jHWxAVAUgl...:18142:0:99999:7:::
 \end{lstlisting}
 
-In \autoref{listing:read-write-socket}, we see that we are not a member of the Docker group, but because every user has read and write access (i.e.\ the read and write permissions are set for \lstinline{other}) we are still able to use Docker.
+In \autoref{listing:read-write-socket}, we see that we are not a member of the Docker group, but because every user has read and write access (i.e.\ the read and write permissions are set for \lstinline{other}) to the Docker Socket we are still able to use Docker.
+
+\medskip
+
+This is covered by the CIS Docker Benchmark guideline 3.4 (Ensure that docker.socket file permissions are set to 644 or more restrictive).
 
 \subsubsection{\texorpdfstring{\lstinline{setuid}}{setuid} Bit}\label{subsubsection:setuid}
 Another way system administrators might skip proper access management is to set the \lstinline{setuid} bit on the \lstinline{docker} binary.
