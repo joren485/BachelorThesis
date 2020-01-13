@@ -7,13 +7,14 @@ The following conventions are used to represent the different contexts in which 
     \item If a command is executed by an unprivileged user, it is prefixed by ``\lstinline{$}''.
     \item If a command is executed by a privileged user (i.e. \lstinline{root}), it is prefixed by ``\lstinline{#}''.
     \item Long or irrelevant output of commands is replaced by ``\ldots''.
+    \item In order to improve legibility, commands shown use the abbreviated command arguments (where possible) and quoted argument values.
 \end{itemize}
 
 \medskip
 
-In \autoref{listing:notation:example1}, an unprivileged user executes the command ``\lstinline{echo Hello, World!}'' on a host system.
+In \autoref{listing:notation:example1}, an unprivileged user executes a command on a host system.
 \begin{lstlisting}[caption={Shell command notation example 1.}, captionpos=b, label={listing:notation:example1}]
-(host)$ echo Hello, World!
+(host)$ echo "Hello, World!"
 Hello, World!
 \end{lstlisting}
 
@@ -24,20 +25,5 @@ In \autoref{listing:notation:example2}, the \lstinline{root} user executes two c
 (cont)# uname -r
 5.3.8-arch1-1
 (cont)# cat /proc/cpuinfo
-...
-\end{lstlisting}
-
-\medskip
-
-\todo[inline]{Geert: Deze persoonlijke mening voegt weinig toe aan de inhoud. Je kunt volstaan met een zin als "in order to improve legibility, commands shown in listings will use the abbreviated docker syntax." Dan kun je zelfs listings 2.3 en 2.4 weglaten.}
-We will look at many examples using shell commands. Although I prefer using non-abbreviated arguments and quoted values (see \autoref{listing:notation:example3}) to make looking up the meaning of an argument (abbreviation) unnecessary. Throughout this thesis we will use abbreviated non-quoted arguments (see \autoref{listing:notation:example4}) where possible to make the commands smaller and more readable.
-
-\begin{lstlisting}[caption={Abbreviated non-quoted command example.}, captionpos=b, label={listing:notation:example3}]
-(host)$ docker run --tty="true" --interactive="true" --rm --volume="/:/host/" ubuntu:latest
-...
-\end{lstlisting}
-
-\begin{lstlisting}[caption={Non-abbreviated quoted command example.}, captionpos=b, label={listing:notation:example4}]
-(host)$ docker run -it --rm -v /:/host/ ubuntu:latest /bin/bash}
 ...
 \end{lstlisting}
