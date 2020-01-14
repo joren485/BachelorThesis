@@ -1,5 +1,7 @@
 \section{Container Escapes}\label{subsection:container-escape}
-One of the most common type of vulnerability is the possibility for a process running in a container to escape the container and access data (i.e.\ execute commands) on the host.
+
+In a Container Escape, an attacker has gained access to a container and tries to escape its isolation. When an attacker gains access to a container, they have gained a foothold inside their target, but that foothold is (like everything else inside the container) isolated from the host. Container Escapes focus on attacking and bypassing the isolation and protection mechanics that separate the container from the host.
+
 \begin{figure}[ht]
     \centering
     \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
@@ -36,8 +38,9 @@ One of the most common type of vulnerability is the possibility for a process ru
         \draw (310,20) -- (395,20) -- (395,50) -- (310,50) -- cycle ;
         \draw (352.5,35) node {Process D};
 
-        % Line
+        % Lines
         \draw [latex-,very thick] (190,55) -- (205,35) ;
+        \draw [-latex, very thick] (290,35) -- (310,35) ;
     \end{tikzpicture}
     \caption{}\label{fig:container-escape}
     \medskip
@@ -45,15 +48,17 @@ One of the most common type of vulnerability is the possibility for a process ru
     A process (Process C) running inside a container accessing data on the host (that it should not be able to access), in this case Process B.
 \end{figure}
 
+In \autoref{fig:container-escape} we see two variants of Container Escapes. We see Process C accessing Process B, which is a process that runs directly on the host. We also see Process C accessing Process D, which is inside another container. In both cases Process C escapes the isolation of the container and accesses data that it should not have access too.
+
+In the first variant, Process C escapes the container to access data that it should not have access to on the host.
+
+In the second variant, Process C escapes from its container and accesses another container. Containers should not only be isolated from the host, but also from other containers. This allows multiple containers with sensitive data to be run on the same host without them being able to access each other's data.
+
+
 \medskip
 
-An example attack scenario would be a company that offers a Platform as a Service (PaaS) products that allows customers to run Docker containers on their infrastructure.\footnote{This is actually quite common nowadays. All major computing providers offer such a service.} If it is possible for the attacker to submit a Docker image with a malicious process that escapes the container and access the underlying infrastructure, they could access other containers or other internal resources. That would, obviously, be a big problem for the company.
+An example attack scenario would be a company that offers Platform as a Service (PaaS) products that allows customers to run Docker containers on their infrastructure.\footnote{This is quite common nowadays. All major computing providers offer such a service.} If it is possible for the attacker to submit a Docker image with a malicious process that escapes the container and access the underlying infrastructure, they could access other containers or other internal resources. That would, obviously, be a big problem for the company.
 
 \medskip
 
-A lot of the known container escapes are possible because the container can access some files on the host. For example, if Docker mounts some necessary directories in \lstinline{/proc} by default (which would be a vulnerability) or if sensitive data is mounted as a volume (which would be a misconfiguration).
-
-\medskip
-
-It should be noted that an exploit that allows someone to escape from a Linux \lstinline{namespace} is essentially a container escape exploit, because Docker relies heavily on \lstinline{namespaces} for isolation (see \autoref{subsubsection:internals}). CVE--2017--7308~\cite{CVE-2017-7308} is a good example of this.
-
+It should be noted that an exploit that allows someone to escape from a Linux \lstinline{namespace} is essentially a Container Escape exploit, because Docker relies heavily on \lstinline{namespaces} for isolation (see \autoref{subsubsection:internals}). CVE--2017--7308~\cite{CVE-2017-7308} is a good example of this.

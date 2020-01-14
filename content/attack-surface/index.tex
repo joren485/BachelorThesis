@@ -1,16 +1,68 @@
-\chapter{Attack Surface \& Attack Models}\label{chapter:attack-surface-models}
-\todo[inline]{Improve models a lot}
-\todo[inline]{Rename this chapter}
-\todo[inline]{Attack vs attacker models}
-Because Docker is more of an ecosystem than a single process, it has quite a large attack surface. This attack surface consists of multiple attacker models.
+\chapter{Attacker Models}\label{chapter:attack-surface-models}
+When discussing containers make the distinction between two perspectives: \emph{inside} a container and \emph{outside} a container.
+
+When \emph{inside} a container, we see the container like a process that is running inside that container. That process (and thus our viewpoint) has been isolated from the host and can only see files and resources specific to that container. This means that we are able to execute commands, but only inside the container.
+
+When \emph{outside} a container, we see the host and containers running on the host like a process that is running on the host. We are able to see everything on that host (that we have access too). For example, we are able to see the Docker daemon process and all its child processes. We are able to execute commands directly on the host. We are able to use Docker (e.g.\ interact with containers) if we have permission to use Docker (see \autoref{background:docker-socket}).
 
 \medskip
 
-In this chapter we will look at three distinct attacker models. The first two, container escapes (\autoref{subsection:container-escape}) and container-to-container attacks (\autoref{attacker-model:container-to-container-attacks}), are attacker models from inside a container. The last, Docker daemon attacks (\autoref{attacker-model:daemon-attacks}), is on a host that runs Docker.
+We can think of these perspectives as attacker models. An attacker model is a general representation of a how an attacker would attack a specific system. Because we split containers into two perspectives, we see two attacker models.
+
+We can think of the first perspective (inside a container) as an attacker model where an attacker has gained access to a container. The attacker is able to execute commands inside the container and has access to everything inside the container. Because the attacker will mostly focus on escaping the isolation that the container brings, we call this type of attack a \emph{Container Escape}. We further discuss Container Escapes in \autoref{subsection:container-escape}.
+
+We can think of the second perspective (outside a container) as an attacker model where the attacker has unprivileged access to a host. The attacker is able to execute commands on the host, but does not have access to everything. Because the attacker will use Docker (specifically the Docker daemon) on the host to access, we call this type of attack \emph{Docker Daemon Attack}. We further discuss Daemon Attacks in \autoref{attacker-model:daemon-attacks}
+
+Throughout this thesis we will always make the distinction between these attacker models.
 
 \medskip
 
-Images are added to clarify each attacker model we look at in this chapter. We see the following processes pictured in the images.
+To clarify the attacker models, we will take a look at the image in \autoref{fig:attacker-model-empty} with arrows to visualize what is attacking what.
+
+\begin{figure}[ht]
+    \centering
+    \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+        % Host Rectangle
+        \draw (0,100) -- (400,100) -- (400,130) -- (0,130) -- cycle ;
+        \draw (200, 115) node {Host};
+
+        %Docker Daemon Rectangle
+        \draw (200,75) -- (400,75) -- (400,95) -- (200,95) -- cycle ;
+        \draw (300,85) node {Docker Daemon};
+
+        % Process A Rectangle
+        \draw (0,40) -- (85,40) -- (85,70) -- (0,70) -- cycle ;
+        \draw (42.5,55) node {Process A};
+
+        % Process B Rectangle
+        \draw (105,40) -- (190,40) -- (190,70) -- (105,70) -- cycle ;
+        \draw (147.5,50) node {Process B};
+        \draw (147.5,62.5) node {{\footnotesize (unprivileged)}};
+
+        %Container Process C Rectangle
+        \draw (200,0) -- (295,0) -- (295,70) -- (200,70) -- cycle ;
+        \draw (247.5,10) node {Container};
+
+        %% Process C Rectangle
+        \draw (205,20) -- (290,20) -- (290,50) -- (205,50) -- cycle ;
+        \draw (247.5,35) node {Process C};
+
+        %Container Process D Rectangle
+        \draw (305,0) -- (400,0) -- (400,70) -- (305,70) -- cycle ;
+        \draw (352.5,10) node {Container};
+
+        %% Process D Rectangle
+        \draw (310,20) -- (395,20) -- (395,50) -- (310,50) -- cycle ;
+        \draw (352.5,35) node {Process D};
+
+    \end{tikzpicture}
+    \caption{}\label{fig:attacker-model-empty}
+    \medskip
+    \small
+    Two processes running directly on a host and two processes running inside Docker containers. 
+\end{figure}
+
+We see the following processes pictured in the images:
 \begin{enumerate}[A.]
     \item A standard (privileged) process running directly on the host.
     \item A standard unprivileged process running directly on the host.
@@ -19,5 +71,4 @@ Images are added to clarify each attacker model we look at in this chapter. We s
 \end{enumerate}
 
 \input{content/attack-surface/container-escape}
-\input{content/attack-surface/container-to-container}
 \input{content/attack-surface/daemon-container-attack}

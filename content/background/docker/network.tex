@@ -12,3 +12,7 @@ Specifying which ports on the host are routed to which ports on the container is
 \end{lstlisting}
 
 The first command creates a Docker image using the \lstinline{Dockerfile} and we then create (and start) a container from that image. We ``publish'' port \lstinline{8000} on the host to port \lstinline{80} of the container. This means that, while the container is running, all traffic from port \lstinline{8000} on the host is routed to port \lstinline{80} inside the container.
+
+\medskip
+
+By default, all Docker containers are added to the same internal network. This means that (by default) all Docker containers can reach each other over the network. This differs from the isolation Docker uses for other \lstinline{namespaces}. In the other \lstinline{namespaces}, Docker isolates containers from the host and from other containers. This difference in design can lead to dangerous misconfigurations, because developers may believe that Docker containers are completely isolated from each other (including the network).
