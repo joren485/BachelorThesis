@@ -9,9 +9,9 @@ When \emph{outside} a container, we see the host and containers running on the h
 
 We can think of these perspectives as attacker models. An attacker model is a general representation of a how an attacker would attack a specific system. Because we split containers into two perspectives, we see two attacker models.
 
-We can think of the first perspective (inside a container) as an attacker model where an attacker has gained access to a container. The attacker is able to execute commands inside the container and has access to everything inside the container. Because the attacker will mostly focus on escaping the isolation that the container brings, we call this type of attack a \emph{Container Escape}. We further discuss Container Escapes in \autoref{subsection:container-escape}.
+We can think of the first perspective (inside a container) as an attacker model where an attacker has gained access to a container. The attacker is able to execute commands inside the container and has access to everything inside the container. Because the attacker will mostly focus on escaping the isolation that the container brings, we call this type of attack a \emph{container escape}. We further discuss container escapes in \autoref{subsection:container-escape}.
 
-We can think of the second perspective (outside a container) as an attacker model where the attacker has unprivileged access to a host. The attacker is able to execute commands on the host, but does not have access to everything. Because the attacker will use Docker (specifically the Docker daemon) on the host to access, we call this type of attack \emph{Docker Daemon Attack}. We further discuss Daemon Attacks in \autoref{attacker-model:daemon-attacks}
+We can think of the second perspective (outside a container) as an attacker model where the attacker has unprivileged access to a host. The attacker is able to execute commands on the host, but does not have access to everything. Because the attacker will use Docker (specifically the Docker daemon) on the host to access, we call this type of attack \emph{Docker daemon attack}. We further discuss Docker daemon attacks in \autoref{attacker-model:daemon-attacks}
 
 Throughout this thesis we will always make the distinction between these attacker models.
 
