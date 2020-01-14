@@ -1,0 +1,38 @@
+\section{Finding Vulnerabilities in Containers}\label{section:checklist-vulnerabilities-container}
+The following questions and steps are meant to identify interesting parts and weak spots inside containers. For detailed information, see \autoref{subsection:testing-container}.
+
+\begin{itemize}
+    \item \textbf{What is the current user?} (see \autoref{subsubsection:user-enumeration})\\
+    Execute ``\lstinline{id}'' to see what the current user is and what groups it is in.
+
+    \item \textbf{Which users are available on the system?} (see \autoref{subsubsection:user-enumeration})\\
+    Read \lstinline{/etc/passwd} to see what users are available.
+
+    \item \textbf{What is the operating system of the container?} (see \autoref{subsubsection:idenitfy-container-os})\\
+    Read \lstinline{/etc/os-release} to get information about the operating system.
+
+    \item \textbf{Which processes are running?} (see \autoref{subsubsection:idenitfy-container-os})\\
+    Execute ``\lstinline{ps aux}'' to view all processes.
+
+    \item \textbf{What is the host operating system?} (see \autoref{subsubsection:identify-host-os})\\
+    Execute ``\lstinline{uname -a}'' to get information about the kernel and the underlying host operating system.
+
+    \item \textbf{Which capabilities do the processes in the container have?} (see \autoref{subsubsection:container:capabilities})\\
+    Get the current capabilities value by running ``\lstinline{grep CapEff /proc/self/status}'' and decode it with ``\lstinline{capsh --decode=value}''. \lstinline{capsh} can be run on a different system.
+
+    \item \textbf{Is the container running in privileged mode?}
+    \\(see \autoref{subsubsection:container:privileged})\\
+    If the \lstinline{CapEff} value of the previous step equals \lstinline{0000003fffffffff}, the container is running in privileged mode and we are able to escape it (see \autoref{subsection:privileged}).
+
+    \item \textbf{What volumes are mounted?} (see \autoref{subsubsection:volumes})\\
+    Read \lstinline{/proc/mounts} to see all mounts including the volumes.
+
+    \item \textbf{Is there sensitive information stored in environment variables?} (see \autoref{pentest:container:env-vars})\\
+    The ``\lstinline{env}'' command will list all environment variables. We should check these for sensitive information.
+
+    \item \textbf{Is the Docker Socket mounted inside the container?} (see \autoref{subsubsection:searching-socket})\\
+        Check \lstinline{/proc/mounts} to see if \lstinline{docker.sock} (or some similar named socket) is mounted inside the container. \lstinline{/run/docker.sock} is a common mount point. If we find it, we can escape the container and interact with the Docker daemon on the host.
+
+    \item \textbf{What hosts are reachable on the network?} (see \autoref{subsubsection:network-scan})\\
+    If possible, use \lstinline{nmap} to scan the local network for reachable hosts. The IPv4 address of the container can be found in \lstinline{/etc/hosts}.
+\end{itemize}

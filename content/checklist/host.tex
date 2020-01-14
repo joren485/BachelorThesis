@@ -1,0 +1,37 @@
+\section{Finding Vulnerabilities on the Host}\label{section:checklist-vulnerabilities-host}
+The following questions and steps are meant to identify interesting parts and weak spots on hosts running Docker. For detailed information, see \autoref{subsection:testing-host}.
+
+\begin{itemize}
+    \item \textbf{What is the version of Docker?} (see \autoref{subsubsection:version})\\
+    Run ``\lstinline{docker --version}'' to find the version of Docker. We will need to check if there are any known software related bugs (\autoref{section:bugs}) in this version of Docker. We can find relevant CVEs in the National Vulnerability Database.\footnote{\url{https://nvd.nist.gov/}}
+
+    \item \textbf{Run Docker Bench for Security} (see \autoref{tools:bench})\\
+        Run Docker Bench for Security\footnote{\url{https://github.com/docker/docker-bench-security}} to quickly see what CIS Docker Benchmark guidelines are not being followed.
+
+    \item \textbf{Which users are able to interact with the Docker socket?} (see \autoref{subsubsection:docker-permissions-host})\\
+    Execute ``\lstinline{ls -l /var/run/docker.sock}'' to see the owner and group of \lstinline{/var/run/docker.sock} and which users have read and write access to it. The owner and every user in the group is allowed to use Docker.
+
+    \item \textbf{Who is in the \lstinline{docker} group?} (see \autoref{subsubsection:docker-permissions-host})\\
+    Check which users are in the group identified in the previous step (by default \lstinline{docker}) by executing ``\lstinline{grep docker /etc/group}''.
+
+    \item \textbf{Is the \lstinline{setuid} bit set on the Docker client binary?} (see \autoref{subsubsection:docker-permissions-host})\\
+    Check the permissions (including whether the \lstinline{setuid} bit is set) of the Docker binary by executing ``\lstinline{ls -l $(which docker)}''.
+
+    \item \textbf{What images are available?} (see \autoref{subsubsection:images-containers})\\
+    List the available images by running ``\lstinline{docker images -a}''.
+
+    \item \textbf{What containers are available?} (see \autoref{subsubsection:images-containers})\\
+    List all containers (running and stopped) by running ``\lstinline{docker ps -a}''.
+
+    \item \textbf{How is the Docker daemon started?} (see \autoref{subsubsection:configuration})\\
+    Check configuration files (e.g. \lstinline{/usr/lib/systemd/system/docker.service} and \lstinline{/etc/docker/daemon.json}) for information on how the Docker daemon is started.
+
+    \item \textbf{Do any \lstinline{docker-compose.yaml} files exist?} (see \autoref{subsection:config-files} and \autoref{subsubsection:configuration})\\
+    Find all \lstinline{docker-compose.yaml} files using ``\lstinline{find / -name "docker-compose.*"}''.
+
+    \item \textbf{Do any \lstinline{.docker/config.json} files exist?} (see \autoref{subsection:config-files} and \autoref{subsubsection:configuration})\\
+    Read the \lstinline{config.json} files in all directories by running ``\lstinline{cat /home/*/.docker/config.json}''.
+
+    \item \textbf{Are the \lstinline{iptables} rules set for both the host and the containers?} (see \autoref{subsubsection:iptables-host})\\
+    List the \lstinline{iptables} by running ``\lstinline{iptables -vnL}'' and ``\lstinline{iptables -t filter -vnL}''.
+\end{itemize}

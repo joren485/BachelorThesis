@@ -1,0 +1,24 @@
+\section{Are We Running in a Container?}\label{section:checklist-detection}
+\todo[inline]{Geert: Change the title. Casing looks bad}
+If the answer to any of the following questions is yes, we are most likely running inside a container. For detailed information, see \autoref{subsection:detection}.
+
+\medskip
+
+If we are running inside a container, see \autoref{section:checklist-vulnerabilities-container}. If not, please see \autoref{section:checklist-vulnerabilities-host}.
+
+\begin{itemize}
+    \item \textbf{Does \lstinline{/.dockerenv} exists?} (see \autoref{subsubsection:dockerenv})\\
+    Execute ``\lstinline{ls /.dockerenv}'' to see if \lstinline{/.dockerenv} exists.
+
+    \item \textbf{Does \lstinline{/proc/1/cgroup} contain ``\lstinline{/docker/}''?} (see \autoref{subsubsection:detection:cgroup})\\
+    Execute ``\lstinline{grep '/docker/' /proc/1/cgroup}'' to find all lines in \lstinline{/proc/1/cgroup} containing ``\lstinline{/docker/}''.
+
+    \item \textbf{Are there fewer than 5 processes?} (see \autoref{subsubsection:processes})\\
+    Execute ``\lstinline{ps aux}'' to view all processes.
+
+    \item \textbf{Is the process with process id 1 a common initial process?} (see \autoref{subsubsection:processes})\\
+        Execute ``\lstinline{ps -p1}'' to view the process with process id 1 and check if it is a common initial process (.e.g.\ \lstinline{systemd} or \lstinline{init}).
+
+    \item \textbf{Are common libraries and binaries not present on the system?} (see \autoref{subsubsection:binaries})\\
+    We can use the \lstinline{which} command to find available binaries. For example, ``\lstinline{which sudo}'' will tell us if the \lstinline{sudo} binary is available.
+\end{itemize}
