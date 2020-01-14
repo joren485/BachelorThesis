@@ -5,8 +5,8 @@ The following questions and steps are meant to identify interesting parts and we
     \item \textbf{What is the version of Docker?} (see \autoref{subsubsection:version})\\
     Run ``\lstinline{docker --version}'' to find the version of Docker. We will need to check if there are any known software related bugs (\autoref{section:bugs}) in this version of Docker. We can find relevant CVEs in the National Vulnerability Database.\footnote{\url{https://nvd.nist.gov/}}
 
-    \item \textbf{Run Docker Bench for Security} (see \autoref{tools:bench})\\
-        Run Docker Bench for Security\footnote{\url{https://github.com/docker/docker-bench-security}} to quickly see what CIS Docker Benchmark guidelines are not being followed.
+    \item \textbf{Which CIS Docker Benchmark guidelines are implemented incorrectly or are not being followed?} (see \autoref{tools:bench})\\
+        Run Docker Bench for Security\footnote{\url{https://github.com/docker/docker-bench-security}} to quickly see which CIS Docker Benchmark guidelines are not being followed.
 
     \item \textbf{Which users are able to interact with the Docker socket?} (see \autoref{subsubsection:docker-permissions-host})\\
     Execute ``\lstinline{ls -l /var/run/docker.sock}'' to see the owner and group of \lstinline{/var/run/docker.sock} and which users have read and write access to it. The owner and every user in the group is allowed to use Docker.

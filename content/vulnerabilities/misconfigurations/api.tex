@@ -1,7 +1,7 @@
 \subsection{Docker Socket}\label{subsection:api}
 The Docker socket (i.e. \lstinline{/var/run/docker.sock}) is the way clients communicate with the Docker daemon. Whenever a user executes a Docker client command, the Docker client sends a HTTP request to the socket.
 
-We do not need to use the Docker client, but can send HTTP requests to the socket directly. We see this in \autoref{listing:ps-curl}, which shows two commands (to see all containers) that produce the same output (albeit in a different format). The first one is a command using the Docker client and the second is a HTTP request.
+We do not need to use the Docker client, but can send HTTP requests to the socket directly. We see this in \autoref{listing:ps-curl}, which shows two commands (to list all containers) that produce the same output (albeit in a different format). The first command uses the Docker client and the second command sends a HTTP request directly.
 \begin{lstlisting}[caption={Interaction with the Docker daemon with the Docker client and the socket directly.},captionpos=b, label={listing:ps-curl}]
 (host)$ docker ps -a
 ...
@@ -38,10 +38,9 @@ admin:$6$VOSV5AVQ$jHWxAVAUgl...:18142:0:99999:7:::
 
 \medskip
 
-This is also covered by CIS Docker Benchmark guideline 5.31 (Ensure that the Docker socket is not mounted inside any containers).
+This is covered by CIS Docker Benchmark guideline 5.31 (Ensure that the Docker socket is not mounted inside any containers).
 
 \subsubsection{Sensitive Information}
-
 When a container has access to \lstinline{/var/run/docker.sock} (i.e.\ when \lstinline{/var/run/docker.sock} is added as volume inside the container), it cannot only start new containers but it can also look at the configuration of existing containers. This configuration might contain sensitive information (e.g.\ passwords in environment variables).
 
 \medskip
@@ -72,7 +71,7 @@ It is also possible to make the Docker API listen on a TCP port. Ports 2375 and 
 
 \medskip
 
-A malicious actor misused this feature in May 2019. He used Shodan\footnote{\url{https://www.shodan.io/}} to find unprotected publicly accessible Docker APIs and start containers that mine cryptocurrencies (Monero\footnote{\url{https://www.getmonero.org/}}) and find other hosts to infect\cite{zoolu2-bot-1807}\cite{zoolu2-bot-1809}\cite{zoolu2-bot-1853}.
+A malicious actor misused this feature in May 2019. He used Shodan\footnote{\url{https://www.shodan.io/}} to find unprotected publicly accessible Docker APIs and start containers that mine cryptocurrencies (Monero\footnote{\url{https://www.getmonero.org/}}) and find other hosts to infect~\cite{zoolu2-bot-1807}~\cite{zoolu2-bot-1809}~\cite{zoolu2-bot-1853}.
 
 \medskip
 

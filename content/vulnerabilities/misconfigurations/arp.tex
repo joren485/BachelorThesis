@@ -1,11 +1,11 @@
 \subsection{ARP Spoofing}\label{subsection:arp-spoofing}
-By default, all Docker containers are added to the same bridge network. This means they are able to reach each other. By default, Docker containers also receive the \lstinline{CAP_NET_RAW} capability, which allows them to create raw packets. This means that by default, containers are able to ARP spoof other containers~\cite{Abusing-Containers}.\footnote{IPv4 forwarding is enabled by default by Docker}
+By default, all Docker containers are added to the same bridge network. This means they are able to reach each other. By default, Docker containers also receive the \lstinline{CAP_NET_RAW} capability, which allows them to create raw packets. This means that by default, containers are able to ARP spoof other containers~\cite{Abusing-Containers}.\footnote{IPv4 forwarding is enabled by default by Docker.}
 
 \medskip
 
 Let's take a look at a practical example. Let's say we have three containers. One container will ping another container. A third malicious container wants to intercept the \lstinline{ICMP} packets.
 
-We start three Docker containers using the \lstinline{ubuntu:latest} image (which is the same as \lstinline{ubunut:bionic-20191029} at the time of writing). They have the following, names IPv4 addresses and MAC addresses:
+We start three Docker containers using the \lstinline{ubuntu:latest} image (which is the same as \lstinline{ubunut:bionic-20191029} at the time of writing). They have the following names, IPv4 addresses and MAC addresses:
 \begin{itemize}
     \item \lstinline{victim0}: \lstinline{172.17.0.2} and \lstinline{02:42:ac:11:00:02}
     \item \lstinline{victim1}: \lstinline{172.17.0.3} and \lstinline{02:42:ac:11:00:03}

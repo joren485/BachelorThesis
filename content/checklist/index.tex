@@ -1,18 +1,17 @@
 \chapter{Docker Penetration Test Checklist}\label{chapter:checklist}
-\todo[inline]{Rename checklist to something like methodology eveywhere}
-\todo[inline]{Dave:you may add the text that Secura explisitly asked for this list}
-\todo[inline]{Jos: What is your contribution? What is new?}
-\todo[inline]{Jos: How long will it remain useful/ up to date?}
-\todo[inline]{Jos: To what extent can this checklist be automated?}
-\todo[inline]{Jos: What are problems with automation?}
-\todo[inline]{Sync this chapter with the two attacker models}
-In \autoref{chapter:vulnerabilities} and \autoref{chapter:pentesting} we looked at common vulnerabilities and how to identify them. In this chapter we will summarize those into a checklist consisting of steps.
+In \autoref{chapter:vulnerabilities} and \autoref{chapter:pentesting} we looked at common vulnerabilities and how to identify them. In this chapter we will summarize those into a checklist consisting of questions. These are questions a penetration tester should ask themselves when assessing a container or a host. Steps on how to answer each question are also given.
 
-This list is kept intentionally short and uses only Unix shell commands that can be run manually, to make it easy and quick to use. In \autoref{section:tools} we look at tools help automating certain enumeration or exploitation of vulnerabilities. These are however not necessary to use this checklist.
+Secura explicitly asked for this list to be added, to make it easier for penetration testers to use this thesis during an assessment.
 
 \medskip
 
-The first steps (\autoref{section:checklist-detection}) are meant to detect whether we are running inside a container. If we know we are inside a container, we can look for vulnerabilities inside the container (see \autoref{section:checklist-vulnerabilities-container}). If we know we are not running inside a container, we can look for vulnerabilities on the host (see \autoref{section:checklist-vulnerabilities-host}).
+This list is kept intentionally short and uses only Unix shell commands that can be run manually, to make it easy and quick to use.
+
+In \autoref{section:tools} we look at tools help automating certain enumeration or exploitation of vulnerabilities. Most of these require some setup (e.g.\ installing dependency libraries) and while only covering very specific vulnerabilities. This goes exactly against the purpose of this checklist and as such are not necessary to use this checklist (with the notable exception of Docker Bench for Security).
+
+\medskip
+
+The first section is meant to detect whether we are running inside a container (\autoref{section:checklist-detection}). If we know we are inside a container, we can look for vulnerabilities inside the container (see \autoref{section:checklist-vulnerabilities-container}). If we know we are not running inside a container, we can look for vulnerabilities on the host (see \autoref{section:checklist-vulnerabilities-host}).
 
 \input{content/checklist/detect}
 \input{content/checklist/container}
