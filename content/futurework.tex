@@ -2,10 +2,9 @@
 This thesis looks at how to do penetration tests on Docker systems. During the research and writing, I came across some interesting topics that go beyond the scope of this thesis.
 
 \section{Orchestration Software}
-\todo[inline]{Dave: Cloud Providers}
 In modern software deployment, containerization is only part of the puzzle. Large companies run a lot of different software and each instance needs to support many connections and a lot of computing power. That means that for many applications, many containers are required. To manage all of those containers there is orchestration software. The most famous are Kubernetes\footnote{\url{https://kubernetes.io/}} and Docker Swarm.\footnote{\url{https://docs.docker.com/engine/swarm/}}
 
-It would be interesting to continue this research by looking at how we could perform penetration tests on orchestration software and how orchestration software impacts the security of systems.
+It would be interesting to continue this research by looking at how we could perform penetration tests on orchestration software and how orchestration software impacts the security of systems. This could be extended to specifically look at Docker usage in cloud computing providers.
 
 \section{Docker on Non-Linux Operating Systems}
 This bachelor thesis looks at Docker on Linux, because Docker uses features only present in the Linux kernel. However, it is also possible to run Docker on non-Linux operating systems (e.g.\ Windows and MacOS). By running a Linux virtual machine that runs Docker.
