@@ -8,8 +8,8 @@ The following questions and steps are meant to identify interesting parts and we
     \item \textbf{Which CIS Docker Benchmark guidelines are implemented incorrectly or are not being followed?} (see \autoref{tools:bench})\\
         Run Docker Bench for Security\footnote{\url{https://github.com/docker/docker-bench-security}} to quickly see which CIS Docker Benchmark guidelines are not being followed.
 
-    \item \textbf{Which users are able to interact with the Docker socket?} (see \autoref{subsubsection:docker-permissions-host})\\
-    Execute ``\lstinline{ls -l /var/run/docker.sock}'' to see the owner and group of \lstinline{/var/run/docker.sock} and which users have read and write access to it. The owner and every user in the group is allowed to use Docker.
+    \item \textbf{Which users are allowed to interact with the Docker socket?} (see \autoref{subsubsection:docker-permissions-host})\\
+    Execute ``\lstinline{ls -l /var/run/docker.sock}'' to see the owner and group of \lstinline{/var/run/docker.sock} and which users have read and write access to it. Users that have read and write permissions to the Docker socket are allowed to interact with it.
 
     \item \textbf{Who is in the \lstinline{docker} group?} (see \autoref{subsubsection:docker-permissions-host})\\
     Check which users are in the group identified in the previous step (by default \lstinline{docker}) by executing ``\lstinline{grep docker /etc/group}''.
