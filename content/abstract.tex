@@ -1,22 +1,23 @@
 \begin{abstract}
-\todo[inline]{Jos: 1.5 page would be more appropriate}
-\todo[inline]{Jos: Make actors explicit}
-\todo[inline]{Rewrite}
-\todo[inline]{Job: "Docker is an ecosystem" is not clear to me}
-\todo[inline]{Job: "bachelor thesis" -> "research"}
-\todo[inline]{Job: less general information, more about contributions}
-\todo[inline]{Job: we looked instead of we will look}
-Containerization software, such as Docker, has become extremely popular to streamline software deployments in the past few years. Its popularity has also made it an interesting attack surface. This bachelor thesis discusses Docker from a security perspective and looks at how a penetration tester (e.g.\ an employee of security companies like Secura) should assess the security of systems that use Docker.
+Penetration testers encounter many different systems during assessments. Penetration testers encounter systems using Docker more and more often, because of the popularity of Docker in recent years. This research discusses Docker from a security perspective and looks at how a penetration tester should assess the security of systems that use Docker.
 
 \medskip
 
-Because Docker is an ecosystem, it has multiple attacker models: escaping Docker containers, inter-container attacks and attacking the host through the Docker daemon. We will look at Docker from these perspectives.
+We introduce two attacker models: container escapes and Docker daemon attacks. These attacker models are generalizations of attacks that someone could make. They attack the system using a certain perspective. We discuss container escapes, an attacker model where the attacker takes the perspective of a process running inside a container. We also discuss Docker daemon attacks, an attacker model where the attacker takes the perspective of a process running on a host with Docker installed.
 
 \medskip
 
-To get a good understanding of what can go wrong using Docker we discuss configuration mistakes that Docker users could make and look at examples that demonstrate the dangerous consequences. We map these to CIS Docker Benchmarks, which are security guidelines aimed at Docker. These are used by companies like Secura as a security benchmark. Recent CVEs that are relevant during penetration tests, are also discussed, but with less emphasis because they are easily circumvented.
+We look at known vulnerabilities in Docker. Specifically, we look at misconfigurations and security related software bugs. We provide practical examples of how to exploit the misconfigurations the and what the resulting impact could be. We find that misconfigurations are more interesting than the software bugs, because software bugs are far easier to fix for a user.
+
+We map these vulnerabilities to relevant CIS Docker Benchmark (a best practices guide about the use of Docker) guidelines. We see that not all misconfigurations are covered by the CIS Docker Benchmark.
 
 \medskip
 
-Finally, this thesis looks at how penetration testers should identify the vulnerabilities discussed. Additionally, a checklist is presented that summarizes the enumeration, identification and exploitation of systems that use Docker to ease assessments.
+Additionally, we describe how to identify the relevant attacker model during a penetration test. After that we describe how to manually perform reconnaissance and identify vulnerabilities on systems that use Docker. We do this for both attacker models.
+
+We take a look at tools that might automate the identification and exploitation of vulnerabilities. We, however, find that no tool fully automates and replaces manual assessments.
+
+\medskip
+
+We conclude by presenting a checklist that summarizes the research as questions that a penetration tester should ask about a target system using Docker during an assessment. For each question, a simple way to answer the question and a reference to the relevant section in this thesis is given.
 \end{abstract}
