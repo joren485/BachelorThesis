@@ -1,39 +1,41 @@
 \chapter{Conclusions}\label{chapter:conclusions}
-\todo[inline]{Luko: security takeaway 4 voelt niet echt als een takeaway maar als een doe dit, het valt vooral op in de rest van het rijtje}
-\todo[inline]{Rewrite}
-\todo[inline]{Geert, Job: Better story in the bullet points. Add narrative}
-\todo[inline]{Geert: A paragraph per bullet point}
-\todo[inline]{CIS Benchmark does not cover everything}
-\todo[inline]{Idea: Do not rely solely on guideline lists like CIS, because they are not cover everything}
-\todo[inline]{Tools are not really useful, except for Bench. There are no tools that replace manual assessments.}
-\todo[inline]{Tools are very specific to one thing and cover only the most well-known cases}
-Containers help people create more secure environments, because it isolates software. However, using containers also increases the attack surface and risks, because containerization software also adds extra layers of abstraction and complexity. This poses challenges for both attackers and defenders of Docker systems. We will look at the findings of this bachelor thesis from both perspectives.
+Containers help people create more secure environments, because it isolates software. However, using containers also increases the attack surface and risks, because containerization software also adds extra layers of abstraction and complexity. This poses challenges for both attackers and defenders of Docker systems. We will look at the findings of this research from both perspectives.
 
 \section{Takeaways from an Offensive Perspective}
-
+When performing a penetration test, it is important to be aware of the following points.
 \begin{itemize}
-    \item When inside a container, an attacker wants to escape and see what other containers it can reach. As we saw in \autoref{chapter:vulnerabilities} there are many ways to escape a Docker container.
+    \item \textbf{Be aware of the attacker models and which you should use.}\\
+        As we saw in \autoref{chapter:attack-surface-models} there are two attacker models: container escapes which focus on escaping the isolation of a container and Docker daemon attacks which focus on using an installation of Docker on a host to gain access to privileged data. It is important to know during an penetration test which one is relevant.
 
-    \item When on a host that runs Docker, an attacker wants to access privileged information through the Docker daemon. Because being able to use Docker is equivalent to having \lstinline{root} permissions, an attacker wants to find a way to get access to Docker and exploit it.
+    \item \textbf{Misconfigurations are more interesting than security related software bugs.}\\
+        We looked at many vulnerabilities in \autoref{chapter:vulnerabilities}. We looked at both misconfigurations and bugs. Both the misconfigurations and the bugs pose a danger. However, the misconfigurations are more interesting to an attacker, because they are harder to fix. Software bugs are easily fixed by using the latest version of Docker, while misconfigurations require changing the way Docker is used.
 
-    \item Misconfigurations are more interesting from an offensive perspective, as these are harder to fix. Security bugs are simply fixed by updating Docker.
+    \item \textbf{Do not solely rely on lists of guidelines.}\\
+        Lists of guidelines (e.g.\ the CIS Docker Benchmark) are a good starting point to identify potential vulnerable parts of a system. However, as we saw with the CIS Docker Benchmark, they are not exhaustive.
 
-    \item Use the checklist provided in \autoref{chapter:checklist} to manually and systematically identify weak spots and misconfigurations that are present in containers or hosts with a Docker installation.
+    \item \textbf{Do not solely rely on tools to automate security assessments.}\\
+        Tools (e.g.\ we looked at in \autoref{section:tools}) help automate penetration tests. They are useful because they save time and systematically look at target systems. They, however, fall short when it comes to identifying more complex vulnerabilities and covering larger parts of a system. Most tools are designed to scan for or exploit only one specific vulnerability. A detailed, manual assessment will take more time, but will also uncover more vulnerabilities and weak spots.
 
-    \item Docker Bench for Security (see \autoref{tools:bench}) is a tool that automates the checking of every guideline in the CIS Docker Benchmark (as manually checking every guideline in the CIS Docker Benchmark takes a long time). It audits a host system for guidelines that are not followed and generates a report on its findings. This is useful to see if there are obvious and interesting configuration mistakes in a Docker installation.
-
+    \item \textbf{Use the checklist provided in \autoref{chapter:checklist}.}\\
+        The checklist in \autoref{chapter:checklist} provides an attacker with three lists of interesting questions about the reconnaissance and exploitation of a system using Docker. The first list is meant to check whether an attacker is running inside a container or on a host. The second and third list are meant to gather data and identify vulnerabilities inside containers and on host systems, respectively.
 \end{itemize}
 
+\pagebreak
+
 \section{Takeaways from a Defensive Perspective}
-
+Although, this research focuses on an offensive perspective on Docker, it can be used when to harden and secure a system that uses Docker. When designing or maintaining a system that uses Docker it is important to keep the following points in mind.
 \begin{itemize}
-    \item Docker is not just one program, but a whole ecosystem. Understanding how it works internally is crucial to building stable, secure systems.
+    \item \textbf{Using Docker adds a layer of isolation to your software.}\\
+        Docker, like all containerization software, adds a layer of isolation. This adds security, because software is isolated from the host system.
 
-    \item Keep Docker up to date to minimize the risks of software bugs.
+    However, this also adds a layer of abstraction to the system. Instead of running software directly on a host, it runs inside of a container on a host. This layer of abstraction increases the attack surface of the system.
 
-    \item Know what the best practices to configure Docker are and be aware of common misconfigurations.
+    \item \textbf{Always use the latest version of Docker.}\\
+        As we saw in \autoref{chapter:vulnerabilities}, there are many vulnerabilities that pose a risk to systems that use Docker. It is possible to significantly reduce the risk of one type of vulnerability we looked at. Software bugs are easily fixed (by the user) by always using the latest version of Docker.
 
-    \item Best practice guideline lists (e.g.\ CIS Docker Benchmark) are a good start, but are not well fitted to every use-case, long and incomplete.
+    \item \textbf{The checklist in \autoref{chapter:checklist} will help us look at a system like an attacker.}\\
+        If we know how an attacker looks at our system, we can more easily identify the parts that an attacker would target. The checklist of questions in \autoref{chapter:checklist} will help us look at a system like an attacker.
 
-    \item Analyze Docker images (automatically) using static image analysis tools (see \autoref{subsection:image-analysis-tools}) to discover misconfigurations and bugs, before the images are deployed.
+    \item \textbf{Do not solely rely on lists of guidelines.}\\
+        Lists of guidelines (e.g.\ the CIS Docker Benchmark) are a good starting point to harden a system. However, as we saw with the CIS Docker Benchmark, they are not exhaustive.
 \end{itemize}
