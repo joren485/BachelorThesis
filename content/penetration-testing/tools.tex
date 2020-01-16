@@ -1,19 +1,9 @@
 \section{Automation Tools}\label{section:tools}
-\todo[inline]{Erik: Link to checklist or say why you cannot link to the checklist.}
-Most security assessments are time restricted. Large, complex systems need to be assessed in a short amount of time. There are tools that automate part of the assessment process. Instead of taking every step manually, these tools scan systems automatically and systematically to find known vulnerabilities and possible weak spots in a system. Because Docker is a popular ecosystem, there exist many different tools and scanners. Created by both companies (including Docker itself) and individuals interested in the security of Docker.
+Most security assessments are time restricted. Large, complex systems need to be assessed in a short amount of time. There are tools that automate part of the assessment process. Instead of taking every step manually, these tools scan systems automatically and systematically to find known vulnerabilities and possible weak spots in a system. In this section we will discuss the tools that help us automate part of the manual steps of \autoref{section:identify-vulnerabilities} to identify and exploit the vulnerabilities we discussed in \autoref{chapter:vulnerabilities}.
 
-\medskip
+As we will see, most tools have a specific focus (e.g.\ a single vulnerability or part of a system). This makes it is harder to separate them into groups that correspond to the attacker models of \autoref{chapter:attack-surface-models}. We instead separate them into groups that match their purpose: host configuration scanners (\autoref{tools:host-scanners}), Docker image analysis tools (\autoref{subsection:image-analysis-tools}) and exploitation tools (\autoref{subsection:offensive-tools}).
 
-The advantage of these tools is that they save a lot of time and effort, because they can look at every part of a system in a systematic way. However, while the tools save time, they do miss the precision and detail that manual testing brings. Many security flaws are complex and might only be vulnerable under specific circumstances. Manual examination and testing might reveal new vulnerabilities or vulnerable circumstances, while automated testing will only look for known vulnerabilities.
-
-As we will see, most tools have a specific vulnerability or part of the system they scan. No single tool will automate all parts of an assessment.
-
-That is why using tools can help us, but can never fully replace manual examination.
-
-\medskip
-In this section we will look at the different types of tools that are available to automate parts of what we looked at in \autoref{section:identify-vulnerabilities}.
-
-\subsection{Host Configuration Scanners}
+\subsection{Host Configuration Scanners}\label{tools:host-scanners}
 The tools described in this section are run on a host running Docker (see \autoref{subsection:testing-host}). They check for issues in the configuration of Docker, available images and available containers.
 
 \subsubsection{Docker Bench for Security}\label{tools:bench}
@@ -24,7 +14,7 @@ Docker itself has released a scanner (called Docker Bench for Security\footnote{
 Docker Bench for Security solves the biggest problem of the CIS Docker Benchmark: its length. The CIS Docker Benchmark is a long document, which makes it hard to use (as discussed in \autoref{futurework:CIS}). Because Docker Bench for Security automatically checks all guidelines, we only need to look at the guidelines that do not pass the check. This makes it a helpful tool during a security assessment.
 
 \subsubsection{Dockscan}
-Dockscan\footnote{\url{https://github.com/kost/dockscan}} checks a host and the running containers for misconfigurations (not every misconfiguration is security related). It is quite old (the last change is made in august 2016) and as such less useful during a penetration test.\ dockscan scans for the following misconfigurations:
+Dockscan\footnote{\url{https://github.com/kost/dockscan}} checks a host and the running containers for misconfigurations (not every misconfiguration is security related). It is quite old (the last change is made in august 2016\footnote{\url{https://github.com/kost/dockscan/commit/0a21d64}}) and as such less useful during a penetration test. Dockscan scans for the following misconfigurations:
 \begin{itemize}
     \item The number of changed but not persistent files of running containers.
     \item Empty passwords in containers (similar to \autoref{subsection:CVE-2019-5021}).
@@ -35,7 +25,7 @@ Dockscan\footnote{\url{https://github.com/kost/dockscan}} checks a host and the 
     \item Whether memory limits have been set for containers.
     \item Whether IPv4 traffic forwarding is enabled in Docker.
     \item Whether a mirror registry is used.
-    \item If the AUFS storage driver is used.
+    \item Whether the AUFS storage driver is used.
 \end{itemize}
 
 \subsection{Docker Image Analysis Tools}\label{subsection:image-analysis-tools}

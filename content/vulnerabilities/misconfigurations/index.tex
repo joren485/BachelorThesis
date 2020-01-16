@@ -1,6 +1,7 @@
 \section{Misconfigurations}\label{section:misconfigurations}
-\todo[inline]{Sort this list better}
 In this section, we will take a look at misconfigurations of Docker and the impact those misconfigurations can have. For each misconfiguration, we will look at practical examples and the impact.
+
+The first two misconfigurations we will look at (\autoref{subsection:docker-permissions} and \autoref{subsection:config-files}) are relevant to attacks that are performed on a host, Docker daemon attacks (\autoref{attacker-model:daemon-attacks}). The other misconfigurations are relevant to attacks that are performed from within a container, container escapes (\autoref{subsection:container-escape})
 
 \medskip
 
@@ -11,5 +12,5 @@ We map each misconfiguration to relevant CIS Docker Benchmark guidelines (if any
 \input{content/vulnerabilities/misconfigurations/privileged}
 \input{content/vulnerabilities/misconfigurations/capabilities}
 \input{content/vulnerabilities/misconfigurations/api}
-\input{content/vulnerabilities/misconfigurations/arp}
 \input{content/vulnerabilities/misconfigurations/iptables}
+\input{content/vulnerabilities/misconfigurations/arp}

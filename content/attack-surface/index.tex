@@ -13,7 +13,7 @@ We can think of the first perspective (inside a container) as an attacker model 
 
 We can think of the second perspective (outside a container) as an attacker model where the attacker has unprivileged access to a host. The attacker is able to execute commands on the host, but does not have access to everything. Because the attacker will use Docker (specifically the Docker daemon) on the host to access, we call this type of attack \emph{Docker daemon attack}. We further discuss Docker daemon attacks in \autoref{attacker-model:daemon-attacks}
 
-Throughout this thesis we will always make the distinction between these attacker models.
+In the following chapters we will discuss vulnerabilities in Docker them (\autoref{chapter:vulnerabilities}) and how to identify them (\autoref{chapter:pentesting}). We will do this by using the attacker models of this chapter.
 
 \medskip
 
@@ -71,4 +71,7 @@ We see the following processes pictured in the images:
 \end{enumerate}
 
 \input{content/attack-surface/container-escape}
+
+\pagebreak
+
 \input{content/attack-surface/daemon-container-attack}

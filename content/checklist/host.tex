@@ -3,7 +3,7 @@ The following questions and steps are meant to identify interesting parts and we
 
 \begin{itemize}
     \item \textbf{What is the version of Docker?} (see \autoref{subsubsection:version})\\
-    Run ``\lstinline{docker --version}'' to find the version of Docker. We will need to check if there are any known software related bugs (\autoref{section:bugs}) in this version of Docker. We can find relevant CVEs in the National Vulnerability Database.\footnote{\url{https://nvd.nist.gov/}}
+        Run ``\lstinline{docker --version}'' to find the version of Docker. We will need to check if there are any known software related bugs (\autoref{section:bugs}) in this version of Docker (see \autoref{section:bugs}). We can find relevant CVEs in the National Vulnerability Database.\footnote{\url{https://nvd.nist.gov/}}
 
     \item \textbf{Which CIS Docker Benchmark guidelines are implemented incorrectly or are not being followed?} (see \autoref{tools:bench})\\
         Run Docker Bench for Security\footnote{\url{https://github.com/docker/docker-bench-security}} to quickly see which CIS Docker Benchmark guidelines are not being followed.

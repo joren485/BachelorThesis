@@ -1,11 +1,16 @@
 \section{Manually Identifying Vulnerabilities}\label{section:identify-vulnerabilities}
-During a penetration test we will get access to different systems. How we get that access depends on the type of assessment we are performing. During a white box assessment, we will most likely get full access to all systems before the assessment starts. During a black box assessment, on the other hand, we get access by exploiting vulnerabilities in systems to get a foothold (e.g.\ command execution). In this section we will discuss how we can manually identify the vulnerabilities we looked at in \autoref{chapter:vulnerabilities} once we have access to a system.
+In this section we will discuss how we can manually identify the vulnerabilities we looked at in \autoref{chapter:vulnerabilities} once we have access to a system. This section is split into three parts, that correspond to the attacker models of \autoref{chapter:attack-surface-models}.
 
-We will look at two different perspectives: inside a Docker container (\autoref{subsection:testing-container}) and from a host running Docker (\autoref{subsection:testing-host}). We will first look at detecting from which perspective we are attacking (\autoref{subsection:detection}). For both perspectives (container and host) we will then look at steps we can take (i.e.\ commands we can execute) to get information about the system and identify vulnerabilities.
+In \autoref{subsection:detection} we look at techniques to identify which attacker model is relevant during an assessment. This means we will discuss techniques to identify whether we are inside a container or on a host.
+
+The second part (\autoref{subsection:testing-container}) corresponds directly to container escapes (\autoref{subsection:container-escape}). We take the perspective of a process inside a container and look how we could perform a container escape attack.
+
+The third part (\autoref{subsection:testing-host}) corresponds directly to Docker daemon attacks (\autoref{attacker-model:daemon-attacks}). We take the perspective of an (unprivileged) process on a host with Docker installed on it and look how we could perform a Docker daemon attack.
 
 \medskip
 
-We will mostly focus on the misconfigurations, because although the security related bugs might have a high impact, they are all mitigated with one simple line of advice: ``Keep your systems up to date''. Checking whether a system is vulnerable to a known bug is also a lot easier than misconfigurations, because almost all Docker bugs are dependent on the version of Docker being out of date (i.e.\ the Docker version tells us what Docker is vulnerable to).
+We will mostly focus on the misconfigurations (\autoref{section:misconfigurations}), because although the security related bugs (\autoref{section:bugs}) might have a high impact, they are all mitigated with one simple line of advice: ``Keep your systems up to date''. Checking whether a system is vulnerable to a known bug is also a lot easier than checking whether a system is vulnerable because of misconfiguration, because all Docker bugs are dependent on the version of Docker being out of date (i.e.\ the Docker version tells us what Docker is vulnerable to).
+
 \input{content/penetration-testing/manual/detection/index}
 \input{content/penetration-testing/manual/container/index}
 \input{content/penetration-testing/manual/host/index}

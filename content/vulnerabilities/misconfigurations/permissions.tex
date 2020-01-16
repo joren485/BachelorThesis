@@ -27,7 +27,11 @@ In \autoref{listing:docker-group} we first check our permissions. We do not have
 
 \medskip
 
-This is covered by the CIS Docker Benchmark guideline 1.2.2 (Ensure only trusted users are allowed to control Docker daemon).
+A real life example of the impact of incorrectly configured Docker permissions happened a few years back with one of the courses in the Computing Science curriculum (of the Radboud). A professor wanted to teach students about containerization and modern software development. The professor asked the IT department to install Docker on all student workstations and add all the students in the course to \lstinline{docker} group (giving them full permissions to run Docker). This gave every student the equivalent of \lstinline{root} rights on every workstation. This was a problem, because it allowed students to read sensitive information (e.g.\ private keys and passwords hashes of all users) and make changes to the system.
+
+\medskip
+
+The \lstinline{docker} group is covered by CIS Docker Benchmark guideline 1.2.2 (Ensure only trusted users are allowed to control Docker daemon).
 
 \subsubsection{World Readable and Writable Docker Socket}
 By default, only \lstinline{root} and every user in the \lstinline{docker} group have access to Docker, because they have read and write access to the Docker socket. However, some administrators set the permissions to read and write for all users (i.e. \lstinline{666}), giving all users access to the Docker daemon.

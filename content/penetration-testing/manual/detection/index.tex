@@ -1,9 +1,11 @@
 \subsection{Detect If We Are Running in a Container}\label{subsection:detection}
-In most security assessments and penetration tests it will be clear what kind of system (i.e.\ running inside a container or not) we are attacking. In some cases, however, it might not be. A good example of this is getting remote code execution on a system during a black box penetration test. In that case, we might get a reverse shell and are able to execute commands, but do not know anything about the systems' internal workings. In such a case it is important to know if we are running in a Docker container or not.
+In most security assessments and penetration tests it will be clear what kind of system (i.e.\ running inside a container or not) we are attacking. In some cases, however, it might not be.
+
+A good example of this, is finding a remote code execution vulnerability on a system during a black box penetration test. This allows us to execute arbitrary commands on a system that we know nothing about. In such a case it is important to know if we are running in a Docker container or not.
 
 \medskip
 
-In this section, we will look at steps that show us whether we are in a Docker container. These steps are in order of ease and certainty. If we know we are inside a container, we can look for vulnerabilities inside the container (see \autoref{subsection:testing-container}). If we know we are not running inside a container, we can look for vulnerabilities on the host (see \autoref{subsection:testing-host}).
+In this section, we will look at steps that show us whether we are in a Docker container. These steps are in descending order of ease and certainty. If we know we are inside a container, we can perform reconnaissance inside the container (see \autoref{subsection:testing-container}). If we know we are not running inside a container, we can perform reconnaissance on the host (see \autoref{subsection:testing-host}).
 
 \input{content/penetration-testing/manual/detection/dockerenv}
 \input{content/penetration-testing/manual/detection/cgroup}
