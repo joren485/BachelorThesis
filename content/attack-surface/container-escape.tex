@@ -1,5 +1,7 @@
 \section{Container Escapes}\label{subsection:container-escape}
-In a container escape, an attacker has gained access to a container and tries to escape its isolation. When an attacker gains access to a container, they have gained a foothold inside their target, but that foothold is (like everything else inside the container) isolated from the host. Container escapes focus on attacking and bypassing the isolation and protection mechanics that separate the container from the host.
+In a container escape, an attacker has gained access to a container and tries to escape its isolation. When an attacker gains access to a container, they have gained a foothold inside their target, but that foothold is (like everything else inside the container) isolated from the host. Container escapes focus on attacking and bypassing the isolation and protection mechanics that separate the container from the host and other containers.
+
+\medskip
 
 \begin{figure}[ht]
     \centering
@@ -52,7 +54,6 @@ In \autoref{fig:container-escape} we see two variants of container escapes. We s
 In the first variant, Process C escapes the container to access data that it should not have access to on the host.
 
 In the second variant, Process C escapes from its container and accesses another container. Containers should not only be isolated from the host, but also from other containers. This allows multiple containers with sensitive data to be run on the same host without them being able to access each other's data.
-
 
 \medskip
 

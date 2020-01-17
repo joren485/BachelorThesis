@@ -4,11 +4,11 @@ Containers help people create more secure environments, because it isolates soft
 \section{Takeaways from an Offensive Perspective}
 When performing a penetration test, it is important to be aware of the following points.
 \begin{itemize}
-    \item \textbf{Be aware of the attacker models and which you should use.}\\
+    \item \textbf{Be aware of the attacker models described in \autoref{chapter:attack-surface-models}.}\\
         As we saw in \autoref{chapter:attack-surface-models} there are two attacker models: container escapes which focus on escaping the isolation of a container and Docker daemon attacks which focus on using an installation of Docker on a host to gain access to privileged data. It is important to know during an penetration test which one is relevant.
 
     \item \textbf{Misconfigurations are more interesting than security related software bugs.}\\
-        We looked at many vulnerabilities in \autoref{chapter:vulnerabilities}. We looked at both misconfigurations and bugs. Both the misconfigurations and the bugs pose a danger. However, the misconfigurations are more interesting to an attacker, because they are harder to fix. Software bugs are easily fixed by using the latest version of Docker, while misconfigurations require changing the way Docker is used.
+        We looked at many vulnerabilities in \autoref{chapter:vulnerabilities}. We looked at both misconfigurations and bugs. Both the misconfigurations and the bugs pose a danger. However, the misconfigurations are more interesting to a attacker, because they are harder to fix. Software bugs are easily fixed by using the latest version of Docker, while misconfigurations require changing the way Docker is used.
 
     \item \textbf{Do not solely rely on lists of guidelines.}\\
         Lists of guidelines (e.g.\ the CIS Docker Benchmark) are a good starting point to identify potential vulnerable parts of a system. However, as we saw with the CIS Docker Benchmark, they are not exhaustive.
@@ -23,7 +23,7 @@ When performing a penetration test, it is important to be aware of the following
 \pagebreak
 
 \section{Takeaways from a Defensive Perspective}
-Although, this research focuses on an offensive perspective on Docker, it can be used when to harden and secure a system that uses Docker. When designing or maintaining a system that uses Docker it is important to keep the following points in mind.
+Although, this research focuses on an offensive perspective on Docker, it can be used to harden and secure a system that uses Docker. When designing or maintaining a system that uses Docker it is important to keep the following points in mind.
 \begin{itemize}
     \item \textbf{Using Docker adds a layer of isolation to your software.}\\
         Docker, like all containerization software, adds a layer of isolation. This adds security, because software is isolated from the host system.
